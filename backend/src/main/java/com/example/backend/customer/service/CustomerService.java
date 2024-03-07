@@ -10,6 +10,7 @@ import com.example.backend.customer.model.response.DeleteCustomerDeleteRes;
 import com.example.backend.customer.model.response.PostCustomerLoginRes;
 import com.example.backend.customer.model.response.PostCustomerSignupRes;
 import com.example.backend.customer.repository.CustomerRepository;
+import com.example.backend.log.service.LogService;
 import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,7 @@ public class CustomerService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final CustomerEmailVerifyService customerEmailVerifyService;
     private final TokenProvider tokenProvider;
+    private final LogService logService;
 
     @Value("${jwt.secret-key}")
     private String secretKey;
@@ -100,6 +102,7 @@ public class CustomerService implements UserDetailsService {
                         .idx(member.get().getIdx())
                         .build();
 
+                logService.loginLogging(member.get());
                 return postCustomerLoginRes;
             } else {
                 return null;
