@@ -1,7 +1,5 @@
 package com.example.backend.customer.service;
 
-
-
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.model.entity.CustomerEmailVerify;
 import com.example.backend.customer.repository.CustomerEmailVerifyRepository;
@@ -44,7 +42,6 @@ public class CustomerEmailVerifyService {
             }
         }
         return false;
-
     }
 
     public void create(String customerEmail, String uuid) {
