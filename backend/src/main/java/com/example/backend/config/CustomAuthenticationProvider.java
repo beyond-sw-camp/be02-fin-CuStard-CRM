@@ -27,7 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
         UserDetails userDetails;
-      userDetails = (Customer) customerService.loadUserByUsername(username);
+        userDetails = (Customer) customerService.loadUserByUsername(username);
 
 
         if (passwordEncoder.matches(password, userDetails.getPassword()) && userDetails.isEnabled()) {
