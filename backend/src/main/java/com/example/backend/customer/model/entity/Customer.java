@@ -1,12 +1,15 @@
 package com.example.backend.customer.model.entity;
 
+import com.example.backend.havecoupon.model.entity.HaveCoupon;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +27,8 @@ public class Customer implements UserDetails {
     private String authority;
     private boolean status;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<HaveCoupon> haveCouponList = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
