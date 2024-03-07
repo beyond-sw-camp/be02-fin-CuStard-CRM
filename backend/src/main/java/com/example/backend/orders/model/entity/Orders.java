@@ -1,5 +1,6 @@
 package com.example.backend.orders.model.entity;
 
+import com.example.backend.common.BaseTimeEntity;
 import lombok.*;
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Orders {
+public class Orders extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
@@ -22,12 +23,14 @@ public class Orders {
 
     private Long productIdx;
 
+    private Integer productPrice;
 
-    public static Orders dtoToEntity(String impUid, Long consumerIdx, Long productIdx ) {
+    public static Orders dtoToEntity(String impUid, Long consumerIdx, Long productIdx,  Integer productPrice ) {
         return Orders.builder()
                 .consumerIdx(consumerIdx)
                 .impUid(impUid)
                 .productIdx(productIdx)
+                .productPrice(productPrice)
                 .build();
     }
 
