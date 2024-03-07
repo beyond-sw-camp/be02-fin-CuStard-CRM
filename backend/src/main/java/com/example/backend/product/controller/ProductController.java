@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/read")
-    public ResponseEntity<GetProductRes> read(Long idx) {
+    public ResponseEntity<GetProductRes> read(@RequestBody Long idx) {
         return ResponseEntity.ok().body(productService.read(idx));
     }
 

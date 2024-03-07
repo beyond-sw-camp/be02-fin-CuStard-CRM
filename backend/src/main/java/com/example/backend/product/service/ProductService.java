@@ -1,6 +1,7 @@
 package com.example.backend.product.service;
 
 
+import com.example.backend.log.service.LogService;
 import com.example.backend.product.model.entity.Product;
 import com.example.backend.product.model.response.GetProductListRes;
 import com.example.backend.product.model.response.GetProductRes;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final LogService logService;
 
     public List<GetProductListRes> list() {
         List<GetProductListRes> productListRes = new ArrayList<>();
@@ -45,7 +47,7 @@ public class ProductService {
                     .productDetails(product.getProductDetails())
                     .productPrice(product.getProductPrice())
                     .build();
-
+//            logService.
             return getProductRes;
         }
         return null;

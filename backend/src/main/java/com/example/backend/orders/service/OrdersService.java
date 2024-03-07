@@ -1,5 +1,7 @@
 package com.example.backend.orders.service;
 
+import com.example.backend.customer.model.entity.Customer;
+import com.example.backend.customer.repository.CustomerRepository;
 import com.example.backend.orders.model.entity.GetPortoneRes;
 import com.example.backend.orders.model.entity.Orders;
 import com.example.backend.orders.model.response.GetOrdersCreateRes;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Optional;
 
 
 @Service
@@ -23,6 +26,7 @@ import java.io.IOException;
 public class OrdersService {
     private final PaymentService paymentService;
     private final OrdersRepository ordersRepository;
+    private final CustomerRepository customerRepository;
 
     @Transactional
     public ResponseEntity<GetOrdersCreateRes> createOrder(String token, String impUid) throws IamportResponseException, IOException {
@@ -36,10 +40,11 @@ public class OrdersService {
         GetPortoneRes getPortoneRes = gson.fromJson(customDataString, GetPortoneRes.class);
 
         token = TokenProvider.replaceToken(token);
-        Long consumerIdx = TokenProvider.getIdx(token);
+        Long customerIdx = TokenProvider.getIdx(token);
 
-        if (consumerIdx != null) {
-            ordersRepository.save(Orders.dtoToEntity(impUid, consumerIdx, getPortoneRes.getId(), getPortoneRes.getPrice()));
+        Optional<Customer> customer = customerRepository.findById(customerIdx);
+        if (customer.isPresent()) {
+            ordersRepository.save(Orders.dtoToEntity(impUid, customer.get(), getPortoneRes.getId(), getPortoneRes.getPrice()));
             GetOrdersCreateRes getOrdersCreateRes = GetOrdersCreateRes.builder()
                     .impUid(impUid)
                     .productName(getPortoneRes.getName())

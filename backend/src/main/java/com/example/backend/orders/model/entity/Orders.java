@@ -1,6 +1,7 @@
 package com.example.backend.orders.model.entity;
 
 import com.example.backend.common.BaseTimeEntity;
+import com.example.backend.customer.model.entity.Customer;
 import lombok.*;
 import javax.persistence.*;
 
@@ -16,18 +17,19 @@ public class Orders extends BaseTimeEntity {
     private Long idx;
 
     @Column(nullable=false)
-    private Long consumerIdx;
-
-    @Column(nullable=false)
     private String impUid;
 
     private Long productIdx;
 
     private Integer productPrice;
 
-    public static Orders dtoToEntity(String impUid, Long consumerIdx, Long productIdx,  Integer productPrice ) {
+    @ManyToOne
+    @JoinColumn(name="customer_idx")
+    private Customer customer;
+
+    public static Orders dtoToEntity(String impUid, Customer customer, Long productIdx,  Integer productPrice) {
         return Orders.builder()
-                .consumerIdx(consumerIdx)
+                .customer(customer)
                 .impUid(impUid)
                 .productIdx(productIdx)
                 .productPrice(productPrice)
