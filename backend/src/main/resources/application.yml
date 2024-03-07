@@ -31,6 +31,7 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+    database: mysql
 cloud:
   aws:
     s3:
