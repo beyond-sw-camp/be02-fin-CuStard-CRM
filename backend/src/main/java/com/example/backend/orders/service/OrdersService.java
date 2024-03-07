@@ -39,7 +39,7 @@ public class OrdersService {
         Long consumerIdx = TokenProvider.getIdx(token);
 
         if (consumerIdx != null) {
-            ordersRepository.save(Orders.dtoToEntity(impUid, consumerIdx, getPortoneRes.getId()));
+            ordersRepository.save(Orders.dtoToEntity(impUid, consumerIdx, getPortoneRes.getId(), getPortoneRes.getPrice()));
             GetOrdersCreateRes getOrdersCreateRes = GetOrdersCreateRes.builder()
                     .impUid(impUid)
                     .productName(getPortoneRes.getName())
