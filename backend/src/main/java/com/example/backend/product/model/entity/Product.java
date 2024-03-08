@@ -1,11 +1,15 @@
 package com.example.backend.product.model.entity;
 
+import com.example.backend.log.entity.ProductDetailLog;
+import com.example.backend.log.entity.SearchLog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -31,5 +35,8 @@ public class Product {
 
     @Column(nullable = false)
     private String ProductImage;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductDetailLog> productDetailLogs = new ArrayList<>();
 
 }

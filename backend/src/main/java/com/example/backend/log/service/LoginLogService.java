@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LogService {
+public class LoginLogService {
     private final LoginLogRespository loginLogRespository;
 
     public void loginLogging(Customer customer){
