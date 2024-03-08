@@ -1,5 +1,6 @@
 package com.example.backend.havecoupon.model.entity;
 
+import com.example.backend.coupon.model.entity.Coupon;
 import com.example.backend.customer.model.entity.Customer;
 import lombok.*;
 
@@ -21,4 +22,7 @@ public class HaveCoupon {
     @JoinColumn(name = "customer_id")
     Customer customer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id")
+    Coupon coupon;
 }

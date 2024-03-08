@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 public class GetHaveCouponReadReq {
-    Long idx;
+    private Long idx;
 
 
 }

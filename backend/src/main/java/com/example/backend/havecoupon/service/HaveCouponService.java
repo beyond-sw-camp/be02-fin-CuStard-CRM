@@ -1,12 +1,13 @@
 package com.example.backend.havecoupon.service;
 
+import com.example.backend.coupon.model.entity.Coupon;
 import com.example.backend.customer.model.entity.Customer;
-import com.example.backend.customer.model.response.GetCustomerReadRes;
 import com.example.backend.havecoupon.Repository.HaveCouponRepository;
 import com.example.backend.havecoupon.model.entity.HaveCoupon;
 import com.example.backend.havecoupon.model.request.PostHaveCouponCreateReq;
 import com.example.backend.havecoupon.model.response.GetHaveCouponListRes;
 import com.example.backend.havecoupon.model.response.GetHaveCouponReadRes;
+import com.example.backend.havecoupon.model.response.PostHaveCouponCreateRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,20 +19,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HaveCouponService {
     private final HaveCouponRepository haveCouponRepository;
-    public HaveCoupon create(PostHaveCouponCreateReq postHaveCouponCreateReq){
+    public PostHaveCouponCreateRes create(PostHaveCouponCreateReq postHaveCouponCreateReq){
         HaveCoupon haveCoupon = haveCouponRepository.save(HaveCoupon.builder()
                 .count(postHaveCouponCreateReq.getCount())
-                        .customer(Customer.builder()
-                                .idx(postHaveCouponCreateReq.getCustomerIdx())
-                                .build())
+                .customer(Customer.builder()
+                        .idx(postHaveCouponCreateReq.getCustomerIdx())
+                        .build())
+                .coupon(Coupon.builder()
+                        .idx(postHaveCouponCreateReq.getCouponIdx())
+                        .build())
                 .build());
 
-        return HaveCoupon.builder()
+        return PostHaveCouponCreateRes.builder()
                 .idx(haveCoupon.getIdx())
                 .count(haveCoupon.getCount())
-                .customer(Customer.builder()
-                        .idx(haveCoupon.getCustomer().getIdx())
-                        .build())
+                .customerIdx(postHaveCouponCreateReq.getCustomerIdx())
+                .couponIdx(postHaveCouponCreateReq.getCouponIdx())
                 .build();
     }
     public List<GetHaveCouponListRes> list(){
@@ -41,14 +44,12 @@ public class HaveCouponService {
         for (HaveCoupon haveCoupon: result) {
 
             Customer customer = haveCoupon.getCustomer();
-
+            Coupon coupon = haveCoupon.getCoupon();
             getHaveCouponListResList.add(GetHaveCouponListRes.builder()
                     .idx(haveCoupon.getIdx())
                     .count(haveCoupon.getCount())
-                    .getCustomerReadRes(GetCustomerReadRes.builder()
-                            .customerEmail(customer.getCustomerEmail())
-                            .authority(customer.getAuthority())
-                            .build())
+                    .customerIdx(customer.getIdx())
+                    .couponIdx(coupon.getIdx())
                     .build());
         }
 
@@ -61,13 +62,12 @@ public class HaveCouponService {
         if(result.isPresent()){
             HaveCoupon haveCoupon = result.get();
             Customer customer = haveCoupon.getCustomer();
+            Coupon coupon = haveCoupon.getCoupon();
             return GetHaveCouponReadRes.builder()
                     .idx(haveCoupon.getIdx())
                     .count(haveCoupon.getCount())
-                    .getCustomerReadRes(GetCustomerReadRes.builder()
-                            .customerEmail(customer.getCustomerEmail())
-                            .authority(customer.getAuthority())
-                            .build())
+                    .customerIdx(customer.getIdx())
+                    .couponIdx(coupon.getIdx())
                     .build();
         }
         return null;

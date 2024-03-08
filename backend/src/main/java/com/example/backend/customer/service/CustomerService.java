@@ -6,10 +6,12 @@ package com.example.backend.customer.service;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.model.request.PostCustomerLoginReq;
 import com.example.backend.customer.model.request.PostCustomerSignupReq;
-import com.example.backend.customer.model.response.DeleteCustomerDeleteRes;
-import com.example.backend.customer.model.response.PostCustomerLoginRes;
-import com.example.backend.customer.model.response.PostCustomerSignupRes;
+import com.example.backend.customer.model.response.*;
 import com.example.backend.customer.repository.CustomerRepository;
+import com.example.backend.havecoupon.model.entity.HaveCoupon;
+import com.example.backend.havecoupon.model.response.GetHaveCouponBaseRes;
+import com.example.backend.havecoupon.model.response.GetHaveCouponListRes;
+import com.example.backend.havecoupon.model.response.GetHaveCouponReadRes;
 import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,9 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -125,6 +125,59 @@ public class CustomerService implements UserDetailsService {
         }
         return null;
     }
+
+    public GetCustomerReadRes read(Long idx){
+        Optional<Customer> result = customerRepository.findById(idx);
+
+        if (result.isPresent()){
+            Customer customer = result.get();
+            List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
+
+            for (HaveCoupon haveCoupon: customer.getHaveCouponList()) {
+                getHaveCouponBaseResList.add(GetHaveCouponBaseRes.builder()
+                        .idx(haveCoupon.getIdx())
+                        .count(haveCoupon.getCount())
+                        .build());
+            }
+            return GetCustomerReadRes.builder()
+                    .idx(customer.getIdx())
+                    .customerEmail(customer.getCustomerEmail())
+                    .authority(customer.getAuthority())
+                    .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                    .build();
+        }
+        return null;
+    }
+    public List<GetCustomerListRes> list(){
+        List<Customer> result = customerRepository.findAll();
+
+        List<GetCustomerListRes> getCustomerListResList = new ArrayList<>();
+
+        for (Customer customer: result) {
+            List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
+
+
+            for (HaveCoupon haveCoupon: customer.getHaveCouponList()) {
+                GetHaveCouponBaseRes getHaveCouponBaseRes = GetHaveCouponBaseRes.builder()
+                        .idx(haveCoupon.getIdx())
+                        .count(haveCoupon.getCount())
+                        .build();
+
+                getHaveCouponBaseResList.add(getHaveCouponBaseRes);
+            }
+
+            GetCustomerListRes getCustomerListRes = GetCustomerListRes.builder()
+                    .idx(customer.getIdx())
+                    .customerEmail(customer.getCustomerEmail())
+                    .authority(customer.getAuthority())
+                    .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                    .build();
+
+            getCustomerListResList.add(getCustomerListRes);
+
+        }
+        return getCustomerListResList;
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println(username);
@@ -136,24 +189,6 @@ public class CustomerService implements UserDetailsService {
         return customer;
     }
 
-    // read
-    // 내 정보 조회
-//    public GetCustomerReadRes readMember (String username) {
-//        Optional<Customer> result = memberRepository.findByCustomerEmail(username);
-//
-//        Customer customer = result.get();
-//
-//        GetCustomerReadRes response = GetCustomerReadRes.builder()
-//                .customerEmail(customer.getCustomerEmail())
-//                .authority(customer.getAuthority())
-//                .build();
-//
-//        if (result.isPresent()) {
-//            return response;
-//        } else {
-//            return null;
-//        }
-//
-//    }
+
 
 }

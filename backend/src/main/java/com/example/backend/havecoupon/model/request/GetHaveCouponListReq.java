@@ -8,6 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 public class GetHaveCouponListReq {
-    Long idx;
-    Integer count;
+    private Long idx;
+    private Integer count;
 }

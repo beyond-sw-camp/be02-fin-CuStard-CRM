@@ -1,6 +1,6 @@
 package com.example.backend.havecoupon.controller;
 
-import com.example.backend.havecoupon.model.request.GetHaveCouponReadReq;
+
 import com.example.backend.havecoupon.model.request.PostHaveCouponCreateReq;
 import com.example.backend.havecoupon.service.HaveCouponService;
 import lombok.RequiredArgsConstructor;

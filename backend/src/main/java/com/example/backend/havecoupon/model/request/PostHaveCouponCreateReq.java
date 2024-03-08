@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 public class PostHaveCouponCreateReq {
-    Integer count;
-    Long customerIdx;
+    private Integer count;
+    private Long customerIdx;
+    private Long couponIdx;
 }

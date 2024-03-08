@@ -1,6 +1,6 @@
 package com.example.backend.havecoupon.model.response;
 
-import com.example.backend.customer.model.response.GetCustomerReadRes;
+
 import lombok.*;
 
 @Builder
@@ -9,8 +9,9 @@ import lombok.*;
 @Getter
 @Setter
 public class GetHaveCouponReadRes {
-    Long idx;
-    Integer count;
+    private Long idx;
+    private Integer count;
 
-    GetCustomerReadRes getCustomerReadRes;
+    private Long customerIdx;
+    private Long couponIdx;
 }

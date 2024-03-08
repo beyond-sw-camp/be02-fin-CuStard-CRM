@@ -8,6 +8,9 @@ import lombok.*;
 @Getter
 @Setter
 public class PostHaveCouponCreateRes {
-    Long idx;
-    Integer count;
+    private Long idx;
+    private Integer count;
+
+    private Long customerIdx;
+    private Long couponIdx;
 }
