@@ -53,6 +53,14 @@ public class CustomerController {
         return ResponseEntity.ok().body(customerService.customerLogin(request));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/customer/list")
+    public ResponseEntity list(){
+        return ResponseEntity.ok().body(customerService.list());
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/customer/read/{idx}")
+    public ResponseEntity read(@PathVariable Long idx){
+        return  ResponseEntity.ok().body(customerService.read(idx));
+    }
     @RequestMapping(method = RequestMethod.DELETE, value = "/customer/delete")
     public ResponseEntity delete(@RequestHeader(value = "Authorization") String token){
         return ResponseEntity.ok().body(customerService.delete(token));

@@ -1,4 +1,4 @@
-package com.example.backend.customer.model.response;
+package com.example.backend.coupon.model.response;
 
 import com.example.backend.havecoupon.model.response.GetHaveCouponBaseRes;
 import lombok.*;
@@ -8,15 +8,14 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class GetCustomerReadRes {
+@AllArgsConstructor
+@Builder
+public class GetCouponReadRes {
 
     private Long idx;
-    private String customerEmail;
-    private String authority;
+    private Integer discount;
+    private Integer couponCategory;
 
     List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
-
 }

@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class PostCustomerLoginRes {
-    String accessToken;
-    Long idx;
+    private String accessToken;
+    private Long idx;
 }
