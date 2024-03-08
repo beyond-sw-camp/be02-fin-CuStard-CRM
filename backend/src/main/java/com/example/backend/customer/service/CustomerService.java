@@ -8,10 +8,14 @@ import com.example.backend.customer.model.request.PostCustomerLoginReq;
 import com.example.backend.customer.model.request.PostCustomerSignupReq;
 import com.example.backend.customer.model.response.*;
 import com.example.backend.customer.repository.CustomerRepository;
+
 import com.example.backend.havecoupon.model.entity.HaveCoupon;
 import com.example.backend.havecoupon.model.response.GetHaveCouponBaseRes;
 import com.example.backend.havecoupon.model.response.GetHaveCouponListRes;
 import com.example.backend.havecoupon.model.response.GetHaveCouponReadRes;
+
+import com.example.backend.log.service.LoginLogService;
+
 import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,11 +35,13 @@ public class CustomerService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final CustomerEmailVerifyService customerEmailVerifyService;
     private final TokenProvider tokenProvider;
+    private final LoginLogService loginLogService;
 
     @Value("${jwt.secret-key}")
     private String secretKey;
     @Value("${jwt.token.expired-time-ms}")
     private Integer expiredTimeMs;
+
     public Customer getMemberByEmail (String customerEmail){
         return customerRepository.findByCustomerEmail(customerEmail).get();
     }
@@ -100,6 +106,7 @@ public class CustomerService implements UserDetailsService {
                         .idx(member.get().getIdx())
                         .build();
 
+                loginLogService.loginLogging(member.get());
                 return postCustomerLoginRes;
             } else {
                 return null;

@@ -5,6 +5,7 @@ import com.example.backend.product.model.response.GetProductRes;
 import com.example.backend.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +23,13 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/read")
-    public ResponseEntity<GetProductRes> read(Long idx) {
-        return ResponseEntity.ok().body(productService.read(idx));
+    public ResponseEntity<GetProductRes> read(Long idx, Authentication authentication) {
+        return ResponseEntity.ok().body(productService.read(idx, authentication));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search")
-    public ResponseEntity<List<GetProductListRes>> searchByName(String keyword){
-        return ResponseEntity.ok().body(productService.searchByName(keyword));
+    public ResponseEntity<List<GetProductListRes>> searchByName(String keyword, Authentication authentication){
+        return ResponseEntity.ok().body(productService.searchByName(keyword, authentication));
     }
 
 }
