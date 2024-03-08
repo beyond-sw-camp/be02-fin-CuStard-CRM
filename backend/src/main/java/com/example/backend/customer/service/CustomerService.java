@@ -38,6 +38,7 @@ public class CustomerService implements UserDetailsService {
     private String secretKey;
     @Value("${jwt.token.expired-time-ms}")
     private Integer expiredTimeMs;
+
     public Customer getMemberByEmail (String customerEmail){
         return customerRepository.findByCustomerEmail(customerEmail).get();
     }
