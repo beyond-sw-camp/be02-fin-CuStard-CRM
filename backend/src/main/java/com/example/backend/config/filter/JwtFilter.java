@@ -32,6 +32,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             token = header.split(" ")[1];
         } else {
+            SecurityContextHolder.getContext().setAuthentication(null);
+
             filterChain.doFilter(request, response);
             return;
         }
