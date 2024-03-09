@@ -1,16 +1,21 @@
 <template>
             <header>
                 <div class="css-1xfyvd1 eo7pjfk4">
-                    <a class="css-xygizb eo7pjfk2">회원가입</a>
+                    <div class="divgnb">
+                        <a v-show="!isLoggedIn" href="/signup" class="css-xygizb eo7pjfk2">회원가입</a>
                     <div class="css-1qgm48u eo7pjfk0"></div>
-                    <a class="css-oyffzd eo7pjfk2">로그인</a>
+                    <a v-show="!isLoggedIn" href="/login" class="css-oyffzd eo7pjfk2">로그인</a>
+                    <div class="css-1qgm48u eo7pjfk0 login"></div>
+                    <a @click="logout()" class="css-oyffzd eo7pjfk2">로그아웃</a>
                     <div class="css-1qgm48u eo7pjfk0"></div>
-                    <!-- <div class="css-1qolcqm eo7pjfk3"> </div> -->
+                    <!-- <div class="css-1qolcqm eo7pjfk3"> </div> -->    
+                    </div>
+                    
                 </div>
                 <div class="gnb">
                     <div class="css-boc80u ekdqe1a1">
-                        <img src="../../public/img/logo.png" alt="커스타드 로고" class="css-17mnrrx e1s3pt0j0 logo">
-                        <p class="active css-mxd3pm ekdqe1a0">CUSTARD</p>
+                        <img  href="/" src="../../public/img/logo.png" alt="커스타드 로고" class="css-17mnrrx e1s3pt0j0 logo">
+                        <a href="/" class="active css-mxd3pm ekdqe1a0">CUSTARD</a>
                     </div>
                     <div class="css-pqw0uk e1493ofl4">
                         <div class="css-w444a2 e1493ofl1"><input
@@ -47,14 +52,35 @@
             </header>
 </template>
 
-<script>
-    export default {
-        
+<script setup> 
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const logout = () => {
+    sessionStorage.removeItem("atoken");
+    router.push("");
+    router.go();
+}
+
+const isLoggedIn = computed(() => {
+    if (sessionStorage.getItem("atoken") !== null) {
+        return true;
+    } else {
+        return false;
     }
+
+});
 </script>
 
 <style scoped>
 /* header */
+a{
+    text-decoration-line: none;
+}
+.divgnb{
+    display: flex;
+}
 .css-t79vuj {
     position: relative;
     width: 1050px;
@@ -138,6 +164,9 @@
     position: relative;
     left: 35px;
 }
+.login{
+    margin-right: 20px;
+}
 .gnb{
     /* background-color: blue; */
     display: flex;
@@ -193,7 +222,7 @@
     position: relative;
     left: 300px;
     /* top: -55px; */
-    width: 400px;
+    width: 465px;
     height: 48px;
     padding-left: 14px;
     border: 2px solid #99154e;
