@@ -1,4 +1,4 @@
-package com.example.backend_admin.customer.model.entity;
+package com.example.backend_admin.admin.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
