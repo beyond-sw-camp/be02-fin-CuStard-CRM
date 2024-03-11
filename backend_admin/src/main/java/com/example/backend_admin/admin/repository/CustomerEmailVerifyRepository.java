@@ -1,6 +1,6 @@
-package com.example.backend_admin.customer.repository;
+package com.example.backend_admin.admin.repository;
 
-import com.example.backend_admin.customer.model.entity.CustomerEmailVerify;
+import com.example.backend_admin.admin.model.entity.CustomerEmailVerify;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

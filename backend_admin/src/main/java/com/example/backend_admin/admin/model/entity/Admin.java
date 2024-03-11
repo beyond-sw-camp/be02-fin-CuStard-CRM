@@ -1,18 +1,15 @@
-package com.example.backend_admin.customer.model.entity;
+package com.example.backend_admin.admin.model.entity;
 
-
-import com.example.backend_admin.log.entity.LoginLog;
-import com.example.backend_admin.orders.model.entity.Orders;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Getter
 @Setter
@@ -20,21 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Customer implements UserDetails {
+public class Admin implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
-
-    private String customerEmail;
-    private String customerPwd;
+    private String adminEmail;
+    private String adminPwd;
     private String authority;
-    private boolean status;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<LoginLog> loginLogs = new ArrayList<>();
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Orders> orders = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,7 +37,7 @@ public class Customer implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.customerEmail;
+        return this.adminEmail;
     }
 
     @Override
@@ -68,6 +57,6 @@ public class Customer implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return status;
+        return true;
     }
 }
