@@ -47,15 +47,15 @@ public class CustomerRatingService {
 
     public CustomerLevel calculateLevel(Integer score){
         CustomerLevel level;
-        if (score >= 100000){
+        if (score >= 100000000){
             level = CustomerLevel.DIAMOND;
-        } else if (score >= 80000) {
+        } else if (score >= 8000000) {
             level = CustomerLevel.PLATINUM;
-        } else if (score >= 60000) {
+        } else if (score >= 600000) {
             level = CustomerLevel.GOLD;
-        }else if (score >= 4000) {
+        }else if (score >= 70000) {
             level = CustomerLevel.SILVER;
-        }else if (score >= 2000) {
+        }else if (score >= 30000) {
             level = CustomerLevel.BRONZE;
         }else {
             level = CustomerLevel.NEWBIE;

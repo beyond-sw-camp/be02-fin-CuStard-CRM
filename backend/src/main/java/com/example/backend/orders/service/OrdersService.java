@@ -42,14 +42,18 @@ public class OrdersService {
         token = TokenProvider.replaceToken(token);
         Long customerIdx = TokenProvider.getIdx(token);
 
-        Optional<Customer> customer = customerRepository.findById(customerIdx);
-        if (customer.isPresent()) {
-            ordersRepository.save(Orders.dtoToEntity(impUid, customer.get(), getPortoneRes.getId(), getPortoneRes.getPrice()));
+        Optional<Customer> result = customerRepository.findById(customerIdx);
+        if (result.isPresent()) {
+            Customer customer = result.get();
+            ordersRepository.save(Orders.dtoToEntity(impUid, customer, getPortoneRes.getId(), getPortoneRes.getPrice()));
             GetOrdersCreateRes getOrdersCreateRes = GetOrdersCreateRes.builder()
                     .impUid(impUid)
                     .productName(getPortoneRes.getName())
                     .price(getPortoneRes.getPrice())
                     .build();
+
+            customer.setTotalAmount(getPortoneRes.getPrice()+customer.getTotalAmount());
+            customerRepository.save(customer);
 
             return ResponseEntity.ok(getOrdersCreateRes);
         }

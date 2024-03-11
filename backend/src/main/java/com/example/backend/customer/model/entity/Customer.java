@@ -37,6 +37,8 @@ public class Customer implements UserDetails {
 
     private CustomerLevel level;
 
+    private Integer totalAmount;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<HaveCoupon> haveCouponList = new ArrayList<>();
 
