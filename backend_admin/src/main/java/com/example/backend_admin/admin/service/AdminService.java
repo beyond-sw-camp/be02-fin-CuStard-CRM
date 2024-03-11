@@ -25,8 +25,7 @@ public class AdminService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 
-    @Value("${jwt.secret-key}")
-    private String secretKey;
+
     @Value("${jwt.token.expired-time-ms}")
     private Integer expiredTimeMs;
 
@@ -77,6 +76,7 @@ public class AdminService implements UserDetailsService {
             }
             return null;
         }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
             Optional<Admin> result = adminRepository.findByAdminEmail(username);
