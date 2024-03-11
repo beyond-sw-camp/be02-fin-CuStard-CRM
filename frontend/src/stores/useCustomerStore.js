@@ -4,7 +4,7 @@ import { toRaw } from "vue";
 
 const backend = "http://localhost:8080";
 
-export const useMemberStore = defineStore("customer", {
+export const useCustomerStore = defineStore("customer", {
   state: () => ({ isLoading: false, isLoggedIn: false }),
   actions: {
     async login(customerLogin) {

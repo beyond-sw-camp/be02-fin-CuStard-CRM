@@ -1,72 +1,65 @@
 <template>
-    <div class="login-container">
-  <div class="content-container">
-    <div class="text-with-image">
-      <!-- <img src="../../public/icon/custard-logo.png" alt="Custard 로고"> -->
-    </div>  
-    <form id="loginForm">
-      <input type="text" placeholder="이메일" id="이메일" required>
-      <input type="password" placeholder="비밀번호" id="비밀번호" required>
-      <br>
-      <br>
-      <button type="submit">로그인</button>
-    </form>
+  <div class="login-container">
+    <div class="content-container">
+      <form id="loginForm" @submit.prevent="login">
+        <!-- v-model을 loginForm.customerEmail로 수정 -->
+        <input type="text" placeholder="이메일" id="email" v-model="loginForm.customerEmail" required>
+        <input type="password" placeholder="비밀번호" id="password" v-model="loginForm.customerPwd" required>
+        <br><br>
+        <!-- @click을 @submit.prevent로 변경하여 form 제출 시 login 메소드를 호출 -->
+        <button type="submit" @click="login()">로그인</button>
+      </form>
     <br>
-    <div>
-      <a href="/users/password/new">비밀번호 재설정</a>
-    </div>
-      <a href="/normal_users/new">회원가입</a>
-      <br><br>
-    <div class="confortLogin">SNS계정으로 간편 로그인 / 회원가입</div>
-    <div class="sns-buttons">
-      <a href="/users/auth/facebook" class="facebook"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2FMjAxOTAzMjlfNSAg%2FMDAxNTUzODM2ODA4MTky.-gS3ZoRn6NftLL0GUjuFUaDNRgoG9vAnH--zyNQIF1Ag.7tgGDNfnJlPGxaTGqye0f5cD0_HKnU6GNQ7wf1FbgZAg.JPEG.btf0c6dsc%2FDFGJSDF%253BLGJ%253BKJSF%253BGKLJR%253BKLDFG.gif&type=sc960_832_gif" alt="Facebook 로고"></a>
-      <a href="/users/auth/kakao" class="kakao"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjFfMjYy%2FMDAxNjI2ODMxODU0NzUx.KsijiA7OtIhygOW1opRzuVuxZeOyK-98jGSc0Ao6g6sg.p-mwUQH33OLvab3S-6fa4-bIJsJCdPzSPpRgWg2T8mkg.JPEG.aosmithkr%2F%25C4%25AB%25C4%25AB%25BF%25C0%25C5%25E5%25C0%25CC%25B9%25CC%25C1%25F6.jpg&type=sc960_832" alt="Kakao 로고"></a>
-      <a href="/users/auth/naver" class="naver"><img src="../../public/icon/naversimbol.png" alt="Naver 로고"></a>
-    </div>
-    <div class="loginError">로그인에 문제가 있으신가요?</div>
-    <hr class="line">
-    <div class="serchOrder" onclick="toggleOrderSearch()">비회원 주문 조회하기</div>
-    <div class="order-search-container">
-      <input type="text" placeholder="주문번호" id="orderNumber">
-      <input type="text" placeholder="이메일" id="orderEmail">
-      <br>
-      <button type="button" onclick="searchOrder()">주문 조회</button>
-    </div>
   </div>
 </div>
 </template>
 
 <script>
-import axios from 'axios';
+import { useCustomerStore } from '@/stores/useCustomerStore';
 
 export default {
-    data() {
-        return {
-            // 로그인 폼 데이터
-            loginForm: {
-                customerEmail: '',
-                customerPwd: ''
-            },
-            loginError: false // 로그인 시도 후 에러 발생 여부
+  data() {
+    return {
+      loginForm: {
+        customerEmail: '',
+        customerPwd: '',
+      }
+    };
+  },
+  methods: {
+    async login() {
+      const customerStore = useCustomerStore(); // 스토어 직접 사용
+      const result = await customerStore.login(this.loginForm);
+      
+      // 로그인 응답에서 status 값을 확인
+      if (result && result.status !== false) {
+        // status가 0이 아니면 로그인 성공 처리
+        const customerIdx = sessionStorage.getItem('customerIdx');
+        localStorage.setItem('customerIdx', customerIdx);
+
+        console.log(`로그인 성공: ${customerIdx}`);
+
+        this.$router.push("/");
+      } else if (result && result.status === false) {
+        // status가 0이면 로그인 거부
+        alert("이메일 인증을 해주세요.");
+      } else {
+        // 그 외 경우는 로그인 실패 처리
+        alert("로그인 실패");
+        this.loginForm = {
+          customerEmail: '',
+          customerPwd: ''
         };
-    },
-    methods: {
-        async login() {
-            try {
-                const response = await axios.post('/api/login', this.loginForm); // 백엔드 로그인 API 경로에 맞게 수정하세요.
-                // 로그인 성공 처리
-                console.log('로그인 성공:', response.data);
-                this.loginError = false;
-                // 로그인 성공 후의 로직을 여기에 추가하세요. 예: 페이지 리다이렉션
-            } catch (error) {
-                console.error('로그인 에러:', error);
-                this.loginError = true;
-                // 로그인 실패 처리를 여기에 추가하세요.
-            }
-        }
+      }
     }
-}
+  }
+};
 </script>
+
+
+
+ 
+
 
 
 <style scoped>

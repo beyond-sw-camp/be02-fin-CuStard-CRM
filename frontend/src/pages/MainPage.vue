@@ -3,7 +3,7 @@
     <section v-for="(categorySlides, category) in categoriesWithSlides" :key="category">
       <div class="div" v-html="getCategoryName(category)"></div>
       <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
-        <Slide v-for="product in categorySlides" :key="product.idx">
+        <Slide v-for="product in categorySlides" :key="product.idx" @click="goToProductDetail(product.idx)">
           <div class="carousel__slide product">
             <div class="carousel__item-column">
               <img :src="product.productImage" alt="Slide Image">
