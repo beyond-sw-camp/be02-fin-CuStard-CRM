@@ -1,6 +1,8 @@
 package com.example.backend.product.controller;
 
+import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.product.model.response.GetProductListRes;
+import com.example.backend.product.model.response.GetProductRecRes;
 import com.example.backend.product.model.response.GetProductRes;
 import com.example.backend.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -32,4 +34,8 @@ public class ProductController {
         return ResponseEntity.ok().body(productService.searchByName(keyword, authentication));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/recommend")
+    public ResponseEntity<GetProductRecRes> recommendItem(){
+        return ResponseEntity.ok().body(productService.recommend());
+    }
 }
