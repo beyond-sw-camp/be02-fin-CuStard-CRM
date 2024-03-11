@@ -19,7 +19,7 @@
             <div class="production-selling-header__info-wrap">
                 <span class="delivery">배송</span>
                 <div class="production-selling-header__delivery">
-                     <b>무료배송</b> 
+                     <b>무료배송</b>
                      <div class="production-selling-header__delivery__expectation">
                         지금 주문시 <b>내일 출발</b>
                     </div>
@@ -254,7 +254,7 @@ p {
 }
 .production-selling-header__price__price>* {
     margin: 4px 0 0 6px;
-    
+
 }
 
 .production-selling-header__price__price>.won {
