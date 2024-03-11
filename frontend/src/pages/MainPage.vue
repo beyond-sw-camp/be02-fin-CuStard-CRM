@@ -89,7 +89,7 @@ export default defineComponent({
 
 
 
-  
+
   <style>
   .div{
     display: flex;
@@ -121,8 +121,8 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-around;
   }
-  
-  
+
+
   .carousel__item-column {
     flex: 1;
     display: flex;
@@ -131,7 +131,7 @@ export default defineComponent({
     -webkit-line-clamp: 1;
 
   }
-  
+
   .carousel__item {
     min-height: 200px;
     width: 100%;
@@ -143,13 +143,13 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
   }
-  
+
   .carousel__slide {
     padding: 10px;
     width: 150px;
     height: 200px;
   }
-  
+
   .carousel__item-details {
     text-align: center;
     margin-top: 10px;
@@ -157,17 +157,17 @@ export default defineComponent({
     /* border: 1px solid black; */
     width: 120px;
     height: 100px;
-    overflow: hidden;  	
-  text-overflow: ellipsis;  	
-  white-space: nowrap; 	
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   word-break:break-all;
 
   }
-  
+
   .carousel__item-title {
     font-weight: bold;
   }
-  
+
   .carousel__item-price {
     margin-top: 5px;
     font-size: 17px;
@@ -184,4 +184,3 @@ export default defineComponent({
 }
 
   </style>
-  
