@@ -63,6 +63,7 @@ public class CustomerService implements UserDetailsService {
                     .customerPwd(passwordEncoder.encode(postCustomerSignupReq.getCustomerPwd()))
                     .authority("CUSTOMER")
                     .level(NEWBIE)
+                    .totalAmount(0)
                     .status(false)
                     .build();
 

@@ -27,9 +27,9 @@ public class ProductController {
         return ResponseEntity.ok().body(productService.read(idx, authentication));
     }
 
-        @RequestMapping(method = RequestMethod.GET, value = "/search")
-        public ResponseEntity<List<GetProductListRes>> searchByName(String keyword, Authentication authentication){
-            return ResponseEntity.ok().body(productService.searchByName(keyword, authentication));
-        }
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public ResponseEntity<List<GetProductListRes>> searchByName(String keyword, Authentication authentication){
+        return ResponseEntity.ok().body(productService.searchByName(keyword, authentication));
+    }
 
 }
