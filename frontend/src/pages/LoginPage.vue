@@ -30,7 +30,7 @@ export default {
     async login() {
       const customerStore = useCustomerStore(); // 스토어 직접 사용
       const result = await customerStore.login(this.loginForm);
-      
+
       // 로그인 응답에서 status 값을 확인
       if (result && result.status !== false) {
         // status가 0이 아니면 로그인 성공 처리
@@ -58,7 +58,7 @@ export default {
 
 
 
- 
+
 
 
 
@@ -69,7 +69,7 @@ a{
 *{
     font-family: 'GmarketSans';
   }
-  
+
   body {
     width: 100%;
     background-color: #f9f9f9;
@@ -80,7 +80,7 @@ a{
     justify-content: center;
     height: 100vh;
   }
-  
+
   .login-container {
     /* background-color: #f9f9f9; */
     padding: 20px;
@@ -88,7 +88,7 @@ a{
     /* width: 500px; */
     text-align: center;
   }
-  
+
   .text-with-image {
     display: flex;
     align-items: center;
@@ -98,7 +98,7 @@ a{
     color: #494949;
     font-size: 13px;
   }
-  
+
   .text-with-image img {
     width: 100px;
     height: auto;
@@ -106,11 +106,11 @@ a{
     border-radius: 20%;
     margin-bottom: 2%;
   }
-  
+
   .login-container h2 {
     color: #333;
   }
-  
+
   .login-container input {
     width: 100%;
     padding: 10px;
@@ -118,12 +118,12 @@ a{
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-    
+
   }
   .login-container input:first-of-type{
     margin-bottom: 20px;
   }
-  
+
   .login-container button {
     width: 100%;
     padding: 10px;
@@ -135,11 +135,11 @@ a{
     transition: all 0.5s;
 
   }
-  
+
   .login-container button:hover {
     background-color: #99154e;
   }
-  
+
   .content-container {
     text-align: center;
     margin-top: 20px;
@@ -150,18 +150,18 @@ a{
     align-content: center;
     align-items: center;
   }
-  
+
   .content-container a {
     color: #333;
     text-decoration: none;
     margin: 0 10px;
     font-size: 12px;
   }
-  
+
   .sns-buttons {
     margin-top: 20px;
   }
-  
+
   .sns-buttons a {
     display: inline-block;
     margin: 0 10px;
@@ -171,52 +171,52 @@ a{
     border-radius: 50%;
     cursor: pointer;
   }
-  
+
   .sns-buttons .facebook {
     background-color: #3b5998;
   }
-  
+
   .sns-buttons .kakao {
     background-color: #fae100;
   }
-  
+
   .sns-buttons .naver {
     background-color: #00c63b;
   }
-  
+
   .confortLogin {
     font-size: 11px;
     color: #696969;
     margin-top: 10px;
   }
-  
+
   .sns-buttons img {
     width: 15px;
     height: 15px;
     margin-right: 3px;
   }
-  
+
   .line {
     margin-top: 25px;
     border: none;
     height: 1px;
     background-color: #c2c8cc;
   }
-  
+
   .loginError {
     font-size: 10px;
     margin-top: 20px;
     margin-bottom: -5px;
     color: #c2c8cc;
   }
-  
+
   .serchOrder {
     font-size: 11px;
     color: #696969;
     margin-top: 20px;
     cursor: pointer;
   }
-  
+
   .order-search-container {
     opacity: 0;
     max-height: 0;
@@ -224,7 +224,7 @@ a{
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
     margin-top: 10px;
   }
-  
+
   .order-search-container input {
     width: 100%;
     padding: 10px;
@@ -233,5 +233,5 @@ a{
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  
+
 </style>
