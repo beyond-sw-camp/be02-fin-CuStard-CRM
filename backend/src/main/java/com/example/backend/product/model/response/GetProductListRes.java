@@ -10,4 +10,5 @@ public class GetProductListRes {
     private Integer category;
     private String productName;
     private Integer productPrice;
+    private String productImage;
 }

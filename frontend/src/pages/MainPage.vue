@@ -1,9 +1,9 @@
 <template>
   <div>
     <section v-for="(categorySlides, category) in categoriesWithSlides" :key="category">
-      <h2>{{ category }}</h2>
+      <div class="div" v-html="getCategoryName(category)"></div>
       <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
-        <Slide v-for="(product) in categorySlides" :key="product.idx">
+        <Slide v-for="product in categorySlides" :key="product.idx" @click="goToProductDetail(product.idx)">
           <div class="carousel__slide product">
             <div class="carousel__item-column">
               <img :src="product.productImage" alt="Slide Image">
@@ -11,7 +11,7 @@
             <div class="carousel__item-column">
               <div class="carousel__item-details">
                 <div class="carousel__item-title">{{ product.productName }}</div>
-                <div class="carousel__item-price">{{ product.productPrice }}</div>
+                <div class="carousel__item-price">{{ product.productPrice }}원</div>
               </div>
             </div>
           </div>
@@ -24,11 +24,13 @@
     </section>
   </div>
 </template>
+
 <script>
 import { ref, defineComponent } from 'vue';
 import axios from 'axios';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
+
 export default defineComponent({
   name: 'CategoryCarousels',
   components: {
@@ -39,6 +41,7 @@ export default defineComponent({
   },
   setup() {
     const categoriesWithSlides = ref({});
+
     const fetchCategorySlides = async () => {
       try {
         const response = await axios.get('http://localhost:8080/product/list');
@@ -50,42 +53,53 @@ export default defineComponent({
           }
           categoriesWithSlides.value[product.category].push(product);
         });
-        for (const category in categoriesWithSlides.value) {
-          switch (category) {
-            case '1':
-              categoriesWithSlides.value[category].categoryName = '식품';
-              break;
-            case '2':
-              categoriesWithSlides.value[category].categoryName = '가전';
-              break;
-            case '3':
-              categoriesWithSlides.value[category].categoryName = '패션';
-              break;
-            default:
-              categoriesWithSlides.value[category].categoryName = '기타';
-              break;
-          }
-        }
       } catch (error) {
         console.error('Error fetching categories and products:', error);
       }
     };
+
+    // 카테고리 번호를 이름으로 변환
+    const getCategoryName = (category) => {
+      if (category === '1') {
+        return '패션<br><span style="font-weight: normal; font-size:17px;">개성을 빛내줄 최신 패션 트렌드!</span>';
+      }else if (category === '2') {
+        return '뷰티<br><span style="font-weight: normal; font-size:17px;">아름다움의 진정한 의미!</span>';
+      }
+      else if (category === '3') {
+        return '식품<br><span style="font-weight: normal; font-size:17px;">건강과 맛의 완벽한 조화!</span>';
+      }
+      else if (category === '4') {
+        return '스포츠/레저<br><span style="font-weight: normal; font-size:17px;">활동적인 당신을 위한 최적의 선택!</span>';
+      }
+      else if (category === '5') {
+        return '가전<br><span style="font-weight: normal; font-size:17px;">혁신적인 기술로 더욱 편리하고 스마트한 생활!</span>';
+      }
+      return category; // 기본적으로 카테고리 번호를 그대로 반환
+    };
+
     fetchCategorySlides();
+
     return {
-      categoriesWithSlides
+      categoriesWithSlides,
+      getCategoryName
     };
   },
 });
 </script>
 
 
-  
+
+
   <style>
   .div{
     display: flex;
     flex-direction: column;
     align-items: center;
     align-content: stretch;
+    margin: 45px 0;
+    font-size: 22px;
+    background-color: #ffcdcd57;
+    padding: 10px;
 
   }
   .div2{
@@ -107,8 +121,8 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-around;
   }
-  
-  
+
+
   .carousel__item-column {
     flex: 1;
     display: flex;
@@ -117,7 +131,7 @@ export default defineComponent({
     -webkit-line-clamp: 1;
 
   }
-  
+
   .carousel__item {
     min-height: 200px;
     width: 100%;
@@ -129,13 +143,13 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
   }
-  
+
   .carousel__slide {
     padding: 10px;
     width: 150px;
     height: 200px;
   }
-  
+
   .carousel__item-details {
     text-align: center;
     margin-top: 10px;
@@ -143,17 +157,17 @@ export default defineComponent({
     /* border: 1px solid black; */
     width: 120px;
     height: 100px;
-    overflow: hidden;  	
-  text-overflow: ellipsis;  	
-  white-space: nowrap; 	
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   word-break:break-all;
 
   }
-  
+
   .carousel__item-title {
     font-weight: bold;
   }
-  
+
   .carousel__item-price {
     margin-top: 5px;
     font-size: 17px;
@@ -170,4 +184,3 @@ export default defineComponent({
 }
 
   </style>
-  
