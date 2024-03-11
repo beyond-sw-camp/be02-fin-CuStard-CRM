@@ -35,6 +35,7 @@ public class ProductService {
                     .category(product.getCategory())
                     .productName(product.getProductName())
                     .productPrice(product.getProductPrice())
+                    .productImage(product.getProductImage())
                     .build());
         }
 
@@ -52,6 +53,7 @@ public class ProductService {
                     .productName(product.getProductName())
                     .productDetails(product.getProductDetails())
                     .productPrice(product.getProductPrice())
+                    .productImage(product.getProductImage())
                     .build();
 
             if(authentication != null && authentication.isAuthenticated()) {

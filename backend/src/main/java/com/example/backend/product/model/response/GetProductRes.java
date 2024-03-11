@@ -11,4 +11,5 @@ public class GetProductRes {
     private String productName;
     private String productDetails;
     private Integer productPrice;
+    private String productImage;
 }
