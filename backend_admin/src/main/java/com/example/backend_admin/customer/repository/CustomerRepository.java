@@ -1,11 +1,10 @@
-package com.example.backend_admin.admin.repository;
+package com.example.backend_admin.customer.repository;
 
-import com.example.backend_admin.admin.model.entity.Customer;
+import com.example.backend_admin.customer.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Long> {

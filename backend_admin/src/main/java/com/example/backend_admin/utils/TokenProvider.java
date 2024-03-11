@@ -3,7 +3,6 @@ package com.example.backend_admin.utils;
 
 
 import com.example.backend_admin.admin.model.entity.Admin;
-import com.example.backend_admin.admin.model.entity.Customer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

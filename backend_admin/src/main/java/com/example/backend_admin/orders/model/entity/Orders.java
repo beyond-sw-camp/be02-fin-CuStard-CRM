@@ -1,7 +1,7 @@
 package com.example.backend_admin.orders.model.entity;
 
 import com.example.backend_admin.common.BaseTimeEntity;
-import com.example.backend_admin.admin.model.entity.Customer;
+import com.example.backend_admin.customer.entity.Customer;
 import lombok.*;
 
 import javax.persistence.*;

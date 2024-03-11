@@ -1,13 +1,14 @@
-package com.example.backend_admin.admin.model.entity;
+package com.example.backend_admin.customer.entity;
 
-
+import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.log.entity.LoginLog;
+import com.example.backend_admin.log.entity.ProductDetailLog;
+import com.example.backend_admin.log.entity.SearchLog;
 import com.example.backend_admin.orders.model.entity.Orders;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-
+import com.example.backend_admin.havecoupon.model.entity.HaveCoupon;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,11 +31,23 @@ public class Customer implements UserDetails {
     private String authority;
     private boolean status;
 
+    private CustomerLevel level;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<HaveCoupon> haveCouponList = new ArrayList<>();
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<LoginLog> loginLogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Orders> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<SearchLog> searchLogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<ProductDetailLog> productDetailLogs = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

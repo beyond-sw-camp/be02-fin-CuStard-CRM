@@ -1,6 +1,7 @@
 package com.example.backend.customer.model.entity;
 
 
+import com.example.backend.common.CustomerLevel;
 import com.example.backend.havecoupon.model.entity.HaveCoupon;
 
 import com.example.backend.log.entity.LoginLog;
@@ -34,6 +35,7 @@ public class Customer implements UserDetails {
     private String authority;
     private boolean status;
 
+    private CustomerLevel level;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<HaveCoupon> haveCouponList = new ArrayList<>();
