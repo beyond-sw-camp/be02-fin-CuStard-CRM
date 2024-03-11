@@ -27,6 +27,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.example.backend.common.CustomerLevel.NEWBIE;
+
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +62,7 @@ public class CustomerService implements UserDetailsService {
                     .customerEmail(postCustomerSignupReq.getCustomerEmail())
                     .customerPwd(passwordEncoder.encode(postCustomerSignupReq.getCustomerPwd()))
                     .authority("CUSTOMER")
+                    .level(NEWBIE)
                     .status(false)
                     .build();
 
