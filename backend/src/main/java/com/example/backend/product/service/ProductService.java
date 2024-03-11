@@ -142,18 +142,11 @@ public class ProductService {
         // 사용자들에게 추천될 아이템과 점수 계산
         Map<Customer, Map<Product, Double>> recommendationScores = recommendProducts(similarityMatrix, viewHistory, purchaseHistory);
 
-        Map<String, Map<String, Double>> recommendList = new HashMap<>();
+        Map<String, Map<Product, Double>> recommendList = new HashMap<>();
         for (Map.Entry<Customer, Map<Product, Double>> entry : recommendationScores.entrySet()) {
             Customer customer = entry.getKey();
             Map<Product, Double> productScores = entry.getValue();
-            Map<String, Double> productList = new HashMap<>();
-            for (Map.Entry<Product, Double> productEntry : productScores.entrySet()) {
-                Product product = productEntry.getKey();
-                Double score = productEntry.getValue();
-                String productName = product.getProductName();
-                productList.put(productName, score);
-            }
-            recommendList.put(customer.getCustomerEmail(), productList);
+            recommendList.put(customer.getCustomerEmail(), productScores);
         }
         return GetProductRecRes.builder().recommendList(recommendList).build();
 

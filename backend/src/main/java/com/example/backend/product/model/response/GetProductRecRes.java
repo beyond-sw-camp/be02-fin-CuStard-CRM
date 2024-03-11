@@ -13,6 +13,6 @@ import java.util.Map;
 @Builder
 public class GetProductRecRes {
 
-    Map<String, Map<String, Double>> recommendList;
+    Map<String, Map<Product, Double>> recommendList;
 
 }
