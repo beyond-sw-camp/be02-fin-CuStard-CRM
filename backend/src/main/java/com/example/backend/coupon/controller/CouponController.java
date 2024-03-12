@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/coupon")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CouponController {
     private final CouponService couponService;
     @RequestMapping(method = RequestMethod.POST, value = "/create")
