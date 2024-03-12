@@ -90,13 +90,22 @@ public class QnaService {
 
             // 비밀번호 일치 여부에 따라 처리
             if (passwordCheck) {
-                PostQnaReadRes postQnaReadRes =
-                        PostQnaReadRes.builder()
-                                .title(qna.getTitle())
-                                .qnaContent(qna.getQnaContent())
-                                .build();
-
-                return postQnaReadRes;
+                Optional<Answer> resultAnswer = answerRepository.findByQnaIdx(idx);
+                if (resultAnswer.isPresent()) {
+                    Answer answer = resultAnswer.get();
+                    return PostQnaReadRes.builder()
+                            .title(qna.getTitle())
+                            .qnaContent(qna.getQnaContent())
+                            .answerContent(answer.getAnswerContent())
+                            .build();
+                    //답변이 있는 경우
+                } else {
+                    return PostQnaReadRes.builder()
+                            .title(qna.getTitle())
+                            .qnaContent(qna.getQnaContent())
+                            .build();
+                    //답변이 없는 경우
+                }
             } else {
                 //비밀번호 일치하지 않음 처리
             }

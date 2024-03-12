@@ -10,4 +10,5 @@ import lombok.*;
 public class PostQnaReadRes {
     private String title; //제목
     private String qnaContent; //본문
+    private String answerContent;
 }
