@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class PostCouponCreateRes {
+    private Long couponIdx;
     private Long adminIdx;
     private Integer discount;
     private Integer couponCategory;
