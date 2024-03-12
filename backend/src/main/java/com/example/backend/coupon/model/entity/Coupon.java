@@ -1,5 +1,6 @@
 package com.example.backend.coupon.model.entity;
 
+import com.example.backend.admin.model.entity.Admin;
 import com.example.backend.havecoupon.model.entity.HaveCoupon;
 import lombok.*;
 
@@ -22,4 +23,8 @@ public class Coupon {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "coupon")
     private List<HaveCoupon> haveCouponList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 }

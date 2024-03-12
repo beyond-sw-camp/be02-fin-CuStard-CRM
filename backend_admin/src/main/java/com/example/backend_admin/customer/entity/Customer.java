@@ -1,5 +1,6 @@
 package com.example.backend_admin.customer.entity;
 
+import com.example.backend_admin.common.BaseTimeEntity;
 import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.log.entity.LoginLog;
 import com.example.backend_admin.log.entity.ProductDetailLog;

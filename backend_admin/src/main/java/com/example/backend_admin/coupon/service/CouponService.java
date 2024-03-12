@@ -27,6 +27,7 @@ public class CouponService {
                 .build());
 
         return PostCouponCreateRes.builder()
+                .couponIdx(coupon.getIdx())
                 .adminIdx(coupon.getAdmin().getIdx())
                 .couponCategory(coupon.getCouponCategory())
                 .discount(coupon.getDiscount())

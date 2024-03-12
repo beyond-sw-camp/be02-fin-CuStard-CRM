@@ -1,18 +1,18 @@
 <template>
     <div class="production-selling">
-        <div class="product-image">
-            <img class="production-selling-cover-image__entry__image" src="https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/dl/v2/0/7/5/4/3/3/WtNFF/3775075433_155181490.jpg">
+        <div class="product-image-box">
+            <img class="product-image" :src="this.productDetail.productImage" width="500px" height="500px">
         </div>
         <div class="production-selling-overview__content">
             <div class="production-selling-header">
                 <h1 class="production-selling-header__title">
                     <div class="production-selling-header__title__name-wrap">
-                        <div class="product-name">개발자 셔츠</div>
-                        <span class="production-selling-header__title__name">안되던 개발도 해결된다는 개발자 셔츠</span>
+                        <div class="product-name">{{this.productDetail.productName}}</div>
+                        <span class="production-selling-header__title__name">{{this.productDetail.productDetails}}</span>
                     </div>
                 </h1>
                 <div class="production-selling-header__price">
-                    <span class="number">129,000</span>
+                    <span class="number">{{this.productDetail.productPrice}}</span>
                     <span class="won">원</span>
                 </div>
             </div>
@@ -32,10 +32,10 @@
                 </div>
             </div>
             <div class="production-selling-option-form">
-                <p>주문금액 <span class="price">0</span>원</p>
+                <p>주문금액 <span class="price">{{this.productDetail.productPrice}}</span>원</p>
             </div>
             <div class="production-selling-option-form__footer">
-                <button class="button--color-blue button--size-55" type="button">바로 구매</button>
+                <button class="button--color-blue button--size-55" type="button" @click="ordersCreate">바로 구매</button>
             </div>
         </div>
     </div>
@@ -44,25 +44,81 @@
 <script>
 // 상세 페이지 컴포넌트의 스크립트 부분
 import axios from 'axios';
+import {useRoute} from "vue-router";
 
 export default {
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
+  // props: {
+  //   id: {
+  //     type: String,
+  //     required: true
+  //   }
+  // },
   data() {
     return {
-      productDetail: null
+      productDetail: "",
+      productIdx: "",
+      customData: []
     };
   },
   async created() {
     try {
-      const response = await axios.get(`http://localhost:8080/product/detail/${this.id}`);
+      const route = useRoute()
+      console.log(route.params.productIdx);
+      this.productIdx = route.params.productIdx;
+
+      const response = await axios.get(`http://localhost:8080/product/read/${this.productIdx}`);
+      console.log(response);
       this.productDetail = response.data;
+      console.log(this.productDetail);
+
+      this.customData.push({"id": this.productIdx, "name": this.productDetail.productName, "price":this.productDetail.productPrice});
+      console.log(this.customData);
+
     } catch (error) {
       console.error("상품 상세 정보를 불러오는데 실패했습니다.", error);
+    }
+  },
+  methods: {
+    async ordersCreate() {
+      const { IMP } = window;
+      IMP.init('imp62836256');
+
+      let today = new Date();
+      let hours = today.getHours(); // 시
+      let minutes = today.getMinutes();  // 분
+      let seconds = today.getSeconds();  // 초
+      let milliseconds = today.getMilliseconds();
+      let makeMerchantUid = hours + minutes + seconds + milliseconds;
+
+      let product_name = "[cus+ard] " + this.productDetail.productName;
+
+      IMP.request_pay({ // param
+            pg: "kakaopay.TC0ONETIME",
+            pay_method: "card",
+            merchant_uid: "IMP" + makeMerchantUid,
+            name: product_name,
+            amount: this.productDetail.productPrice,
+            buyer_email: "gildong@gmail.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-3333-3333",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181",
+            custom_data: this.customData
+          }, async rsp => { // callback
+            if (rsp.success) {
+              // 결제 성공 시 로직,
+              console.log(rsp.imp_uid);
+              let response = await axios.get("http://localhost:8080/orders/validation?impUid=" + rsp.imp_uid, {
+                    headers: {
+                      Authorization: localStorage.getItem("accessToken"),
+                    },
+                  }
+              )
+              console.log(response.data)
+              // window.location.href =   "http://localhost:8081/order/complete"
+            }
+          }
+      )
     }
   }
 };
@@ -131,21 +187,14 @@ a {
     /* background-color: #ededed; */
 }
 
-img {
-    overflow-clip-margin: content-box;
-    overflow: clip;
-}
 
-.production-selling-cover-image__entry__image{
-    border-radius: 10px;
-}
 
 .production-selling-overview__content{
     width: 90%;
     /* padding-right:5%; */
     padding: 30px;
     height: auto;
-    flex:right;
+    flex: right;
     /* background-color: blanchedalmond; */
 }
 
@@ -482,12 +531,18 @@ p {
     float:right;
 }
 
-.product-image{
-    width: 50%;
-    float: left;
+.product-image-box{
+    width: 500px;
+    height: 500px;
+    //float: left;
     padding-left: 20%;
-    margin-right: 80px;
-    /* background-color: red; */
+
+}
+
+.product-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .product-name{

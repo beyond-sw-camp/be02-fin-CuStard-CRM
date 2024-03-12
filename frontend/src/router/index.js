@@ -10,7 +10,7 @@ const routes = [
   // { path: "/", component: MainPage, beforeEnter: requireAuth() },
   { path: "/", component: MainPage  },
   { path: '/verify', component: VerifyPage },
-  {path: "/productDetails", component: DetailsComponent},
+  {path: "/product/:productIdx", component: DetailsComponent},
   { path: "/product", component: DetailsComponent },
   { path: "/login", component: LoginPage},
   { path: "/Signup", component: SignupPage},

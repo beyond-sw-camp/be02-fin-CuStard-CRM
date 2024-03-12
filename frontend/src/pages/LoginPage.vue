@@ -35,7 +35,10 @@ export default {
       if (result && result.status !== false) {
         // status가 0이 아니면 로그인 성공 처리
         const customerIdx = sessionStorage.getItem('customerIdx');
+        const accessToken = sessionStorage.getItem('atoken');
+
         localStorage.setItem('customerIdx', customerIdx);
+        localStorage.setItem('accessToken', "Bearer " + accessToken);
 
         console.log(`로그인 성공: ${customerIdx}`);
 
