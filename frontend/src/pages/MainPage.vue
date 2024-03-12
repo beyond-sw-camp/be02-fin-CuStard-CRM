@@ -3,12 +3,12 @@
     <section v-for="(categorySlides, category) in categoriesWithSlides" :key="category">
       <div class="div" v-html="getCategoryName(category)"></div>
       <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
-        <Slide v-for="product in categorySlides" :key="product.idx" @click="goToProductDetail(product.idx)">
+        <Slide v-for="product in categorySlides" :key="product.idx">
           <div class="carousel__slide product">
             <div class="carousel__item-column">
-              <img :src="product.productImage" alt="Slide Image">
+              <img :src="product.productImage" alt="Slide Image" @click="goToProduct(product.idx)">
             </div>
-            <div class="carousel__item-column">
+            <div class="carousel__item-column" @click="goToProduct(product.idx)">
               <div class="carousel__item-details">
                 <div class="carousel__item-title">{{ product.productName }}</div>
                 <div class="carousel__item-price">{{ product.productPrice }}원</div>
@@ -33,12 +33,14 @@ import 'vue3-carousel/dist/carousel.css';
 
 export default defineComponent({
   name: 'CategoryCarousels',
+
   components: {
     Carousel,
     Slide,
     Pagination,
     Navigation
   },
+
   setup() {
     const categoriesWithSlides = ref({});
 
@@ -79,11 +81,18 @@ export default defineComponent({
 
     fetchCategorySlides();
 
+
     return {
       categoriesWithSlides,
       getCategoryName
     };
   },
+
+  methods: {
+    async goToProduct(idx) {
+      this.$router.push(`/product/${idx}`)
+    }
+  }
 });
 </script>
 
