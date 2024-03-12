@@ -37,6 +37,7 @@ public class SecurityConfig{
                     .antMatchers("/qna/*").permitAll()
                     .antMatchers("/test/member").hasRole("MEMBER")
                     .antMatchers("/test/customer").hasRole("MEMBER")
+                    .antMatchers("/orders").permitAll()
                     .antMatchers("/**").permitAll()
                     .anyRequest().permitAll();
 
