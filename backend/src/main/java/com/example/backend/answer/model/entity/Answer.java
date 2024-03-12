@@ -1,6 +1,7 @@
 package com.example.backend.answer.model.entity;
 
 
+import com.example.backend.admin.model.entity.Admin;
 import com.example.backend.qna.model.entity.Qna;
 import lombok.*;
 
@@ -23,4 +24,8 @@ public class Answer {
     @OneToOne
     @JoinColumn(name = "qnaIdx")
     private Qna qna;
+
+    @OneToOne
+    @JoinColumn(name = "adminIdx")
+    private Admin admin;
 }
