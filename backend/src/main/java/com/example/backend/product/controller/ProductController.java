@@ -24,8 +24,8 @@ public class ProductController {
         return ResponseEntity.ok().body(productService.list());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/read")
-    public ResponseEntity<GetProductRes> read(Long idx, Authentication authentication) {
+    @RequestMapping(method = RequestMethod.GET, value = "/read/{idx}")
+    public ResponseEntity<GetProductRes> read(@PathVariable Long idx, Authentication authentication) {
         return ResponseEntity.ok().body(productService.read(idx, authentication));
     }
 
