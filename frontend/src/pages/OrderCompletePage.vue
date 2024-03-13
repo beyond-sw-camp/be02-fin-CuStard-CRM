@@ -248,63 +248,6 @@ html, button, input, select, textarea {
   height: 56px;
   margin: 0px auto;
 }
-.css-axtlq9 {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  height: 100%;
-}
-.css-1k5gn9s {
-  width: 16px;
-  height: 14px;
-  margin-right: 14px;
-  background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNiAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wIDBoMTZ2MS43SDBWMHptMCA2LjE1aDE2djEuN0gwdi0xLjd6bTAgNi4xNWgxNlYxNEgwdi0xLjd6IiBmaWxsPSIjMzMzIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==) 0px 0px / 16px 14px no-repeat;
-}
-.css-t75x7c {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.3px;
-  color: rgb(51, 51, 51);
-}
-/* 쿠폰 드롭다운 */
-.dropdown{
-  position: relative;
-  width: 60px;
-  height: 125px;
-  /* background-color: blueviolet; */
-  padding: 0 10px 20px 10px;
-  display: none;
-  border: 1px solid rgb(223, 223, 223);
-}
-.coupondiv:hover > .css-14vnom0 .dropdown{
-  position: absolute;
-  top: 35px;
-  right: -1px;
-  overflow: scroll;
-  display: block;
-  background-color: white;
-  width: 165px;
-  padding: 10px;
-}
-.dropdown {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.dropdown::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
-}
-.coupondiv{
-  /* border: 1px solid red; */
-  display: flex;
-  transition: all 0.5s ease 0s;
-}
-.amount{
-  margin-top: 10px;
-}
-.dropdown > li{
-  margin: 9px 0px;
-}
 /* 로고 */
 .logo{
   width: 50px;
