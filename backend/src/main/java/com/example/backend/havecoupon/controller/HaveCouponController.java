@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/have")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class HaveCouponController {
     private final HaveCouponService haveCouponService;
 

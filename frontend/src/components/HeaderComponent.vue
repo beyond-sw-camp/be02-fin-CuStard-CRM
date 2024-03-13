@@ -27,24 +27,25 @@
                             <button id="submit" aria-label="submit" class="css-ywxmlw e1493ofl0"></button>
                         </div>
                     </div>
-
-                    <div class="css-c4pbxv e15sbxqa0">
-                        <div class="coupondiv">
-                          <div class="css-c4pbxv e15sbxqa0">
-                            <div class="coupondiv" @mouseenter="fetchCoupons" @mouseleave="showDropdown = false">
-                              보유 쿠폰
-                              <!-- 드롭다운 메뉴 -->
-                              <transition name="fade">
-                                <div v-if="showDropdown" class="css-14vnom0 e1n3mt0d1 coupon dropdown">
-                                  <ul>
-                                    <li v-for="coupon in coupons" :key="coupon.idx">[{{ getCategoryName(coupon.couponCategory) }}]            {{coupon.discount}}% 할인쿠폰</li>
-                                  </ul>
-                                </div>
-                              </transition>
-                            </div>
-                          </div>
-                        </div>
+                    
+                    <div>
+                      <router-link to="/qna/write" >1:1문의 내역</router-link>
                     </div>
+
+                  <div class="css-c4pbxv e15sbxqa0">
+                    <div class="coupondiv" @mouseenter="fetchCoupons" @mouseleave="showDropdown = false">
+                      보유 쿠폰
+                      <transition name="fade">
+                        <div v-if="showDropdown" class="css-14vnom0 e1n3mt0d1 coupon dropdown">
+                          <ul>
+                            <li v-for="haveCoupon in coupons" :key="haveCoupon.idx">
+                              [{{ getCategoryName(haveCoupon.count) }}]  {{ haveCoupon.coupon }} % 할인쿠폰 {{ haveCoupon.count }}개
+                            </li>
+                          </ul>
+                        </div>
+                      </transition>
+                    </div>
+                  </div>
                 </div>
             </header>
 </template>
@@ -53,6 +54,8 @@
 import { ref } from 'vue';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
+
 
 const coupons = ref([]);
 const showDropdown = ref(false);
@@ -78,22 +81,43 @@ function getCategoryName(categoryId) {
   }
 }
 
+// const fetchCoupons = async () => {
+//   const url = "http://localhost:8080/coupon/list"; // 예: 'http://localhost:8080/api/coupons'
+//   try {
+//     const response = await fetch(url);
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+//     const data = await response.json();
+//     coupons.value = data; // 응답 데이터를 coupons 상태에 저장
+//     showDropdown.value = true;
+//   } catch (error) {
+//     console.error("Fetching coupons failed:", error);
+//     showDropdown.value = false;
+//   }
+// };
+
+// 쿠폰 데이터를 불러오는 함수
 const fetchCoupons = async () => {
-  const url = "http://localhost:8080/coupon/list"; // 예: 'http://localhost:8080/api/coupons'
+  // 로컬 스토리지에서 사용자 idx 가져오기
+  const customerIdx = sessionStorage.getItem('customerIdx');
+
+  if (!customerIdx) {
+    alert('로그인이 필요합니다.');
+    return;
+  }
+
+  const url = `http://localhost:8080/have/list?customerIdx=${customerIdx}`;
+
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    coupons.value = data; // 응답 데이터를 coupons 상태에 저장
-    showDropdown.value = true;
+    const response = await axios.get(url);
+    coupons.value = response.data; // 응답 데이터 저장
+    showDropdown.value = true; // 드롭다운 표시
   } catch (error) {
     console.error("Fetching coupons failed:", error);
-    showDropdown.value = false;
+    showDropdown.value = false; // 실패 시 드롭다운 숨김
   }
 };
-
 
 
 const logout = () => {
