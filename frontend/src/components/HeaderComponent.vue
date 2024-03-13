@@ -27,6 +27,10 @@
                             <button id="submit" aria-label="submit" class="css-ywxmlw e1493ofl0"></button>
                         </div>
                     </div>
+                    
+                    <div>
+                      <router-link to="/qna/write" >1:1문의 내역</router-link>
+                    </div>
 
                   <div class="css-c4pbxv e15sbxqa0">
                     <div class="coupondiv" @mouseenter="fetchCoupons" @mouseleave="showDropdown = false">
