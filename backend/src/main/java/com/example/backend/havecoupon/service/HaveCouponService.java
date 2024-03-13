@@ -68,6 +68,7 @@ public class HaveCouponService {
                     .count(haveCoupon.getCount())
                     .customerIdx(customer.getIdx())
                     .couponIdx(coupon.getIdx())
+                    .discount(coupon.getDiscount())
                     .build();
         }
         return null;
