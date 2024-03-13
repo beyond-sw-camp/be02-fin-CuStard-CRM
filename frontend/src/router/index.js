@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory  } from "vue-router";
 
 import MainPage from "@/pages/MainPage.vue";
 import VerifyPage from '@/pages/VerifyPage.vue'
 import LoginPage from "@/pages/LoginPage.vue";
 import SignupPage from "@/pages/SignupPage.vue";
+import OrderCompletePage from "@/pages/OrderCompletePage.vue";
 import DetailsComponent from  "@/components/DetailsComponent.vue";
 
 const routes = [
@@ -12,6 +13,9 @@ const routes = [
   { path: '/verify', component: VerifyPage },
   {path: "/product/:productIdx", component: DetailsComponent},
   { path: "/product", component: DetailsComponent },
+  { path: "/order/complete/",
+    name:'orderCompletePage',
+    component: OrderCompletePage,},
   { path: "/login", component: LoginPage},
   { path: "/Signup", component: SignupPage},
 ];
