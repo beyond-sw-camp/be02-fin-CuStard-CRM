@@ -168,22 +168,22 @@ public class AdminService implements UserDetailsService {
             Long adminIdx = TokenProvider.getIdx(token);
             Long cnt=0L;
 
-            // 데이터 읽기
+//            // 데이터 읽기
             List<Customer> customerList = customerRepository.findAll();
-            //
+//            //
             List<LoginLog> loginLogList;
             LocalDateTime now = LocalDateTime.now();
 
-            // 데이터 처리
-            for (Customer customer:customerList) {
-                loginLogList = loginLogRespository.findByCustomerIdx(customer.getIdx());
-
-                if (loginLogList.isEmpty()){
-                    continue;
-                }
-                LocalDateTime lastLogin = loginLogList.get(loginLogList.size()-1).getCreatedDate();
-                Duration duration = Duration.between(lastLogin, now);
-            }
+//            // 데이터 처리
+//            for (Customer customer:customerList) {
+//                loginLogList = loginLogRespository.findByCustomerIdx(customer.getIdx());
+//
+//                if (loginLogList.isEmpty()){
+//                    continue;
+//                }
+//                LocalDateTime lastLogin = loginLogList.get(loginLogList.size()-1).getCreatedDate();
+//                Duration duration = Duration.between(lastLogin, now);
+//            }
             //
             for (Customer customer:customerList) {
                 loginLogList = loginLogRespository.findByCustomerIdx(customer.getIdx());

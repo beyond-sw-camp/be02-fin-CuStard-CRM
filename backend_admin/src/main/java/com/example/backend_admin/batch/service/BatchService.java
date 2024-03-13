@@ -33,8 +33,14 @@ public class BatchService {
         return customerRepository.findAll();
     }
 
-    public List<LoginLog> loginLogDataReader(Long idx){
-        return loginLogRespository.findByCustomerIdx(idx);
+    public List<List<LoginLog>> loginLogDataReader(List<Long> idxs){
+        List<List<LoginLog>> result = new ArrayList<>();
+        for (Long idx: idxs
+             ) {
+            List<LoginLog> log = loginLogRespository.findByCustomerIdx(idx);
+            result.add(log);
+        }
+        return result;
     }
     public void sleeperCouponProccessor(List<Customer> customerList,Integer period){
 
@@ -55,6 +61,7 @@ public class BatchService {
                 couponRecipientList.add(customer.getIdx());
             }
         }
+
     }
 
     public void sleeperCouponWriter(){
