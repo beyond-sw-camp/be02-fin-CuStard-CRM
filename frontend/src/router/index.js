@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory  } from "vue-router";
 
 import MainPage from "@/pages/MainPage.vue";
 import VerifyPage from '@/pages/VerifyPage.vue'
@@ -6,6 +6,7 @@ import LoginPage from "@/pages/LoginPage.vue";
 import QnaListPage from "@/pages/QnaListPage.vue";
 import QnaListReadPage from "@/pages/QnaListReadPage.vue";
 import QnaRegisterPage from "@/pages/QnaRegisterPage.vue";
+
 import DetailsComponent from  "@/components/DetailsComponent.vue";
 
 const routes = [
@@ -14,6 +15,9 @@ const routes = [
   { path: '/verify', component: VerifyPage },
   {path: "/product/:productIdx", component: DetailsComponent},
   { path: "/product", component: DetailsComponent },
+  { path: "/order/complete/",
+    name:'orderCompletePage',
+    component: OrderCompletePage,},
   { path: "/login", component: LoginPage},
   { path: "/qna/list", component: QnaListPage},
   { path: '/qna/read/:idx', component: QnaListReadPage},
