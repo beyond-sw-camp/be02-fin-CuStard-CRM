@@ -45,18 +45,18 @@ export default {
   methods: {
     submitPassword() {
       axios.post(`http://localhost:8080/qna/read/${this.$route.params.idx}`, { qnaPwd: this.password })
-        .then(response => {
-          if (response.status === 200) {
-            this.qna = response.data;
-            this.passwordEntered = true;
-          } else {
-            // 비밀번호가 틀렸을 때 처리
-            alert("비밀번호가 올바르지 않습니다.");
-          }
-        })
-        .catch(error => {
-          console.error("에러 발생:", error);
-        });
+          .then(response => {
+            if (response.status === 200) {
+              this.qna = response.data;
+              this.passwordEntered = true;
+            } else {
+              // 비밀번호가 틀렸을 때 처리
+              alert("비밀번호가 올바르지 않습니다.");
+            }
+          })
+          .catch(error => {
+            console.error("에러 발생:", error);
+          });
     }
   },
   mounted() {
