@@ -6,11 +6,9 @@ import LoginPage from "@/pages/LoginPage.vue";
 import QnaListPage from "@/pages/QnaListPage.vue";
 import QnaListReadPage from "@/pages/QnaListReadPage.vue";
 import QnaRegisterPage from "@/pages/QnaRegisterPage.vue";
-
+import SignupPage from "@/pages/SignupPage.vue";
 import DetailsComponent from  "@/components/DetailsComponent.vue";
-
 import SearchResultPage from "@/pages/SearchResultPage.vue";
-
 import OrderCompletePage from "@/pages/OrderCompletePage.vue";
 
 
@@ -20,16 +18,15 @@ const routes = [
   { path: '/verify', component: VerifyPage },
   {path: "/product/:productIdx", component: DetailsComponent},
   { path: "/product", component: DetailsComponent },
-
+  {path: "/search", component: SignupPage},
   { path: "/order/complete/", name:'orderCompletePage', component: OrderCompletePage,},
   { path: "/search/:keyword",
     name: "SearchResult",
     component: SearchResultPage,
     props: true},
-
   { path: "/order/complete/",
     name:'orderCompletePage', component: OrderCompletePage,},
-
+  { path: '/signup', component: SignupPage },
   { path: "/login", component: LoginPage},
   { path: "/qna/list", component: QnaListPage},
   { path: '/qna/read/:idx', component: QnaListReadPage},
