@@ -26,4 +26,9 @@ public class DashboardController {
     public BaseResponse<List<GetCustomerListRes>> selectByAmount(){
         return dashboardService.selectByAmount();
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/dashboard/count/active/user")
+    public void count(){
+
+    }
 }

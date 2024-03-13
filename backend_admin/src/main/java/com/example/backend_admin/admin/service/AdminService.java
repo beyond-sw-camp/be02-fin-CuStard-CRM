@@ -167,18 +167,32 @@ public class AdminService implements UserDetailsService {
             token = TokenProvider.replaceToken(token);
             Long adminIdx = TokenProvider.getIdx(token);
             Long cnt=0L;
+
+            // 데이터 읽기
             List<Customer> customerList = customerRepository.findAll();
+            //
             List<LoginLog> loginLogList;
             LocalDateTime now = LocalDateTime.now();
 
+            // 데이터 처리
+            for (Customer customer:customerList) {
+                loginLogList = loginLogRespository.findByCustomerIdx(customer.getIdx());
+
+                if (loginLogList.isEmpty()){
+                    continue;
+                }
+                LocalDateTime lastLogin = loginLogList.get(loginLogList.size()-1).getCreatedDate();
+                Duration duration = Duration.between(lastLogin, now);
+            }
+            //
             for (Customer customer:customerList) {
                 loginLogList = loginLogRespository.findByCustomerIdx(customer.getIdx());
                 if (loginLogList.isEmpty()){
                     continue;
                 }
                 LocalDateTime lastLogin = loginLogList.get(loginLogList.size()-1).getCreatedDate();
-                LocalDateTime testDateTime = LocalDateTime.of(2023, 3, 13, 15, 30, 0);
-                Duration duration = Duration.between(testDateTime, now);
+//                LocalDateTime testDateTime = LocalDateTime.of(2023, 3, 13, 15, 30, 0);    // lastlogin 대신 넣을 테스트 날짜 데이터
+                Duration duration = Duration.between(lastLogin, now);
 
                 if (duration.getSeconds()/(3600*24)> postAdminSleeperCouponReq.getPeriod()){
                     PostCouponCreateRes response = couponService.create(PostCouponCreateReq.builder()
