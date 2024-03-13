@@ -1,4 +1,57 @@
 <template>
+            <header>
+                <div class="css-1xfyvd1 eo7pjfk4">
+                    <div class="divgnb">
+                        <a v-show="!isLoggedIn" href="/signup" class="css-xygizb eo7pjfk2">회원가입</a>
+                    <div class="css-1qgm48u eo7pjfk0"></div>
+                    <a v-show="!isLoggedIn" href="/login" class="css-oyffzd eo7pjfk2">로그인</a>
+                    <div class="css-1qgm48u eo7pjfk0 login"></div>
+                    <a @click="logout()" class="css-oyffzd eo7pjfk2">로그아웃</a>
+                    <div class="css-1qgm48u eo7pjfk0"></div>
+                    <!-- <div class="css-1qolcqm eo7pjfk3"> </div> -->
+                    </div>
+
+                </div>
+                <div class="gnb">
+                    <a href="/" class="css-boc80u ekdqe1a1">
+                        <img  href="/" src="../../public/img/logo.png" alt="커스타드 로고" class="css-17mnrrx e1s3pt0j0 logo">
+                        <div class="active css-mxd3pm ekdqe1a0">CUSTARD</div>
+                    </a>
+                    <div class="css-pqw0uk e1493ofl4">
+                        <div class="css-w444a2 e1493ofl1">
+                          <input
+                            id="gnb_search"
+                            placeholder="검색어를 입력해주세요"
+                            required=""
+                            class="css-11ntk83 e1493ofl3"
+                            v-model="searchInput"
+                          >
+                          <a :href= "'/search/' + searchInput">
+                            <button id="submit" aria-label="submit" class="css-ywxmlw e1493ofl0"></button>
+                          </a>
+                        </div>
+                    </div>
+
+                    <div class="css-c4pbxv e15sbxqa0">
+                        <div class="coupondiv">
+                          <div class="css-c4pbxv e15sbxqa0">
+                            <div class="coupondiv" @mouseenter="fetchCoupons" @mouseleave="showDropdown = false">
+                              보유 쿠폰
+                              <!-- 드롭다운 메뉴 -->
+                              <transition name="fade">
+                                <div v-if="showDropdown" class="css-14vnom0 e1n3mt0d1 coupon dropdown">
+                                  <ul>
+                                    <li v-for="coupon in coupons" :key="coupon.idx">[{{ getCategoryName(coupon.couponCategory) }}]            {{coupon.discount}}% 할인쿠폰</li>
+                                  </ul>
+                                </div>
+                              </transition>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+=======
   <header>
     <div class="css-1xfyvd1 eo7pjfk4">
       <div class="divgnb">
@@ -57,9 +110,11 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 
+
 const coupons = ref([]);
 const showDropdown = ref(false);
 const router = useRouter();
+const searchInput = ref('');
 
 // 카테고리 번호에 따른 이름을 반환하는 메서드
 function getCategoryName(categoryId) {
@@ -120,6 +175,8 @@ const fetchCoupons = async () => {
 };
 
 
+
+
 const logout = () => {
   sessionStorage.removeItem("atoken");
   router.push("");
@@ -134,6 +191,12 @@ const isLoggedIn = computed(() => {
   }
 
 });
+
+// const search = async (keyword) => {
+//   this.$router.push(`/search/${keyword}`);
+// }
+
+
 </script>
 
 <style scoped>
