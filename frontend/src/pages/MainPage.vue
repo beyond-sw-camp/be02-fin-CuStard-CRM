@@ -105,10 +105,10 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     align-content: stretch;
-    margin: 45px 0;
+    margin-top: 45px;
     font-size: 22px;
     background-color: #ffcdcd57;
-    padding: 10px;
+    padding: 20px;
 
   }
   .div2{
@@ -187,8 +187,8 @@ export default defineComponent({
     width: 17px;
   }
   img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
 }
 

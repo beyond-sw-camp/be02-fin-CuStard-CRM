@@ -18,13 +18,17 @@
                         <div class="active css-mxd3pm ekdqe1a0">CUSTARD</div>
                     </a>
                     <div class="css-pqw0uk e1493ofl4">
-                        <div class="css-w444a2 e1493ofl1"><input
+                        <div class="css-w444a2 e1493ofl1">
+                          <input
                             id="gnb_search"
                             placeholder="검색어를 입력해주세요"
                             required=""
                             class="css-11ntk83 e1493ofl3"
-                            value="">
+                            v-model="searchInput"
+                          >
+                          <a :href= "'/search/' + searchInput">
                             <button id="submit" aria-label="submit" class="css-ywxmlw e1493ofl0"></button>
+                          </a>
                         </div>
                     </div>
 
@@ -54,9 +58,11 @@ import { ref } from 'vue';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
+
 const coupons = ref([]);
 const showDropdown = ref(false);
 const router = useRouter();
+const searchInput = ref('');
 
 // 카테고리 번호에 따른 이름을 반환하는 메서드
 function getCategoryName(categoryId) {
@@ -94,8 +100,6 @@ const fetchCoupons = async () => {
   }
 };
 
-
-
 const logout = () => {
     sessionStorage.removeItem("atoken");
     router.push("");
@@ -110,6 +114,12 @@ const isLoggedIn = computed(() => {
     }
 
 });
+
+// const search = async (keyword) => {
+//   this.$router.push(`/search/${keyword}`);
+// }
+
+
 </script>
 
 <style scoped>
