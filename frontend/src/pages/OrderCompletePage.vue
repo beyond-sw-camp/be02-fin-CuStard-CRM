@@ -213,16 +213,7 @@ html, button, input, select, textarea {
   width: 100%;
   z-index: 300;
 }
-/* 쿠폰 아이콘 */
-.css-14vnom0 {
-  width: 26px;
-  height: 41px;
-  margin-right: 5px;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Eticket-percent-outline%3C/title%3E%3Cpath d='M14.8 8L16 9.2L9.2 16L8 14.8L14.8 8M4 4H20C21.11 4 22 4.89 22 6V10C20.9 10 20 10.9 20 12C20 13.11 20.9 14 22 14V18C22 19.11 21.11 20 20 20H4C2.9 20 2 19.11 2 18V14C3.11 14 4 13.11 4 12C4 10.9 3.11 10 2 10V6C2 4.89 2.9 4 4 4M4 6V8.54C5.24 9.26 6 10.57 6 12C6 13.43 5.24 14.75 4 15.46V18H20V15.46C18.76 14.75 18 13.43 18 12C18 10.57 18.76 9.26 20 8.54V6H4M9.5 8C10.33 8 11 8.67 11 9.5C11 10.33 10.33 11 9.5 11C8.67 11 8 10.33 8 9.5C8 8.67 8.67 8 9.5 8M14.5 13C15.33 13 16 13.67 16 14.5C16 15.33 15.33 16 14.5 16C13.67 16 13 15.33 13 14.5C13 13.67 13.67 13 14.5 13Z' /%3E%3C/svg%3E");
-  cursor: pointer;
-}
+
 /* 찜 호버 했을 때 리스트 */
 .css-c4pbxv {
   display: flex;
@@ -247,63 +238,6 @@ html, button, input, select, textarea {
   width: 1050px;
   height: 56px;
   margin: 0px auto;
-}
-.css-axtlq9 {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  height: 100%;
-}
-.css-1k5gn9s {
-  width: 16px;
-  height: 14px;
-  margin-right: 14px;
-  background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNiAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wIDBoMTZ2MS43SDBWMHptMCA2LjE1aDE2djEuN0gwdi0xLjd6bTAgNi4xNWgxNlYxNEgwdi0xLjd6IiBmaWxsPSIjMzMzIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4KPC9zdmc+Cg==) 0px 0px / 16px 14px no-repeat;
-}
-.css-t75x7c {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.3px;
-  color: rgb(51, 51, 51);
-}
-/* 쿠폰 드롭다운 */
-.dropdown{
-  position: relative;
-  width: 60px;
-  height: 125px;
-  /* background-color: blueviolet; */
-  padding: 0 10px 20px 10px;
-  display: none;
-  border: 1px solid rgb(223, 223, 223);
-}
-.coupondiv:hover > .css-14vnom0 .dropdown{
-  position: absolute;
-  top: 35px;
-  right: -1px;
-  overflow: scroll;
-  display: block;
-  background-color: white;
-  width: 165px;
-  padding: 10px;
-}
-.dropdown {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.dropdown::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
-}
-.coupondiv{
-  /* border: 1px solid red; */
-  display: flex;
-  transition: all 0.5s ease 0s;
-}
-.amount{
-  margin-top: 10px;
-}
-.dropdown > li{
-  margin: 9px 0px;
 }
 /* 로고 */
 .logo{
