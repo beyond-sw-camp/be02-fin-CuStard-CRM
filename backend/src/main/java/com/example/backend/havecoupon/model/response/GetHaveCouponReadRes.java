@@ -14,4 +14,6 @@ public class GetHaveCouponReadRes {
 
     private Long customerIdx;
     private Long couponIdx;
+
+    private Integer discount;
 }
