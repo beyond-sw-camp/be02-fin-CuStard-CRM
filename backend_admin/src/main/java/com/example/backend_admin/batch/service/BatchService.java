@@ -47,6 +47,8 @@ public class BatchService {
             }
         }
 
+//        List<LoginLog> loginLogList = loginLogRespository.findBySleeperCouponTargetList();
+
 //        for (List<LoginLog> loginLogs: result) {
 //            if (loginLogs.isEmpty()){
 //                continue;
@@ -110,6 +112,8 @@ public class BatchService {
         adminService.sleeperCoupon(PostAdminSleeperCouponReq.builder()
                 .couponRecipientList(sleeperCouponWriterReq.getCouponRecipientList())
                 .build());
+
+
     }
     public LevelCouponReaderRes levelCouponReader(){
         List<Customer> customerList = customerRepository.findAll();
