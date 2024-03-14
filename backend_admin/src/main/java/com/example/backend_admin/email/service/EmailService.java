@@ -20,6 +20,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -90,6 +91,31 @@ public class EmailService {
             emailRepository.save(Email.builder().emailContent(sectionsAsString).customer(customer).admin(null).build());
         } else {
                 //사용자가 존재하지 않을 경우 오류 처리
+        }
+    }
+    private void sendSleeperEmail(List<Customer> targetList) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        for (Customer target : targetList) {
+            Optional<Customer> result = customerRepository.findById(target.getIdx());
+            if (result.isPresent()) {
+                Customer customer = result.get();
+                helper.setSubject("[광고] CuStard :) 고객님만을 위한 쿠폰이 발급되었어요!");
+                helper.setTo(customer.getCustomerEmail());
+                Context context = new Context();
+
+                String html = templateEngine.process("mail/sleeper", context);
+                helper.setText(html, true);
+                context.setVariable("username", customer.getUsername());
+
+                javaMailSender.send(message);
+
+                //:TODO admin을 시스템이 배치 처리로 전송할 경우 0으로 설정
+                emailRepository.save(Email.builder().emailContent(html).customer(customer).admin(null).build());
+            } else {
+                //사용자가 존재하지 않을 경우 오류 처리
+            }
         }
     }
 }
