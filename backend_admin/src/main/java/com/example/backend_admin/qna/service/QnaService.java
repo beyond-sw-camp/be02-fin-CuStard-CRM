@@ -41,14 +41,22 @@ public class QnaService {
         Optional<Qna> result = qnaRepository.findById(idx);
         if (result.isPresent()) {
             Qna qna = result.get();
-
-            PostQnaReadRes postQnaReadRes =
-                    PostQnaReadRes.builder()
-                            .title(qna.getTitle())
-                            .qnaContent(qna.getQnaContent())
-                            .build();
-
-            return postQnaReadRes;
+            Optional<Answer> resultAnswer = answerRepository.findByQnaIdx(idx);
+            if (resultAnswer.isPresent()) {
+                Answer answer = resultAnswer.get();
+                return PostQnaReadRes.builder()
+                        .title(qna.getTitle())
+                        .qnaContent(qna.getQnaContent())
+                        .answerContent(answer.getAnswerContent())
+                        .build();
+                //답변이 있는 경우
+            } else {
+                return PostQnaReadRes.builder()
+                        .title(qna.getTitle())
+                        .qnaContent(qna.getQnaContent())
+                        .build();
+                //답변이 없는 경우
+            }
         }else{
             return null;
         }
