@@ -1,5 +1,7 @@
 package com.example.backend_admin.calculate.service;
 
+import com.example.backend_admin.calculate.model.response.GetSleepAccountGrowthRateRes;
+import com.example.backend_admin.calculate.model.response.GetTodayLoginByThreeHour;
 import com.example.backend_admin.calculate.model.response.GetTodayLoginRes;
 import com.example.backend_admin.calculate.model.response.GetTodaySignupRes;
 import com.example.backend_admin.customer.repository.CustomerRepository;
@@ -7,7 +9,11 @@ import com.example.backend_admin.log.repository.LoginLogRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,4 +41,30 @@ public class CalculateLogService {
 
     }
 
+    public GetSleepAccountGrowthRateRes sleepAccountGrowthRate(){
+        double sleepAccountGrowthRate = (loginLogRespository.findByOneDaysAgoDormancyCount() - loginLogRespository.findByTwoDaysAgoDormancyCount())/(double)loginLogRespository.findByTwoDaysAgoDormancyCount();
+
+        sleepAccountGrowthRate = Math.round(sleepAccountGrowthRate*100)/100.0;
+
+        return GetSleepAccountGrowthRateRes.builder()
+                .sleepAccountGrowthRate(sleepAccountGrowthRate).build();
+    }
+
+    public GetTodayLoginByThreeHour todayLoginByThreeHour(){
+        List<List<Long>> countList = loginLogRespository.findByLoginByThreeHour();
+        Long sectionCount = 0L;
+        int time=0;
+        List<Long> timeDataList = new ArrayList<>();
+        for (List<Long> count:countList) {
+            System.out.println(count.get(1));
+            sectionCount = sectionCount + count.get(1);
+            time++;
+            if (time%3==0){
+                timeDataList.add(sectionCount);
+                sectionCount=0L;
+            }
+        }
+
+        return GetTodayLoginByThreeHour.builder().timeDataList(timeDataList).build();
+    }
 }
