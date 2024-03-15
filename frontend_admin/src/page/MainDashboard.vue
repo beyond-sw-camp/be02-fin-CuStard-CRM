@@ -10,13 +10,13 @@
         <div class="content-wrapper">
           <h6 class="text-muted font-weight-normal" style="padding-left:20px; padding-bottom: 5px;"> 오늘 03:00시 기준</h6>
           <div class="row">
-            <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="col-xl-2 col-sm-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-9">
                       <h4 class="text-muted font-weight-normal">방문자 수</h4>
-                      <div class="d-flex align-items-center align-self-start" style="width: 250px;">
+                      <div class="d-flex align-items-center align-self-start" style="width: 300px;">
                         <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ visitorCount }}명</div>
                         <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ visitorcalc }}명 </div>
                       </div>
@@ -30,7 +30,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="col-xl-2 col-sm-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="row">
@@ -50,7 +50,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="col-xl-2 col-sm-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="row">
@@ -70,7 +70,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="col-xl-2 col-sm-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="row">
@@ -114,8 +114,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6   grid-margin stretch-card">
-              <div class="card">
+            <div class="col-lg-4   grid-margin stretch-card">
+              <div class="card" >
                 <div class="card-body">
                   <div class="chartjs-size-monitor">
                     <div class="chartjs-size-monitor-expand">
@@ -125,11 +125,12 @@
                       <div class=""></div>
                     </div>
                   </div>
-                  <h4 class="card-title" style="width:280px;">카테고리 별 판매율</h4>
+                  <h4 class="card-title">카테고리 별 판매율</h4>
                   <canvas
+                      ref="CategoryChart"
                       id="doughnutChart"
                       style="height: 130px; display: block; width: 300px"
-                      width="317"
+                      width="400"
                       height="130"
                       class="chartjs-render-monitor"
                   ></canvas>
@@ -157,7 +158,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 grid-margin stretch-card">
+            <div class="col-lg-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 미답변 내역 3개 </h4>
@@ -237,6 +238,8 @@
 
 <script>
 import axios from "axios";
+import { Chart, registerables } from 'chart.js'
+Chart.register(...registerables)
 
 export default {
   data() {
@@ -255,7 +258,44 @@ export default {
 
       iconClass: 'mdi-arrow-top-right', // 초기 아이콘 클래스 기본값 설정
       textClass: 'text-success', // 양수일 때 기본 텍스트 클래스 설정
-      iconColorClass: 'text-success' // 양수일 때 기본 아이콘 색상 클래스 설정
+      iconColorClass: 'text-success', // 양수일 때 기본 아이콘 색상 클래스 설정
+
+      doughnutPieData: {
+        datasets: [{
+          data: [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          '패션',
+          '뷰티' ,
+          '가전' ,
+          '식품' ,
+          '스포츠/레저'
+        ]
+      }, doughnutPieOptions: {
+        responsive: true,
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        }
+      }
     };
   },
   methods: {
@@ -343,6 +383,26 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
+    createChart() {
+      axios.get('http://localhost:8000/category/orders')
+          .then(response => {
+            const responseData = response.data;
+            this.doughnutPieData.datasets[0].data = responseData.array;
+            // 데이터 로딩이 완료된 후에 차트를 생성합니다.
+            this.$nextTick(() => {
+              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
+              if (this.chartInstance) {
+                this.chartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+              }
+              this.chartInstance = new Chart(this.$refs.CategoryChart, {
+                type: 'doughnut',
+                data: this.doughnutPieData,
+                options: this.doughnutPieOptions
+              });
+            });
+          })
+          .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
+    }
   },
   mounted() {
     this.fetchVisitorCount();
@@ -353,7 +413,9 @@ export default {
     this.fetchtodaySignupCalc();
     this.fetchtodaySell();
     this.fetchtodaySellCalc();
-  }
+
+    this.createChart()
+  },
 }
 
 </script>
