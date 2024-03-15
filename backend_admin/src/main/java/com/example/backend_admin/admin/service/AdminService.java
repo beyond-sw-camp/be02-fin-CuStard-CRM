@@ -179,7 +179,7 @@ public class AdminService implements UserDetailsService {
             Long cnt=0L;
 
 
-            for (Long idx:postAdminSleeperCouponReq.getCouponRecipientList()) {
+            for (Long idx:postAdminSleeperCouponReq.getTargetList()) {
                 haveCouponService.create(PostHaveCouponCreateReq.builder()
                         .couponIdx(7L)
                         .customerIdx(idx)

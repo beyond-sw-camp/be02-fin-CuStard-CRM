@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class SleeperCouponWriterReq {
-    private List<Long> couponRecipientList;
+    private List<Long> targetList;
 }

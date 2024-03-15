@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PostAdminSleeperCouponReq {
-    private List<Long> couponRecipientList;
+    private List<Long> targetList;
 }

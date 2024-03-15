@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class LevelCouponReaderRes {
-    private List<Customer> customerList;
+    private List<List<Long>> targetList;
 }

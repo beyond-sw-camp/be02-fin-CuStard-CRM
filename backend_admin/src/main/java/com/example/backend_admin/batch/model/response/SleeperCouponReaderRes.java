@@ -1,6 +1,7 @@
 package com.example.backend_admin.batch.model.response;
 
 import com.example.backend_admin.log.entity.LoginLog;
+import com.mysql.cj.log.Log;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class SleeperCouponReaderRes {
-    private List<List<LoginLog>> loginLogLists;
+    private List<Long> targetList;
 }
