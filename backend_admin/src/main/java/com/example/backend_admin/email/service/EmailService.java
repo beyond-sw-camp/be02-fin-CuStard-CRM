@@ -56,7 +56,7 @@ public class EmailService {
             Customer customer = result.get();
 
 
-            helper.setSubject("[광고] CuStard :) 고객님만을 위한 쿠폰이 발급되었어요!");
+            helper.setSubject("[광고] CuStard :) 고객님을 위한 추천 상품!");
             helper.setTo(""); //:TODO 고객 username(이메일)로 변경
             Context context = new Context();
 
@@ -93,21 +93,21 @@ public class EmailService {
                 //사용자가 존재하지 않을 경우 오류 처리
         }
     }
-    private void sendSleeperEmail(List<Customer> targetList) throws MessagingException {
+    public void sendSleeperEmail(List<Long> targetList) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        for (Customer target : targetList) {
-            Optional<Customer> result = customerRepository.findById(target.getIdx());
+        for (Long targetidx : targetList) {
+            Optional<Customer> result = customerRepository.findById(targetidx);
             if (result.isPresent()) {
                 Customer customer = result.get();
                 helper.setSubject("[광고] CuStard :) 고객님만을 위한 쿠폰이 발급되었어요!");
                 helper.setTo(customer.getCustomerEmail());
                 Context context = new Context();
+                context.setVariable("username", customer.getUsername());
 
                 String html = templateEngine.process("mail/sleeper", context);
                 helper.setText(html, true);
-                context.setVariable("username", customer.getUsername());
 
                 javaMailSender.send(message);
 
@@ -117,5 +117,34 @@ public class EmailService {
                 //사용자가 존재하지 않을 경우 오류 처리
             }
         }
+    }
+
+    public void sendLevelCoupon(List<List<Long>> targetList) throws MessagingException{
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        for (int i = 0; i < targetList.size(); i++) {
+            for (Long targetidx:targetList.get(i)) {
+                Optional<Customer> result = customerRepository.findById(targetidx);
+                if (result.isPresent()) {
+                    Customer customer = result.get();
+                    helper.setSubject("[광고] CuStard :) 고객님만을 위한 쿠폰이 발급되었어요!");
+                    helper.setTo(customer.getCustomerEmail());
+                    Context context = new Context();
+                    context.setVariable("level", customer.getLevel());
+
+                    String html = templateEngine.process("mail/level", context);
+                    helper.setText(html, true);
+
+                    javaMailSender.send(message);
+
+                    //:TODO admin을 시스템이 배치 처리로 전송할 경우 0으로 설정
+                    emailRepository.save(Email.builder().emailContent(html).customer(customer).admin(null).build());
+                } else {
+                    //사용자가 존재하지 않을 경우 오류 처리
+                }
+            }
+        }
+
+
     }
 }

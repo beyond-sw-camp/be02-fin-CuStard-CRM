@@ -1,17 +1,13 @@
 package com.example.backend_admin.admin.model.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PostAdminSleeperCouponReq {
-    private Integer discount;
-    private Integer couponCategory;
-    private Integer period;
-    private Integer count;
+    private List<Long> targetList;
 }
