@@ -1,8 +1,6 @@
 package com.example.backend_admin.calculate.controller;
 
-import com.example.backend_admin.calculate.model.response.GetTodayLoginRes;
-import com.example.backend_admin.calculate.model.response.GetTodayOrdersRes;
-import com.example.backend_admin.calculate.model.response.GetTodaySignupRes;
+import com.example.backend_admin.calculate.model.response.*;
 import com.example.backend_admin.calculate.service.CalculateLogService;
 import com.example.backend_admin.calculate.service.CalculateOrdersService;
 import lombok.RequiredArgsConstructor;
@@ -29,4 +27,14 @@ public class CalculateController {
 
     @RequestMapping("/today/orders")
     public GetTodayOrdersRes todayOrders(){return calculateOrdersService.todayOrders();}
+
+    @RequestMapping("/today/sleep")
+    public GetSleepAccountGrowthRateRes sleepAccountGrowthRate(){
+        return calculateLogService.sleepAccountGrowthRate();
+    }
+
+    @RequestMapping("/today/count")
+    public GetTodayLoginByThreeHour todayLoginByThreeHour(){
+        return calculateLogService.todayLoginByThreeHour();
+    }
 }
