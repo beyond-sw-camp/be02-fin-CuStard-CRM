@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LoginLogRespository extends JpaRepository<LoginLog, Long> {
+    Long countByCreatedDateAfter(LocalDateTime createdDate);
+
     List<LoginLog> findByCustomerIdx(Long customerIdx);
 
     @Query(value = "SELECT COUNT(*) FROM LoginLog WHERE LoginLog.createdDate BETWEEN DATE_ADD(DATE(NOW()),INTERVAL -2 DAY) AND DATE_ADD(DATE(NOW()),INTERVAL -1 DAY)", nativeQuery = true)

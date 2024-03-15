@@ -10,11 +10,13 @@ import com.example.backend_admin.batch.model.response.LevelCouponReaderRes;
 import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.customer.entity.Customer;
 import com.example.backend_admin.customer.repository.CustomerRepository;
+import com.example.backend_admin.email.service.EmailService;
 import com.example.backend_admin.log.entity.LoginLog;
 import com.example.backend_admin.log.repository.LoginLogRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class BatchService {
     private final CustomerRepository customerRepository;
     private final LoginLogRespository loginLogRespository;
     private final AdminService adminService;
+    private final EmailService emailService;
     public void batch(){
 
         System.out.println("출력");
@@ -48,11 +51,11 @@ public class BatchService {
 
     }
 
-    public void sleeperCouponWriter(SleeperCouponWriterReq sleeperCouponWriterReq){
+    public void sleeperCouponWriter(SleeperCouponWriterReq sleeperCouponWriterReq) throws MessagingException {
         adminService.sleeperCoupon(PostAdminSleeperCouponReq.builder()
                 .targetList(sleeperCouponWriterReq.getTargetList())
                 .build());
-
+        emailService.sendSleeperEmail(sleeperCouponWriterReq.getTargetList());
 
     }
     public LevelCouponReaderRes levelCouponReader(){
@@ -80,10 +83,11 @@ public class BatchService {
     public void levelCouponProcessor(){
 
     }
-    public void levelCouponWriter(LevelCouponWriterReq levelCouponWriterReq){
+    public void levelCouponWriter(LevelCouponWriterReq levelCouponWriterReq) throws MessagingException{
         adminService.levelCoupon(PostAdminLevelCouponReq.builder()
                 .targetList(levelCouponWriterReq.getTargetList())
                 .build());
+        emailService.sendLevelCoupon(levelCouponWriterReq.getTargetList());
     }
 
 }
