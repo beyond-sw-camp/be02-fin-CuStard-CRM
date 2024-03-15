@@ -33,11 +33,11 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/level/coupon")
     public ResponseEntity levelCoupon(@RequestHeader(value = "Authorization") String token,@RequestBody PostAdminLevelCouponReq postAdminLevelCouponReq){
 
-        return ResponseEntity.ok().body(adminService.levelCoupon(token,postAdminLevelCouponReq));
+        return ResponseEntity.ok().body(adminService.levelCoupon(postAdminLevelCouponReq));
     }
     @RequestMapping(method = RequestMethod.POST, value = "/sleeper/coupon")
     public ResponseEntity sleeperCoupon(@RequestHeader(value = "Authorization") String token, @RequestBody PostAdminSleeperCouponReq postAdminSleeperCouponReq){
-        return ResponseEntity.ok().body(adminService.sleeperCoupon(token, postAdminSleeperCouponReq));
+        return ResponseEntity.ok().body(adminService.sleeperCoupon(postAdminSleeperCouponReq));
 //        LocalDateTime now = LocalDateTime.now();
 //        System.out.println(now);
 //        LocalDateTime endDateTime = LocalDateTime.of(2024, 3, 13, 15, 30, 0);

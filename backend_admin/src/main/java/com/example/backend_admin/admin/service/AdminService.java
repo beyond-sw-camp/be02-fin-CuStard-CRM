@@ -96,105 +96,115 @@ public class AdminService implements UserDetailsService {
             return null;
         }
 
-        public String levelCoupon(String token,PostAdminLevelCouponReq postAdminLevelCouponReq){
+        public String levelCoupon(PostAdminLevelCouponReq postAdminLevelCouponReq){
 
-            token = TokenProvider.replaceToken(token);
-            Long adminIdx = TokenProvider.getIdx(token);
+//            token = TokenProvider.replaceToken(token);
+//            Long adminIdx = TokenProvider.getIdx(token);
 
             CustomerLevel[] level = CustomerLevel.values();
             List<Long> couponIdx = new ArrayList<>();
 
-            for(int cnt = 0; cnt<level.length; cnt ++){
-                PostCouponCreateRes response = couponService.create(PostCouponCreateReq.builder()
-                        .adminIdx(adminIdx)
-                        .couponCategory(postAdminLevelCouponReq.getCategory().get(cnt))
-                        .discount(postAdminLevelCouponReq.getDiscount().get(cnt))
-                        .build());
-
-                couponIdx.add(response.getCouponIdx());
-            }
-
-            List<Customer> customerList = customerRepository.findAll();
-
-            for (Customer customer: customerList) {
-                if (customer.getLevel()==CustomerLevel.NEWBIE){
+            for (int i = 0; i < postAdminLevelCouponReq.getTargetList().size(); i++) {
+                for (Long idx:postAdminLevelCouponReq.getTargetList().get(i)) {
                     haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .customerIdx(customer.getIdx())
-                            .couponIdx(couponIdx.get(0))
-                            .count(postAdminLevelCouponReq.getCount().get(0))
+                            .couponIdx(i+1L)
+                            .customerIdx(idx)
+                            .count(1)
                             .build());
-
-
-
-                } else if (customer.getLevel()==CustomerLevel.BRONZE) {
-                    haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .customerIdx(customer.getIdx())
-                            .couponIdx(couponIdx.get(1))
-                            .count(postAdminLevelCouponReq.getCount().get(1))
-                            .build());
-                } else if (customer.getLevel()==CustomerLevel.SILVER) {
-                    haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .customerIdx(customer.getIdx())
-                            .couponIdx(couponIdx.get(2))
-                            .count(postAdminLevelCouponReq.getCount().get(2))
-                            .build());
-                } else if (customer.getLevel()==CustomerLevel.GOLD) {
-                    haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .customerIdx(customer.getIdx())
-                            .couponIdx(couponIdx.get(3))
-                            .count(postAdminLevelCouponReq.getCount().get(3))
-                            .build());
-                } else if (customer.getLevel()==CustomerLevel.PLATINUM) {
-                    haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .customerIdx(customer.getIdx())
-                            .couponIdx(couponIdx.get(4))
-                            .count(postAdminLevelCouponReq.getCount().get(4))
-                            .build());
-                } else if (customer.getLevel()==CustomerLevel.DIAMOND) {
-                    haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .customerIdx(customer.getIdx())
-                            .couponIdx(couponIdx.get(5))
-                            .count(postAdminLevelCouponReq.getCount().get(5))
-                            .build());
-                } else {
-
                 }
             }
+
+
+//            for(int cnt = 0; cnt<level.length; cnt ++){
+//                PostCouponCreateRes response = couponService.create(PostCouponCreateReq.builder()
+//                        .adminIdx(adminIdx)
+//                        .couponCategory(postAdminLevelCouponReq.getCategory().get(cnt))
+//                        .discount(postAdminLevelCouponReq.getDiscount().get(cnt))
+//                        .build());
+//
+//                couponIdx.add(response.getCouponIdx());
+//            }
+
+//            List<Customer> customerList = customerRepository.findAll();
+//
+//            for (Customer customer: customerList) {
+//                if (customer.getLevel()==CustomerLevel.NEWBIE){
+//                    haveCouponService.create(PostHaveCouponCreateReq.builder()
+//                            .customerIdx(customer.getIdx())
+//                            .couponIdx(couponIdx.get(0))
+//                            .count(postAdminLevelCouponReq.getCount().get(0))
+//                            .build());
+//
+//
+//
+//                } else if (customer.getLevel()==CustomerLevel.BRONZE) {
+//                    haveCouponService.create(PostHaveCouponCreateReq.builder()
+//                            .customerIdx(customer.getIdx())
+//                            .couponIdx(couponIdx.get(1))
+//                            .count(postAdminLevelCouponReq.getCount().get(1))
+//                            .build());
+//                } else if (customer.getLevel()==CustomerLevel.SILVER) {
+//                    haveCouponService.create(PostHaveCouponCreateReq.builder()
+//                            .customerIdx(customer.getIdx())
+//                            .couponIdx(couponIdx.get(2))
+//                            .count(postAdminLevelCouponReq.getCount().get(2))
+//                            .build());
+//                } else if (customer.getLevel()==CustomerLevel.GOLD) {
+//                    haveCouponService.create(PostHaveCouponCreateReq.builder()
+//                            .customerIdx(customer.getIdx())
+//                            .couponIdx(couponIdx.get(3))
+//                            .count(postAdminLevelCouponReq.getCount().get(3))
+//                            .build());
+//                } else if (customer.getLevel()==CustomerLevel.PLATINUM) {
+//                    haveCouponService.create(PostHaveCouponCreateReq.builder()
+//                            .customerIdx(customer.getIdx())
+//                            .couponIdx(couponIdx.get(4))
+//                            .count(postAdminLevelCouponReq.getCount().get(4))
+//                            .build());
+//                } else if (customer.getLevel()==CustomerLevel.DIAMOND) {
+//                    haveCouponService.create(PostHaveCouponCreateReq.builder()
+//                            .customerIdx(customer.getIdx())
+//                            .couponIdx(couponIdx.get(5))
+//                            .count(postAdminLevelCouponReq.getCount().get(5))
+//                            .build());
+//                } else {
+//
+//                }
+//            }
             return "쿠폰 발급 완료";
         }
         //TODO: 장기 미접속자는 매일매일 쿠폰을 받기 때문에 수정 필요 및 testDateTime 제거 필요
-        public PostAdminSleeperCouponRes sleeperCoupon(String token, PostAdminSleeperCouponReq postAdminSleeperCouponReq){
-            token = TokenProvider.replaceToken(token);
-            Long adminIdx = TokenProvider.getIdx(token);
+        public PostAdminSleeperCouponRes sleeperCoupon( PostAdminSleeperCouponReq postAdminSleeperCouponReq){
+
             Long cnt=0L;
-            List<Customer> customerList = customerRepository.findAll();
-            List<LoginLog> loginLogList;
-            LocalDateTime now = LocalDateTime.now();
 
-            for (Customer customer:customerList) {
-                loginLogList = loginLogRespository.findByCustomerIdx(customer.getIdx());
-                if (loginLogList.isEmpty()){
-                    continue;
-                }
-                LocalDateTime lastLogin = loginLogList.get(loginLogList.size()-1).getCreatedDate();
-                LocalDateTime testDateTime = LocalDateTime.of(2023, 3, 13, 15, 30, 0);
-                Duration duration = Duration.between(testDateTime, now);
 
-                if (duration.getSeconds()/(3600*24)> postAdminSleeperCouponReq.getPeriod()){
-                    PostCouponCreateRes response = couponService.create(PostCouponCreateReq.builder()
-                            .adminIdx(adminIdx)
-                            .discount(postAdminSleeperCouponReq.getDiscount())
-                            .couponCategory(postAdminSleeperCouponReq.getCouponCategory())
-                            .build());
-                    haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .couponIdx(response.getCouponIdx())
-                            .customerIdx(customer.getIdx())
-                            .count(postAdminSleeperCouponReq.getCount())
-                            .build());
-
-                    cnt++;
-                }
+            for (Long idx:postAdminSleeperCouponReq.getTargetList()) {
+                haveCouponService.create(PostHaveCouponCreateReq.builder()
+                        .couponIdx(7L)
+                        .customerIdx(idx)
+                        .count(1)
+                        .build());
             }
+
+
+
+                // 장기미접속자를 구해서 쿠폰을 새로 발급하고 쿠폰을 고객에게 나눠주는 코드
+//                if (duration.getSeconds()/(3600*24)> postAdminSleeperCouponReq.getPeriod()){
+//                    PostCouponCreateRes response = couponService.create(PostCouponCreateReq.builder()
+//                            .adminIdx(adminIdx)
+//                            .discount(postAdminSleeperCouponReq.getDiscount())
+//                            .couponCategory(postAdminSleeperCouponReq.getCouponCategory())
+//                            .build());
+//                    haveCouponService.create(PostHaveCouponCreateReq.builder()
+//                            .couponIdx(response.getCouponIdx())
+//                            .customerIdx(customer.getIdx())
+//                            .count(postAdminSleeperCouponReq.getCount())
+//                            .build());
+//
+//                    cnt++;
+//                }
+            cnt++;
             return PostAdminSleeperCouponRes.builder().cnt(cnt).build();
         }
 
