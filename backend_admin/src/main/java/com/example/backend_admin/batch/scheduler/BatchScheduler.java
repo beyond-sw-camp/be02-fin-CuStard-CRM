@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Component
@@ -29,7 +30,7 @@ public class BatchScheduler {
     private final LoginLogRespository loginLogRespository;
 
     @Scheduled(cron = "40 * * * * *")
-    public void batch(){
+    public void batch() throws MessagingException {
         // 읽는거
 //        batchService.batch();
 //        List<Long> loginLogList = loginLogRespository.findBySleeperCouponTargetList();
