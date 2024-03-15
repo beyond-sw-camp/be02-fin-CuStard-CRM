@@ -282,7 +282,7 @@ export default {
           animateScale: true,
           animateRotate: true
         }
-      }
+      },
 
       qnasWaitings: 0,
       qnasWaiting: []
@@ -394,7 +394,7 @@ export default {
             });
           })
           .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
-=======
+    },
     loadArticles() {
       axios.get("http://localhost:8000/admin/qna/list")
           .then((response) => {
@@ -420,10 +420,7 @@ export default {
     this.fetchtodaySell();
     this.fetchtodaySellCalc();
 
-
-    this.createChart()
-  },
-
+    this.createChart();
     this.loadArticles();
   }
 
