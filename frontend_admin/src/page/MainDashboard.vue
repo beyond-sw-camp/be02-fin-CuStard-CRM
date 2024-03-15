@@ -161,52 +161,17 @@
             <div class="col-lg-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {{ 수정수정 }} </h4>
 
                   <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp; | &nbsp; 미답변 내역 {{ qnasWaitings }}개 </h4>
 
                   <div class="table-responsive">
                     <table class="table">
-                      <thead>
-                      <tr>
 
-                        <th>User</th>
-                        <th>title</th>
-                        <th>Status</th>
-                      </tr>
-                      </thead>
-                      <tbody>
                       <tr>
-                        <td>Jacob</td>
-                        <td>{{ qnatitle }}</td>
-                        <td><label class="badge badge-danger">Pending</label></td>
-                      </tr>
-                      <tr>
-                        <td>Messsy</td>
-                        <td>상품이 고장나서 왔어요</td>
-                        <td><label class="badge badge-danger">Pending</label></td>
-                      </tr>
-                      <tr>
-                        <td>John</td>
-                        <td>상한 음식이 온 것 같아요</td>
-                        <td><label class="badge badge-danger">Pending</label></td>
-                      </tr>
-                      <tr>
-                        <td>Peter</td>
-                        <td>단순변심 환불도 가능할까요?</td>
-                        <td><label class="badge badge-success">Completed</label></td>
-                      </tr>
-                      <tr>
-                        <td>Dave</td>
-                        <td>배송이 언제 올까요?</td>
-                        <td><label class="badge badge-success">Completed</label></td>
-
                         <th>번호</th>
                         <th>제목</th>
                         <th>답변 상태</th>
                       </tr>
-                      </thead>
                       <tbody>
                       <tr v-for="qna in qnasWaiting" :key="qna.idx" @click="goToArticle(qna.idx)">
                         <td>{{ qna.idx }}</td>
