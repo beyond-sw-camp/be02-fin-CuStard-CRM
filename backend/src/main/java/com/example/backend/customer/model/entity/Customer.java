@@ -1,6 +1,7 @@
 package com.example.backend.customer.model.entity;
 
 
+import com.example.backend.common.BaseTimeEntity;
 import com.example.backend.common.CustomerLevel;
 import com.example.backend.havecoupon.model.entity.HaveCoupon;
 
@@ -25,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Customer implements UserDetails {
+public class Customer extends BaseTimeEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
