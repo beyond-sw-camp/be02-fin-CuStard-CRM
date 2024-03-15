@@ -88,7 +88,7 @@ export default {
           });
     },
     goToArticle(idx) {
-      this.$router.push({path: `/admin/qna/read/${idx}`});
+      this.$router.push({path: `/qnaread${idx}`});
     }
   },
   mounted() {
