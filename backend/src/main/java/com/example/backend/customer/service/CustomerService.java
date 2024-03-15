@@ -157,6 +157,8 @@ public class CustomerService implements UserDetailsService {
                     .customerEmail(customer.getCustomerEmail())
                     .authority(customer.getAuthority())
                     .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                    .totalAmount(customer.getTotalAmount())
+                    .level(customer.getLevel())
                     .build();
         }
         return null;
@@ -184,6 +186,8 @@ public class CustomerService implements UserDetailsService {
                     .customerEmail(customer.getCustomerEmail())
                     .authority(customer.getAuthority())
                     .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                    .totalAmount(customer.getTotalAmount())
+                    .level(customer.getLevel())
                     .build();
 
             getCustomerListResList.add(getCustomerListRes);

@@ -16,24 +16,20 @@
                     <table class="table table-bordered table-contextual">
                       <thead>
                       <tr>
-                        <th> 이름</th>
-                        <th> 아이디</th>
-                        <th> 나이</th>
-                        <th> 지역</th>
-                        <th> 등급</th>
-                        <th> 총 구매 금액</th>
-                        <th> 마지막 접속일</th>
+                        <th>번호</th>
+                        <th>아이디</th>
+                        <th>등급</th>
+                        <th>총 구매 금액</th>
+                        <th>마지막 접속일</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr class="table-info">
-                        <td> 이창훈</td>
-                        <td> LCH-97</td>
-                        <td> 27</td>
-                        <td> 서울시</td>
-                        <td> VIP</td>
-                        <td> 1000000</td>
-                        <td> 24-03-14-12-06-00</td>
+                      <tr class="table-info" v-for="customer in customers" :key="customer.idx">
+                        <td>{{ customer.idx }}</td>
+                        <td>{{ customer.customerEmail }}</td>
+                        <td>{{ customer.level }}</td>
+                        <td>{{ customer.totalAmount}}</td>
+                        <td>{{ customer.date }}</td>
                       </tr>
                       </tbody>
                     </table>
@@ -178,7 +174,8 @@ export default {
   data() {
     return {
       qnasWaiting: [],
-      qnasAnswered: []
+      qnasAnswered: [],
+      customers: []
 
     };
   },
@@ -196,6 +193,28 @@ export default {
             console.error("데이터 로드 실패:", error);
           });
     },
+    // fetchCustomers() {
+    //   axios.get("http://localhost:8080/customer/list")
+    //       .then(response => {
+    //         console.log(response)
+    //         this.customers = response.data; // 응답으로 받은 데이터를 customers 배열에 저장
+    //       })
+    //       .catch(error => {
+    //         console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
+    //       });
+    // },
+
+    fetchCustomers() {
+      // productIdx 변수를 사용하여 고객 정보를 불러오는 URL 수정
+      axios.get(`http://localhost:8080/customer/read/${this.idx}`)
+          .then(response => {
+            console.log(response)
+            this.customers = response.data; // 응답으로 받은 데이터를 customers 배열에 저장
+          })
+          .catch(error => {
+            console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
+          });
+    },
 
     goToArticle(idx) {
       this.$router.push({path: `/admin/qna/read/${idx}`});
@@ -203,6 +222,7 @@ export default {
   },
   mounted() {
     this.loadArticles();
+    this.fetchCustomers();
   }
 };
 </script>
