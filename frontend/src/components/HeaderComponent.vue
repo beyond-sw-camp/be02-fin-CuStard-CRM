@@ -106,28 +106,28 @@ function getCategoryName(categoryId) {
 // };
 
 // 쿠폰 데이터를 불러오는 함수
-const fetchCoupons = async () => {
-  // 로컬 스토리지에서 사용자 idx 가져오기
-  const customerIdx = sessionStorage.getItem('customerIdx');
+  const fetchCoupons = async () => {
+    // 로컬 스토리지에서 사용자 idx 가져오기
+    const customerIdx = sessionStorage.getItem('customerIdx');
 
-  if (!customerIdx) {
-    alert('로그인이 필요합니다.');
-    return;
-  }
+    if (!customerIdx) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
 
-  const url = `http://localhost:8080/have/list?customerIdx=${customerIdx}`;
+    const url = `http://localhost:8080/have/list?customerIdx=${customerIdx}`;
 
-  try {
-    const response = await axios.get(url);
-    coupons.value = response.data; // 응답 데이터 저장
-    showDropdown.value = true; // 드롭다운 표시
+    try {
+      const response = await axios.get(url);
+      coupons.value = response.data; // 응답 데이터 저장
+      showDropdown.value = true; // 드롭다운 표시
 
-    console.log(coupons);
-  } catch (error) {
-    console.error("Fetching coupons failed:", error);
-    showDropdown.value = false; // 실패 시 드롭다운 숨김
-  }
-};
+      console.log(coupons);
+    } catch (error) {
+      console.error("Fetching coupons failed:", error);
+      showDropdown.value = false; // 실패 시 드롭다운 숨김
+    }
+  };
 
 
 
