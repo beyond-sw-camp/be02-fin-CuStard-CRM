@@ -19,12 +19,12 @@
                   <input type="checkbox" v-model="consent.agreeAll" class="checkbox-input">
                 </div>
                 <span class="consent-text">
-                  <h4>전체동의<span class="additional-consent"> &nbsp; 선택항목에 대한 동의 포함</span></h4>
+                  <h4>전체동의<span class="additional-consent"> 선택항목에 대한 동의 포함</span></h4>
                 </span>
               </label>
             </div>
             <hr class="consent-divider">
-            <div class="consent-option" v-for="(value, name) in consent" :key="name" >
+            <div class="consent-option" v-for="(value, name) in consent" :key="name">
               <label class="checkbox-label">
                 <div class="checkbox-wrapper">
                   <div class="check-icon"><span class="_check_12"></span></div>
@@ -115,8 +115,6 @@ export default {
 
 
 <style>
-
-
 *{
   font-family: 'GmarketSans';
 }

@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <nav-component />
+  <side-component />
+  <router-view></router-view>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import NavComponent from "@/components/NavComponent.vue";
+import SideComponent from "@/components/SideComponent.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SideComponent,
+    NavComponent
+
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: row; /* 가로 방향으로 요소들을 정렬 */
+}
+
+/* 사이드 컴포넌트와 네비게이션 컴포넌트의 너비를 조정하고 싶다면 추가적인 CSS가 필요할 수 있습니다. */
+.side-component {
+  /* 예: 고정된 너비 설정 */
+  width: 200px;
+}
+.nav-component {
+  /* 필요한 경우 스타일링 */
 }
 </style>
