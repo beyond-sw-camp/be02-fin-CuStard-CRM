@@ -9,7 +9,7 @@
         </div>
       </li>
     </ul>
-    <button @click="goToRegister" class="write-button">작성</button>
+    <button @click="goToRegister" class="write-button">문의 글 작성</button>
   </div>
 </template>
 
@@ -47,8 +47,11 @@ export default {
 
 <style scoped>
 .qna-list {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
+  margin-top: 60px;
+  padding-top: 20px; /* 위쪽 여백 */
+  padding-bottom: 20%; /* 아래쪽 여백 */
 }
 
 ul {
@@ -81,14 +84,17 @@ ul {
 .write-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #ffbe0e;
+  transition: background-color 0.5s;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 100%;
+
 }
 
 .write-button:hover {
-  background-color: #0056b3;
+  background-color: #99154E;
 }
 </style>
