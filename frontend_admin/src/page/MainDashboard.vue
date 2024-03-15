@@ -16,22 +16,19 @@
                   <div class="row">
                     <div class="col-9">
                       <h4 class="text-muted font-weight-normal">방문자 수</h4>
-                      <div class="d-flex align-items-center align-self-start" style="  width:250px;">
-                        <div style="font-size: 25px; font-weight: 500;">1833명</div>
-                        <div class="text-success ml-2 mb-0 font-weight-medium" style="font-size: 15px; font-weight: 500; padding-left: 5px;">
-                          +21명
-                        </div>
+                      <div class="d-flex align-items-center align-self-start" style="width: 250px;">
+                        <div style="font-size: 25px; font-weight: 500;">{{ visitorCount }}명</div>
+                        <div class="text-success ml-2 mb-0 font-weight-medium" style="font-size: 15px; font-weight: 500; padding-left: 5px;"> +{{ visitorCount }}명 </div>
                       </div>
                     </div>
                     <div class="col-3">
                       <div class="icon icon-box-success">
-                          <span
-                              class="mdi mdi-arrow-top-right icon-item"
-                          ></span>
+                        <span class="mdi mdi-arrow-top-right icon-item"></span>
                       </div>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
             <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
@@ -274,6 +271,29 @@
 </template>
 
 <script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      visitorCount: 0 // 방문자 수를 저장할 변수
+    };
+  },
+  methods: {
+    fetchVisitorCount() {
+      // 백엔드로부터 방문자 수를 받아오는 로직
+      // 여기서는 axios를 사용한 예시입니다.
+      axios.get('http://localhost:8080/login/logging')
+          .then(response => {
+            this.visitorCount = response.data.customerIdx; // 백엔드로부터 받아온 데이터로 visitorCount를 업데이트
+          })
+          .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
+    }
+  },
+  mounted() {
+    this.fetchVisitorCount(); // 컴포넌트가 마운트될 때 방문자 수를 불러옵니다.
+  }
+}
 
 </script>
 
