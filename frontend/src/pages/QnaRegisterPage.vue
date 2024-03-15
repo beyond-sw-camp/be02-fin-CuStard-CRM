@@ -1,21 +1,19 @@
 <template>
   <div id="articlelist">
-    <form @submit.prevent="submitForm">
-      <div>
+    <main>
+      <form @submit.prevent="submitForm">
         <label for="title">제목:</label>
-        <input placeholder="제목을 입력해주세요" id="title" v-model="title" /><br /><br />
-      </div>
-      <div>
-        <label for="content">내용:</label>
-        <textarea placeholder="내용을 입력해주세요" id="content" v-model="content"></textarea><br /><br />
-      </div>
-      <div>
-        <label for="password" id="passwword">비밀번호:</label>
-        <input placeholder="비밀번호를 입력해주세요" id="password" type="password" v-model="password" />
-      </div>
+        <input type="text" id="title" v-model="title" required>
 
-      <button type="submit">작성</button>
-    </form>
+        <label for="content">내용:</label>
+        <textarea id="content" v-model="content" rows="4" required></textarea>
+
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" v-model="password" required>
+
+        <button type="submit">문의하기</button>
+      </form>
+    </main>
   </div>
 </template>
 
@@ -61,61 +59,58 @@ export default {
 
 <style scoped>
 #articlelist {
-  border: 1px solid #ccc;
-  padding: 20px;
-  max-width: 500px;
-  margin: 0 auto;
-  /* background: rgb(255, 169, 169); */
+  margin-top: 60px;
 }
-div{
-  display: flex;
-  align-items: center;
-  margin-bottom: 50px;
-}
-div > :first-of-type{
-  margin-right: 50px;
-}
-#passwword{
-  margin-right: 18px;
-}
+
 form {
-  display: flex;
-  flex-direction: column;
+  margin-top: 10px;
+}
+
+input[type="text"] {
+  margin-bottom: 20px; 
+}
+
+main {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽 정렬 */
+
 }
 
 label {
-  margin-bottom: 5px;
-}
-input{
-  border: none;
-  border-bottom: 1.5px solid red;
+    margin-bottom: 10px;
+    width: 100px; /* 레이블 너비 조정 */
+
 }
 
-textarea{
-  resize: none;
-}
-
-input[type="text"],
-textarea,
-input[type="password"],
-button {
-  margin-bottom: 10px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+input, textarea {
+    margin-bottom: 15px; /* 조정된 부분 */
+    padding: 8px;
+    width: 100%; /* 입력 칸 너비 조정 */
+    box-sizing: border-box; /* 너비에 padding, border 포함 */
 }
 
 button {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
+    background-color: #ffbe0e;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+    width: 100%; /* 버튼의 너비를 100%로 설정하여 왼쪽으로 정렬되도록 함 */
+    box-sizing: border-box; /* 너비에 padding, border 포함 */
 }
 
 button:hover {
-  background-color: #0056b3;
-}
-
-button:active {
-  background-color: #004280;
+    background-color: #99154E;
 }
 </style>

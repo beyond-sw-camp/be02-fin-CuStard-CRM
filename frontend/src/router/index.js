@@ -27,7 +27,7 @@ const routes = [
   { path: "/order/complete/",
     name:'orderCompletePage', component: OrderCompletePage,},
   { path: '/signup', component: SignupPage },
-  { path: "/login", component: LoginPage},
+  { path: "/login", component: LoginPage, },
   { path: "/qna/list", component: QnaListPage},
   { path: '/qna/read/:idx', component: QnaListReadPage},
   { path: "/qna/write", component: QnaRegisterPage},

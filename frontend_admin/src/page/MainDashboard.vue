@@ -161,41 +161,27 @@
             <div class="col-lg-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 미답변 내역 3개 </h4>
+                  <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp; | &nbsp; 미답변 내역 {{ qnasWaitings }}개 </h4>
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table">
                       <thead>
                       <tr>
-                        <th>User</th>
-                        <th>Title</th>
-                        <th>Status</th>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>답변 상태</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>Jacob</td>
-                        <td>배송이 7일째 안옵니다..</td>
-                        <td><label class="badge badge-danger">Pending</label></td>
-                      </tr>
-                      <tr>
-                        <td>Messsy</td>
-                        <td>상품이 고장나서 왔어요</td>
-                        <td><label class="badge badge-danger">Pending</label></td>
-                      </tr>
-                      <tr>
-                        <td>John</td>
-                        <td>상한 음식이 온 것 같아요</td>
-                        <td><label class="badge badge-danger">Pending</label></td>
-                      </tr>
-                      <tr>
-                        <td>Peter</td>
-                        <td>단순변심 환불도 가능할까요?</td>
-                        <td><label class="badge badge-success">Completed</label></td>
-                      </tr>
-                      <tr>
-                        <td>Dave</td>
-                        <td>배송이 언제 올까요?</td>
-                        <td><label class="badge badge-success">Completed</label></td>
+                      <tr v-for="qna in qnasWaiting" :key="qna.idx" @click="goToArticle(qna.idx)">
+                        <td>{{ qna.idx }}</td>
+                        <td>
+                          <span class="title-text">{{ qna.title }}</span>
+                        </td>
+                        <td>
+                          <div class="badge badge-outline-danger">
+                            답변 대기
+                          </div>
+                        </td>
                       </tr>
                       </tbody>
                     </table>
@@ -253,12 +239,13 @@ export default {
       newSignup: 0, //신규유입
       newSignupCalc: 0, //신규유입 계산
 
-      todaySell:0, //히루매출액
-      todaySellCalc:0, //히루매출액계산
+      todaySell: 0, //히루매출액
+      todaySellCalc: 0, //히루매출액계산
 
       iconClass: 'mdi-arrow-top-right', // 초기 아이콘 클래스 기본값 설정
       textClass: 'text-success', // 양수일 때 기본 텍스트 클래스 설정
       iconColorClass: 'text-success', // 양수일 때 기본 아이콘 색상 클래스 설정
+
 
       doughnutPieData: {
         datasets: [{
@@ -296,6 +283,10 @@ export default {
           animateRotate: true
         }
       }
+
+      qnasWaitings: 0,
+      qnasWaiting: []
+
     };
   },
   methods: {
@@ -306,7 +297,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchCalcCount(){ //방문자 수
+    fetchCalcCount() { //방문자 수
       axios.get('http://localhost:8000/today/login')
           .then(response => {
             this.visitorcalc = response.data.difLogin;
@@ -317,7 +308,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchOrders(){ //결제  수
+    fetchOrders() { //결제  수
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
             this.todayOrder = response.data.todayOrdersCount;
@@ -328,7 +319,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchOrdersCalc(){ //결제 계산
+    fetchOrdersCalc() { //결제 계산
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
             this.todayOrderCalc = response.data.difOrdersCount;
@@ -339,7 +330,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchtodaySignup(){ //신규유입
+    fetchtodaySignup() { //신규유입
       axios.get('http://localhost:8000/today/signup')
           .then(response => {
             this.newSignup = response.data.todaySignup;
@@ -350,7 +341,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchtodaySignupCalc(){ //신규유입 계산
+    fetchtodaySignupCalc() { //신규유입 계산
       axios.get('http://localhost:8000/today/signup')
           .then(response => {
             this.newSignupCalc = response.data.difSignup;
@@ -361,7 +352,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchtodaySell(){ //일 매출
+    fetchtodaySell() { //일 매출
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
             this.todaySell = response.data.todayOrdersAmount;
@@ -372,7 +363,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchtodaySellCalc(){ //일 매출 계산
+    fetchtodaySellCalc() { //일 매출 계산
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
             this.todaySellCalc = response.data.difOrdersAmount;
@@ -383,6 +374,7 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
+
     createChart() {
       axios.get('http://localhost:8000/category/orders')
           .then(response => {
@@ -402,6 +394,20 @@ export default {
             });
           })
           .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
+=======
+    loadArticles() {
+      axios.get("http://localhost:8000/admin/qna/list")
+          .then((response) => {
+            this.qnasWaitings = response.data.filter(qna => !qna.answerContent).length;
+            this.qnasWaiting = response.data.filter(qna => !qna.answerContent).slice(0, 5);
+          })
+          .catch((error) => {
+            console.error("데이터 로드 실패:", error);
+          });
+    },
+    goToArticle(idx) {
+      this.$router.push({path: `/qnaread${idx}`});
+
     }
   },
   mounted() {
@@ -414,8 +420,13 @@ export default {
     this.fetchtodaySell();
     this.fetchtodaySellCalc();
 
+
     this.createChart()
   },
+
+    this.loadArticles();
+  }
+
 }
 
 </script>

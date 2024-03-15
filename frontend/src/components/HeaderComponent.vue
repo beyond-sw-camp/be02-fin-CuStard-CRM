@@ -16,13 +16,13 @@
     <div class="gnb">
       <a href="/" class="css-boc80u ekdqe1a1">
         <img  href="/" src="../../public/img/logo.png" alt="커스타드 로고" class="css-17mnrrx e1s3pt0j0 logo">
-        <div class="active css-mxd3pm ekdqe1a0">cus+ard</div>
+        <div class="active css-mxd3pm ekdqe1a0">Cus+ard</div>
       </a>
       <div class="css-pqw0uk e1493ofl4">
         <div class="css-w444a2 e1493ofl1">
           <input
             id="gnb_search"
-            placeholder="검색어를 입력해주세요"
+            placeholder="검색어를 입력해주세요."
             required=""
             class="css-11ntk83 e1493ofl3"
             value=""
@@ -175,11 +175,12 @@ ul {
 
 a {
   text-decoration-line: none;
-  color: black;
+  color: #333;
 }
 
 .divgnb {
   display: flex;
+  margin-right: 45px;
 }
 
 .css-t79vuj {
@@ -202,7 +203,7 @@ a {
 
 .css-xygizb {
   display: block;
-  color: rgb(95, 0, 128);
+  color: #99154e;
   cursor: pointer;
 }
 
@@ -216,6 +217,7 @@ a {
 .css-oyffzd {
   display: block;
   cursor: pointer;
+  color: #333;
 }
 
 .css-1qolcqm {
@@ -282,6 +284,12 @@ a {
   height: 30px;
   margin: 10px;
   bottom: 3px;
+  background-image: url("../assets/search.png") ;
+  background-repeat: no-repeat;
+  background-size : 60%;
+  background-position : 5px 9px;
+  border: none;
+  background-color: #FFF;
 }
 
 .css-mxd3pm {
@@ -302,7 +310,7 @@ a {
   color: rgb(255 190 14);
   border: none;
   background: none;
-
+  margin-top: -10px;
 }
 
 .css-11ntk83 {
@@ -312,6 +320,8 @@ a {
   outline: none;
   font-size: 16px;
   letter-spacing: -0.33px;
+  color: 33380;
+
 }
 
 .css-pqw0uk {
@@ -327,7 +337,7 @@ a {
   -webkit-box-pack: justify;
   justify-content: space-between;
   position: relative;
-  left: 300px;
+  left: 370px;
   /* top: -55px; */
   width: 465px;
   height: 48px;
@@ -337,7 +347,9 @@ a {
   background-color: rgb(255, 255, 255);
   box-shadow: rgb(247, 247, 247) 0px 0px 0px 1px inset;
 }
-
+.css-11ntk83::placeholder {
+  color: 33380; /* Change this to the desired color */
+}
 
 /* 쿠폰 드롭다운 */
 .dropdown {
@@ -363,6 +375,7 @@ a {
   display: flex;
   transition: all 0.5s ease 0s;
   margin-right: 46px;
+  color:#333;
 }
 
 .amount {
@@ -379,6 +392,7 @@ a {
   height: 50px;
 }
 .answer{
-  width: 120px;
+  width: 100px;
+  color: #333;
 }
 </style>
