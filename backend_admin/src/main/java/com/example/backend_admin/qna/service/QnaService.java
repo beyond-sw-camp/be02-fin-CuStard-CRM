@@ -27,6 +27,7 @@ public class QnaService {
             GetQnaListRes qnaListRes = new GetQnaListRes();
             qnaListRes.setIdx(qna.getIdx());
             qnaListRes.setTitle(qna.getTitle());
+            qnaListRes.setCustomerIdx(qna.getCustomer().getIdx());
             Optional<Answer> resultAnswer = answerRepository.findByQnaIdx(qnaListRes.getIdx());
             if (resultAnswer.isPresent()) {
                 Answer answer = resultAnswer.get();
