@@ -42,8 +42,9 @@ public class CalculateLogService {
     }
 
     public GetSleepAccountGrowthRateRes sleepAccountGrowthRate(){
-        double sleepAccountGrowthRate = (loginLogRespository.findByOneDaysAgoDormancyCount() - loginLogRespository.findByTwoDaysAgoDormancyCount())/(double)loginLogRespository.findByTwoDaysAgoDormancyCount();
-
+        double sleepAccountGrowthRate = ((customerRepository.count() - loginLogRespository.findByOneDaysAgoActiveCount()) - (customerRepository.count() - loginLogRespository.findByTwoDaysAgoActiveCount()))/(double)loginLogRespository.findByTwoDaysAgoActiveCount()*100;
+        System.out.println("최종 : " + loginLogRespository.findByOneDaysAgoActiveCount());
+        System.out.println("초기 : " + loginLogRespository.findByTwoDaysAgoActiveCount());
         sleepAccountGrowthRate = Math.round(sleepAccountGrowthRate*100)/100.0;
 
         return GetSleepAccountGrowthRateRes.builder()
