@@ -197,7 +197,7 @@
               <div class="card">
                 <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                   <h4 class="card-title">월별 매출 </h4>
-                  <canvas id="barChart" style="height: 180px; display: block; width: 320px;" width="358" height="180" class="chartjs-render-monitor"></canvas>
+                  <canvas ref="monthChart" id="barChart" style="height: 180px; display: block; width: 320px;" width="358" height="180" class="chartjs-render-monitor"></canvas>
                 </div>
               </div>
             </div>
@@ -291,12 +291,68 @@ export default {
         }
       },
 
+      barData: {
+        datasets: [{
+          data: [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)',
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          '1월',
+          '2월',
+          '3월',
+          '4월',
+          '5월',
+          '6월',
+          '7월',
+          '8월',
+          '9월',
+          '10월',
+          '11월',
+          '12월'
+        ]
+      }, options: {
+        responsive: true,
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        }
+      },
       qnasWaitings: 0,
       qnasWaiting: []
 
 
     };
   },
+
+
   methods: {
     fetchVisitorCount() { //방문자 수
       axios.get('http://localhost:8000/today/login')
@@ -395,8 +451,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
 
-
-    createChart() {
+    createPieChart() {
       axios.get('http://localhost:8000/category/orders')
           .then(response => {
             const responseData = response.data;
@@ -416,6 +471,27 @@ export default {
           })
           .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
     },
+    createBarChart() {
+      axios.get('http://localhost:8000/month/orders')
+          .then(response => {
+            const responseData = response.data;
+            this.barData.datasets[0].data = responseData.array;
+            // 데이터 로딩이 완료된 후에 차트를 생성합니다.
+            this.$nextTick(() => {
+              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
+              if (this.chartInstance2) {
+                this.chartInstance2.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+              }
+              this.chartInstance2 = new Chart(this.$refs.monthChart, {
+                type: 'bar',
+                data: this.barData,
+                options: this.options
+              });
+            });
+          })
+          .catch(error => console.error("월별 매출액을 불러오는 데 실패했습니다.", error));
+    },
+
     loadArticles() {
       axios.get("http://localhost:8000/admin/qna/list")
           .then((response) => {
@@ -444,8 +520,8 @@ export default {
 
     this.fetchqnalist();
 
-
-    this.createChart();
+    this.createPieChart();
+    this.createBarChart()
     this.loadArticles();
 
   }

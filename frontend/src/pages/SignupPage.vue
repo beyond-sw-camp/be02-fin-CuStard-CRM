@@ -89,7 +89,7 @@ export default {
     async signup() {
       let result = await this.customerStore.signup(this.customerSignup)
       if (result === true) {
-        window.location.href = "/customer/login";
+        window.location.href = "/login";
       } else {
         alert("회원 가입 실패");
         this.resetSignupForm();
