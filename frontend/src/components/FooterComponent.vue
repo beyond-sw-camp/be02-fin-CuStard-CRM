@@ -32,8 +32,7 @@
 html, button, input, select, textarea {
     font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif;
     cursor: pointer;
-
-    width: 1284px;
+    width: 100%;
     /* border: 1px solid red; */
     margin: 0 auto;
 }
