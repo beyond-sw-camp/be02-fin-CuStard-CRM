@@ -14,7 +14,7 @@
         </div>
         <div class="article-content">
           <p>{{ qna.qnaContent }}</p>
-          <h3>답변:</h3>
+          <h2>답변</h2>
           <p>{{ qna.answerContent }}</p>
         </div>
       </div>
