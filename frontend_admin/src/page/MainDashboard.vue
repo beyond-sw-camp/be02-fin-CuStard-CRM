@@ -161,11 +161,47 @@
             <div class="col-lg-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
+                  <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ 수정수정 }} </h4>
+
                   <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp; | &nbsp; 미답변 내역 {{ qnasWaitings }}개 </h4>
+
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
                       <tr>
+
+                        <th>User</th>
+                        <th>title</th>
+                        <th>Status</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>Jacob</td>
+                        <td>{{ qnatitle }}</td>
+                        <td><label class="badge badge-danger">Pending</label></td>
+                      </tr>
+                      <tr>
+                        <td>Messsy</td>
+                        <td>상품이 고장나서 왔어요</td>
+                        <td><label class="badge badge-danger">Pending</label></td>
+                      </tr>
+                      <tr>
+                        <td>John</td>
+                        <td>상한 음식이 온 것 같아요</td>
+                        <td><label class="badge badge-danger">Pending</label></td>
+                      </tr>
+                      <tr>
+                        <td>Peter</td>
+                        <td>단순변심 환불도 가능할까요?</td>
+                        <td><label class="badge badge-success">Completed</label></td>
+                      </tr>
+                      <tr>
+                        <td>Dave</td>
+                        <td>배송이 언제 올까요?</td>
+                        <td><label class="badge badge-success">Completed</label></td>
+
                         <th>번호</th>
                         <th>제목</th>
                         <th>답변 상태</th>
@@ -182,6 +218,7 @@
                             답변 대기
                           </div>
                         </td>
+
                       </tr>
                       </tbody>
                     </table>
@@ -242,9 +279,14 @@ export default {
       todaySell: 0, //히루매출액
       todaySellCalc: 0, //히루매출액계산
 
+      qnatitle:'',
+
       iconClass: 'mdi-arrow-top-right', // 초기 아이콘 클래스 기본값 설정
       textClass: 'text-success', // 양수일 때 기본 텍스트 클래스 설정
       iconColorClass: 'text-success', // 양수일 때 기본 아이콘 색상 클래스 설정
+
+
+      qnalist:0,
 
 
       doughnutPieData: {
@@ -286,6 +328,7 @@ export default {
 
       qnasWaitings: 0,
       qnasWaiting: []
+
 
     };
   },
@@ -375,6 +418,19 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
 
+    fetchqnalist(){ //1:1문의 내역
+      axios.get('http://localhost:8000/admin/qna/list')
+          .then(response => {
+            this.qnatitle = response.data.title;
+            // this.todaySellCalc = response.data.difOrdersAmount;
+            // this.todaySellCalc = response.data.difOrdersAmount;
+            // this.todaySellCalc = response.data.difOrdersAmount;
+            // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+          })
+          .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
+    },
+
+
     createChart() {
       axios.get('http://localhost:8000/category/orders')
           .then(response => {
@@ -409,6 +465,7 @@ export default {
       this.$router.push({path: `/qnaread${idx}`});
 
     }
+
   },
   mounted() {
     this.fetchVisitorCount();
@@ -420,8 +477,12 @@ export default {
     this.fetchtodaySell();
     this.fetchtodaySellCalc();
 
+    this.fetchqnalist();
+
+
     this.createChart();
     this.loadArticles();
+
   }
 
 }

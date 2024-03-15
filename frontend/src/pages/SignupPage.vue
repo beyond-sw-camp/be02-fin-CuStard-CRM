@@ -1,5 +1,6 @@
 <template>
   <div class="signup-content">
+    <div class="all">
     <div class="signup-container">
       <div class="text-with-image">
         <img src="../assets/custard-logo.png" alt="Custard 로고">
@@ -17,19 +18,16 @@
       </div>
       <hr class="line">
       <br>
-      
+
       <form id="signupForm" @submit.prevent="signup">
         <div class="insertEmail"><h5>이메일</h5></div>
         <input placeholder="이메일" type="email" id="customerEmail" v-model="customerSignup.customerEmail" maxlength="100">
         <br>
-        <div class="emailAuth">
-          <button type="button" @click="sendEmailVerification" class="loginsubmit">이메일 인증하기</button>
-        </div>
         <div class="insertpassword"><h5>비밀번호</h5></div>
         <div class="insertpassword2">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
         <input placeholder="비밀번호" type="password" id="customerPwd" v-model="customerSignup.customerPwd" maxlength="100">
         <br>
-        
+
         <div class="insertcheck"><h5>약관동의</h5></div>
         <div class="consent-options">
           <div class="consent-option" v-for="(value, name) in consent" :key="name">
@@ -46,11 +44,11 @@
         <input class="loginsubmit" type="submit" value="가입하기">
       </form>
     </div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import { mapStores } from 'pinia'
 import { useCustomerStore } from '@/stores/useCustomerStore';
 
@@ -62,6 +60,7 @@ export default {
         customerPwd: '',
       },
       consent: {
+        agreeAll: false,
         agree1: false,
         agree2: false,
         agree3: false,
@@ -71,7 +70,20 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useCustomerStore)
+    ...mapStores(useCustomerStore),
+    filteredConsent() {
+      // "agreeAll" 항목을 제외한 consent 객체의 복사본을 반환합니다.
+      const filtered = { ...this.consent };
+      delete filtered.agreeAll; // "agreeAll" 항목을 제거합니다.
+      return filtered;
+    }
+  },
+  watch: {
+    'consent.agreeAll'(newVal) {
+      Object.keys(this.consent).forEach(key => {
+        this.consent[key] = newVal;
+      });
+    }
   },
   methods: {
     async signup() {
@@ -82,22 +94,6 @@ export default {
         alert("회원 가입 실패");
         this.resetSignupForm();
       }
-    },
-    sendEmailVerification() {
-      const email = this.customerSignup.customerEmail;
-      if (!this.validateEmail(email)) {
-        alert('올바른 이메일 주소를 입력해주세요.');
-        return;
-      }
-      axios.post('https://your-api-server.com/send-email-verification', { email })
-        .then(response => {
-          console.log('이메일 인증 링크 전송 성공:', response.data);
-          alert('이메일 인증 링크를 전송했습니다. 이메일을 확인해주세요.');
-        })
-        .catch(error => {
-          console.error('이메일 인증 링크 전송 에러:', error);
-          alert('이메일 인증 링크 전송 중 오류가 발생했습니다.');
-        });
     },
     resetSignupForm() {
       this.customerSignup = {
@@ -120,17 +116,16 @@ export default {
         agreePromotion: '이벤트, 쿠폰, 특가 알림 메일 및 SMS 등 수신 (선택)',
       };
       return labels[key] || '';
-    },
-    validateEmail(email) {
-      // 간단한 이메일 유효성 검사 로직을 여기에 추가하세요
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
   }
 };
 </script>
 
 <style>
-
+.all{
+  width: 80%
+;
+}
 *{
     font-family: 'GmarketSans';
 }
@@ -139,17 +134,16 @@ body {
     background-color: #f9f9f9;
     margin: 0;
     padding: 0;
-    display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     margin-bottom: 50px;
-    width: 100%;
 }
 
 .signup-content {
     justify-content: center;
     display: flex;
+  width: 100%;
 }
 
 .signup-container {

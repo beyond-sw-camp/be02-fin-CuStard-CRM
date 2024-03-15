@@ -105,15 +105,15 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.3);
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
   margin-top: 45px;
-  font-size: 22px; 
+  font-size: 22px;
   padding: 65px;
   background-image: url("../assets/Gray\ Minimalist\ New\ Collection\ Banner.gif");
-  background-position: 50% 49%;
+  background-position: 100% 49%;
   background-size: 1000px cover;
   background-color: #e2e2e2;
   background-repeat: no-repeat;
@@ -123,15 +123,15 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.3);
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
   margin-top: 45px;
-  font-size: 22px; 
+  font-size: 22px;
   padding: 65px;
   background-image: url("../assets/Baeuty.gif");
-  background-position: 50% 50%;
+  background-position: 100% 50%;
   background-size: 2200px cover;
   background-color: #CFC9C4;
   background-repeat: no-repeat;
@@ -141,15 +141,15 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.3);
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
   margin-top: 45px;
-  font-size: 22px; 
+  font-size: 22px;
   padding: 65px;
   background-image: url("../assets/burger.gif");
-  background-position: 50% 50%;
+  background-position: 130% 50%;
   background-size: 55% 150%;
   background-color: #fff;
   background-repeat: no-repeat;
@@ -159,12 +159,12 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.3);
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
   margin-top: 45px;
-  font-size: 22px; 
+  font-size: 22px;
   padding: 65px;
   background-image: url("../assets/sakai.gif");
   background-position: 50% 49%;
@@ -177,15 +177,15 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.3);
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
   margin-top: 45px;
-  font-size: 22px; 
+  font-size: 22px;
   padding: 65px;
   background-image: url("../assets/home.gif");
-  background-position: 50% 49%;
+  background-position: 185% 49%;
   background-size: 1000px cover;
   background-color: #f0f1f1;
   background-repeat: no-repeat;
