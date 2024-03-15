@@ -17,18 +17,17 @@
                     <div class="col-9">
                       <h4 class="text-muted font-weight-normal">방문자 수</h4>
                       <div class="d-flex align-items-center align-self-start" style="width: 250px;">
-                        <div style="font-size: 25px; font-weight: 500;">{{ visitorCount }}명</div>
-                        <div class="text-success ml-2 mb-0 font-weight-medium" style="font-size: 15px; font-weight: 500; padding-left: 5px;"> +{{ visitorCount }}명 </div>
+                        <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ visitorCount }}명</div>
+                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ visitorcalc }}명 </div>
                       </div>
                     </div>
                     <div class="col-3">
-                      <div class="icon icon-box-success">
-                        <span class="mdi mdi-arrow-top-right icon-item"></span>
+                      <div :class="['icon', iconColorClass]">
+                        <span :class="['mdi', 'icon-item', iconClass]"></span>
                       </div>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
             <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
@@ -38,17 +37,13 @@
                     <div class="col-9">
                       <h4 class="text-muted font-weight-normal">결제건 수</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:150px;">
-                        <div style="font-size: 25px; font-weight: 500;">67건</div>
-                        <div class="text-success ml-2 mb-0 font-weight-medium" style="font-size: 15px; font-weight: 500; padding-left: 5px;">
-                          +21건
-                        </div>
+                        <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ visitorCount }}명</div>
+                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ visitorcalc }}명 </div>
                       </div>
                     </div>
                     <div class="col-3">
-                      <div class="icon icon-box-success">
-                          <span
-                              class="mdi mdi-arrow-top-right icon-item"
-                          ></span>
+                      <div :class="['icon', iconColorClass]">
+                        <span :class="['mdi', 'icon-item', iconClass]"></span>
                       </div>
                     </div>
                   </div>
@@ -241,27 +236,7 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <footer class="footer">
-          <div
-              class="d-sm-flex justify-content-center justify-content-sm-between"
-          >
-              <span
-                  class="text-muted d-block text-center text-sm-left d-sm-inline-block"
-              >Copyright © bootstrapdash.com 2020</span
-              >
-            <span
-                class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
-            >
-                Free
-                <a
-                    href="https://www.bootstrapdash.com/bootstrap-admin-template/"
-                    target="_blank"
-                >Bootstrap admin templates</a
-                >
-                from Bootstrapdash.com</span
-            >
-          </div>
-        </footer>
+
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -276,27 +251,44 @@ import axios from "axios";
 export default {
   data() {
     return {
-      visitorCount: 0 // 방문자 수를 저장할 변수
+      visitorCount: 0, //방문자 수
+      visitorcalc: 0, //방문자 수 일별
+      iconClass: 'mdi-arrow-top-right', // 초기 아이콘 클래스 기본값 설정
+      textClass: 'text-success', // 양수일 때 기본 텍스트 클래스 설정
+      iconColorClass: 'text-success' // 양수일 때 기본 아이콘 색상 클래스 설정
     };
   },
   methods: {
     fetchVisitorCount() {
-      // 백엔드로부터 방문자 수를 받아오는 로직
-      // 여기서는 axios를 사용한 예시입니다.
-      axios.get('http://localhost:8080/login/logging')
+      axios.get('http://localhost:8000/today/login')
           .then(response => {
-            this.visitorCount = response.data.customerIdx; // 백엔드로부터 받아온 데이터로 visitorCount를 업데이트
+            this.visitorCount = response.data.todayLogin;
+          })
+          .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
+    },
+    fetchCalcCount(){
+      axios.get('http://localhost:8000/today/login')
+          .then(response => {
+            this.visitorcalc = response.data.difLogin;
+            // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+            this.iconClass = this.visitorcalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
+            this.iconColorClass = this.visitorcalc >= 0 ? 'text-success' : 'text-danger';
+            this.textClass = this.visitorcalc >= 0 ? 'text-success' : 'text-danger';
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     }
   },
   mounted() {
-    this.fetchVisitorCount(); // 컴포넌트가 마운트될 때 방문자 수를 불러옵니다.
+    this.fetchVisitorCount();
+    this.fetchCalcCount();
   }
 }
 
 </script>
 
 <style>
+.text-danger {
+  color: red;
+}
 
 </style>
