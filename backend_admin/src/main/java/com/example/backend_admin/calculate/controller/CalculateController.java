@@ -1,5 +1,6 @@
 package com.example.backend_admin.calculate.controller;
 
+import com.example.backend_admin.calculate.model.response.GetCategoryOrdersRes;
 import com.example.backend_admin.calculate.model.response.GetTodayLoginRes;
 import com.example.backend_admin.calculate.model.response.GetTodayOrdersRes;
 import com.example.backend_admin.calculate.model.response.GetTodaySignupRes;
@@ -29,4 +30,9 @@ public class CalculateController {
 
     @RequestMapping("/today/orders")
     public GetTodayOrdersRes todayOrders(){return calculateOrdersService.todayOrders();}
+
+    @RequestMapping("/category/orders")
+    public GetCategoryOrdersRes categoryOrdersRes(){
+        return calculateOrdersService.categoryOrderRes();
+    }
 }
