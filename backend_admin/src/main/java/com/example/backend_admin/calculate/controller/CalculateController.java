@@ -28,6 +28,18 @@ public class CalculateController {
     @RequestMapping("/today/orders")
     public GetTodayOrdersRes todayOrders(){return calculateOrdersService.todayOrders();}
 
+
+    @RequestMapping("/category/orders")
+    public GetCategoryOrdersRes categoryOrdersRes(){
+        return calculateOrdersService.categoryOrderRes();
+    }
+
+    @RequestMapping("/month/orders")
+    public GetCategoryOrdersRes monthOrdersRes(){
+        return calculateOrdersService.monthOrdersRes();
+    }
+
+
     @RequestMapping("/today/sleep")
     public GetSleepAccountGrowthRateRes sleepAccountGrowthRate(){
         return calculateLogService.sleepAccountGrowthRate();

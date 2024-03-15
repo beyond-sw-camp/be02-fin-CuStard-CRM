@@ -16,4 +16,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
     Integer countByCreatedDateAfter(LocalDateTime createdDate);
     @Query("SELECT COALESCE(SUM(o.productPrice), 0) FROM Orders o WHERE o.createdDate > :createdDate")
     Integer sumProductPriceByCreatedDateAfter(@Param("createdDate") LocalDateTime createdDate);
+
+    List<Orders> findByCreatedDateAfter(LocalDateTime createDate);
 }
