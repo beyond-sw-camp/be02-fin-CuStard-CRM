@@ -160,20 +160,21 @@
             <div class="col-lg-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 미답변 내역 3개 </h4>
+                  <h4 class="card-title" style="padding-bottom: 10px;">1:1 문의내역 처리 현황 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ 수정수정 }} </h4>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                       <tr>
                         <th>User</th>
-                        <th>Title</th>
+                        <th>title</th>
                         <th>Status</th>
                       </tr>
                       </thead>
                       <tbody>
                       <tr>
                         <td>Jacob</td>
-                        <td>배송이 7일째 안옵니다..</td>
+                        <td>{{ qnatitle }}</td>
                         <td><label class="badge badge-danger">Pending</label></td>
                       </tr>
                       <tr>
@@ -253,9 +254,13 @@ export default {
       todaySell:0, //히루매출액
       todaySellCalc:0, //히루매출액계산
 
+      qnatitle:'',
+
       iconClass: 'mdi-arrow-top-right', // 초기 아이콘 클래스 기본값 설정
       textClass: 'text-success', // 양수일 때 기본 텍스트 클래스 설정
-      iconColorClass: 'text-success' // 양수일 때 기본 아이콘 색상 클래스 설정
+      iconColorClass: 'text-success', // 양수일 때 기본 아이콘 색상 클래스 설정
+
+      qnalist:0,
     };
   },
   methods: {
@@ -343,6 +348,17 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
+    fetchqnalist(){ //1:1문의 내역
+      axios.get('http://localhost:8000/admin/qna/list')
+          .then(response => {
+            this.qnatitle = response.data.title;
+            // this.todaySellCalc = response.data.difOrdersAmount;
+            // this.todaySellCalc = response.data.difOrdersAmount;
+            // this.todaySellCalc = response.data.difOrdersAmount;
+            // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+          })
+          .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
+    },
   },
   mounted() {
     this.fetchVisitorCount();
@@ -353,6 +369,7 @@ export default {
     this.fetchtodaySignupCalc();
     this.fetchtodaySell();
     this.fetchtodaySellCalc();
+    this.fetchqnalist();
   }
 }
 

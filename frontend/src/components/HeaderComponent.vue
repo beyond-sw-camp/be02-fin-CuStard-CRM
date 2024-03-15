@@ -39,7 +39,7 @@
       </div>
 
       <div class="css-c4pbxv e15sbxqa0">
-        <div class="coupondiv" @mouseenter="fetchCoupons" @mouseleave="showDropdown = false">
+        <div class="coupondiv" @click="fetchCoupons" @mouseleave="showDropdown = false">
           보유 쿠폰
           <transition name="fade">
             <div v-if="showDropdown" class="css-14vnom0 e1n3mt0d1 coupon dropdown">
@@ -328,6 +328,7 @@ a {
   position: relative;
   width: 1050px;
   margin: 0px auto;
+  right: 100px;
 }
 
 .css-w444a2 {
@@ -392,7 +393,7 @@ a {
   height: 50px;
 }
 .answer{
-  width: 100px;
+  width: 120px;
   color: #333;
 }
 </style>

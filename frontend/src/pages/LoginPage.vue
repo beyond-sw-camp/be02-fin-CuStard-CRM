@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import {useCustomerStore} from "@/stores/useCustomerStore";
+
 export default {
   data() {
     return {
@@ -47,7 +49,32 @@ export default {
   },
   methods: {
     async login() {
-      // 로그인 로직을 구현하세요.
+      const customerStore = useCustomerStore(); // 스토어 직접 사용
+      const result = await customerStore.login(this.loginForm);
+
+      // 로그인 응답에서 status 값을 확인
+      if (result && result.status !== false) {
+        // status가 0이 아니면 로그인 성공 처리
+        const customerIdx = sessionStorage.getItem('customerIdx');
+        const accessToken = sessionStorage.getItem('atoken');
+
+        localStorage.setItem('customerIdx', customerIdx);
+        localStorage.setItem('accessToken', "Bearer " + accessToken);
+
+        console.log(`로그인 성공: ${customerIdx}`);
+
+        this.$router.push("/");
+      } else if (result && result.status === false) {
+        // status가 0이면 로그인 거부
+        alert("이메일 인증을 해주세요.");
+      } else {
+        // 그 외 경우는 로그인 실패 처리
+        alert("로그인 실패");
+        this.loginForm = {
+          customerEmail: '',
+          customerPwd: ''
+        };
+      }
     },
     toggleOrderSearch() {
       var orderSearchContainer = document.querySelector('.order-search-container');
@@ -70,6 +97,9 @@ export default {
   }
 };
 </script>
+
+
+
 
 <style scoped>
 * {
