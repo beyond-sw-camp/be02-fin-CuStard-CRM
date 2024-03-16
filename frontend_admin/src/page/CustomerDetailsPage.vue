@@ -28,8 +28,8 @@
                         <td>{{ customer.idx }}</td>
                         <td>{{ customer.customerEmail }}</td>
                         <td>{{ customer.level }}</td>
-                        <td>{{ customer.totalAmount}}</td>
-                        <td>{{ customer.date }}</td>
+                        <td>{{ customer.totalAmount }}</td>
+                        <td>{{ customer.getHaveCouponBaseResList }}</td>
                       </tr>
                       </tbody>
                     </table>
