@@ -29,7 +29,7 @@ public class BatchScheduler {
     private final BatchService batchService;
     private final LoginLogRespository loginLogRespository;
 
-    @Scheduled(cron = "40 * * * * *")
+//    @Scheduled(cron = "40 * * * * *")
     public void batch() throws MessagingException {
         // 읽는거
 //        batchService.batch();
