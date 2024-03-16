@@ -45,7 +45,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr class="table-info" v-for="customer in customers" :key="customer.idx">
+                      <tr class="table-info" v-for="customer in customers" :key="customer.idx" @click="goToCustomerDetail(customer.idx)">
                         <td>{{ customer.idx }}</td>
                         <td>{{ customer.customerEmail }}</td>
                         <td>{{ customer.level }}</td>
@@ -109,7 +109,9 @@ export default {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
           });
     },
-
+    goToCustomerDetail(idx) {
+      this.$router.push({ name: 'CustomerDetail', params: { customerId: idx } });
+    },
 
 
 
