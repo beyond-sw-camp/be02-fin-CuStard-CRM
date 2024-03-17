@@ -58,4 +58,17 @@ public class CalculateOrdersService {
 
         return GetCategoryOrdersRes.builder().array(array).build();
     }
+
+    public GetCategoryOrdersRes customerOrdersRes(Long idx){
+        List<Orders> ordersList = ordersRepository.findByCustomerIdx(idx);
+
+        int[] array = new int[6];
+        for(Orders orders : ordersList){
+            Long productIdx = orders.getProductIdx();
+            Integer category = productRepository.findById(productIdx).get().getCategory();
+            array[category] = orders.getProductPrice();
+        }
+
+        return GetCategoryOrdersRes.builder().array(array).build();
+    }
 }
