@@ -1,5 +1,6 @@
 package com.example.backend.havecoupon.service;
 
+import com.example.backend.common.BaseException;
 import com.example.backend.coupon.model.entity.Coupon;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.havecoupon.Repository.HaveCouponRepository;
@@ -19,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HaveCouponService {
     private final HaveCouponRepository haveCouponRepository;
-    public PostHaveCouponCreateRes create(PostHaveCouponCreateReq postHaveCouponCreateReq){
+    public PostHaveCouponCreateRes create(PostHaveCouponCreateReq postHaveCouponCreateReq)throws BaseException {
         HaveCoupon haveCoupon = haveCouponRepository.save(HaveCoupon.builder()
                 .count(postHaveCouponCreateReq.getCount())
                 .customer(Customer.builder()
@@ -37,7 +38,7 @@ public class HaveCouponService {
                 .couponIdx(postHaveCouponCreateReq.getCouponIdx())
                 .build();
     }
-    public List<GetHaveCouponListRes> list(){
+    public List<GetHaveCouponListRes> list()throws BaseException{
         List<HaveCoupon> result = haveCouponRepository.findAll();
         List<GetHaveCouponListRes> getHaveCouponListResList = new ArrayList<>();
 
@@ -57,7 +58,8 @@ public class HaveCouponService {
         return getHaveCouponListResList;
 
     }
-    public GetHaveCouponReadRes read(Long idx){
+    public GetHaveCouponReadRes read(Long idx)throws BaseException{
+        //TODO: 쿠폰을 가지지 않을 수 있으므로 else 상황에서 약간 수정 필요
         Optional<HaveCoupon> result = haveCouponRepository.findById(idx);
 
         if(result.isPresent()){

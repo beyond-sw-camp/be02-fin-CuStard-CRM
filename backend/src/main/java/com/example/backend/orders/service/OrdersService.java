@@ -1,5 +1,7 @@
 package com.example.backend.orders.service;
 
+import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.repository.CustomerRepository;
 import com.example.backend.orders.model.entity.GetPortoneRes;
@@ -20,6 +22,8 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
 
+import static com.example.backend.common.BaseResponseStatus.ORDERS_CREATEORDER_FAIL;
+
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +33,7 @@ public class OrdersService {
     private final CustomerRepository customerRepository;
 
     @Transactional
-    public ResponseEntity<GetOrdersCreateRes> createOrder(String token, String impUid) throws IamportResponseException, IOException {
+    public ResponseEntity<GetOrdersCreateRes> createOrder(String token, String impUid) throws IamportResponseException, IOException, BaseException {
         IamportResponse<Payment> iamportResponse = paymentService.getPaymentInfo(impUid);
         Integer amount = iamportResponse.getResponse().getAmount().intValue();
         String customDataString = iamportResponse.getResponse().getCustomData();
@@ -57,7 +61,7 @@ public class OrdersService {
 
             return ResponseEntity.ok(getOrdersCreateRes);
         }
-        return null;
+        throw new BaseException(ORDERS_CREATEORDER_FAIL);
     }
 
 }

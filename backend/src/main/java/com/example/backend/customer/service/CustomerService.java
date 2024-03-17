@@ -3,6 +3,8 @@ package com.example.backend.customer.service;
 
 
 
+import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.model.request.PostCustomerLoginReq;
 import com.example.backend.customer.model.request.PostCustomerSignupReq;
@@ -24,10 +26,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.*;
 
+import static com.example.backend.common.BaseResponseStatus.*;
 import static com.example.backend.common.CustomerLevel.NEWBIE;
 
 
@@ -54,12 +59,13 @@ public class CustomerService implements UserDetailsService {
     // Member CRUD
 
     // create
-    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq){
+
+    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq)throws BaseException {
 
         Optional<Customer> duplicatedMember = customerRepository.findByCustomerEmail(postCustomerSignupReq.getCustomerEmail());
-        // 멤버 정보를 빌드로 저장
-        if(!duplicatedMember.isPresent()) {
-
+        if (duplicatedMember.isPresent()){
+            throw new BaseException(CUSTOMER_SIGNUP_DUPLICATE_EMAIL);
+        }else{
             Customer customer = Customer.builder()
                     .customerEmail(postCustomerSignupReq.getCustomerEmail())
                     .customerPwd(passwordEncoder.encode(postCustomerSignupReq.getCustomerPwd()))
@@ -73,7 +79,7 @@ public class CustomerService implements UserDetailsService {
 
             Customer customer1 = customerRepository.findByCustomerEmail(customer.getCustomerEmail()).get();
 
-            customerEmailVerifyService.sendCustomerMail(customer1);
+//            customerEmailVerifyService.sendCustomerMail(customer1);
             Map<String, String> result = new HashMap<>();
             result.put("customerEmail", customer.getCustomerEmail());
 
@@ -85,23 +91,10 @@ public class CustomerService implements UserDetailsService {
                     .build();
 
             return postCustomerSignupRes;
-
-        } else {
-
-            PostCustomerSignupRes postCustomerSignupRes = PostCustomerSignupRes.builder()
-                    .isSuccess(false)
-                    .code(4000L)
-                    .message("요청 실패. 중복된 이메일입니다.")
-                    .result(null)
-                    .build();
-
-            return postCustomerSignupRes;
-
         }
 
-
     }
-    public PostCustomerLoginRes customerLogin(PostCustomerLoginReq postCustomerLoginReq) {
+    public PostCustomerLoginRes customerLogin(PostCustomerLoginReq postCustomerLoginReq) throws BaseException{
         Optional<Customer> member = customerRepository.findByCustomerEmail(postCustomerLoginReq.getCustomerEmail());
 
         if (member.isPresent()) {
@@ -115,13 +108,13 @@ public class CustomerService implements UserDetailsService {
                 loginLogService.loginLogging(member.get());
                 return postCustomerLoginRes;
             } else {
-                return null;
+                throw new BaseException(CUSTOMER_LOGIN_INCORRECT_ACCOUNT);
             }
         }
-        return null;
+        throw new BaseException(CUSTOMER_LOGIN_INCORRECT_ACCOUNT);
     }
 
-    public DeleteCustomerDeleteRes delete(String token){
+    public DeleteCustomerDeleteRes delete(String token) throws BaseException{
         token = TokenProvider.replaceToken(token);
 
         Optional<Customer> result = customerRepository.findByCustomerEmail(TokenProvider.getUsername(token));
@@ -136,64 +129,73 @@ public class CustomerService implements UserDetailsService {
 
             return deleteCustomerDeleteRes;
         }
-        return null;
+        throw new BaseException(CUSTOMER_DELETE_FAIL);
     }
 
-    public GetCustomerReadRes read(Long idx){
+    public GetCustomerReadRes read(Long idx)throws BaseException{
         Optional<Customer> result = customerRepository.findById(idx);
 
-        if (result.isPresent()){
-            Customer customer = result.get();
-            List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
+            if (result.isPresent()){
+                Customer customer = result.get();
+                List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
 
-            for (HaveCoupon haveCoupon: customer.getHaveCouponList()) {
-                getHaveCouponBaseResList.add(GetHaveCouponBaseRes.builder()
-                        .idx(haveCoupon.getIdx())
-                        .count(haveCoupon.getCount())
-                        .build());
+                for (HaveCoupon haveCoupon: customer.getHaveCouponList()) {
+                    getHaveCouponBaseResList.add(GetHaveCouponBaseRes.builder()
+                            .idx(haveCoupon.getIdx())
+                            .count(haveCoupon.getCount())
+                            .build());
+                }
+                return GetCustomerReadRes.builder()
+                        .idx(customer.getIdx())
+                        .customerEmail(customer.getCustomerEmail())
+                        .authority(customer.getAuthority())
+                        .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                        .totalAmount(customer.getTotalAmount())
+                        .level(customer.getLevel())
+                        .build();
+            }else {
+                throw new BaseException(CUSTOMER_READ_FAIL);
             }
-            return GetCustomerReadRes.builder()
-                    .idx(customer.getIdx())
-                    .customerEmail(customer.getCustomerEmail())
-                    .authority(customer.getAuthority())
-                    .getHaveCouponBaseResList(getHaveCouponBaseResList)
-                    .totalAmount(customer.getTotalAmount())
-                    .level(customer.getLevel())
-                    .build();
-        }
-        return null;
+
+
+
     }
-    public List<GetCustomerListRes> list(){
-        List<Customer> result = customerRepository.findAll();
+    public List<GetCustomerListRes> list() throws BaseException{
 
-        List<GetCustomerListRes> getCustomerListResList = new ArrayList<>();
+            List<Customer> result = customerRepository.findAll();
+            if (result.isEmpty()){
+                throw new BaseException(CUSTOMER_LIST_FAIL);
+            }
+            List<GetCustomerListRes> getCustomerListResList = new ArrayList<>();
 
-        for (Customer customer: result) {
-            List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
+            for (Customer customer: result) {
+                List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
 
 
-            for (HaveCoupon haveCoupon: customer.getHaveCouponList()) {
-                GetHaveCouponBaseRes getHaveCouponBaseRes = GetHaveCouponBaseRes.builder()
-                        .idx(haveCoupon.getIdx())
-                        .count(haveCoupon.getCount())
+                for (HaveCoupon haveCoupon: customer.getHaveCouponList()) {
+                    GetHaveCouponBaseRes getHaveCouponBaseRes = GetHaveCouponBaseRes.builder()
+                            .idx(haveCoupon.getIdx())
+                            .count(haveCoupon.getCount())
+                            .build();
+
+                    getHaveCouponBaseResList.add(getHaveCouponBaseRes);
+                }
+
+                GetCustomerListRes getCustomerListRes = GetCustomerListRes.builder()
+                        .idx(customer.getIdx())
+                        .customerEmail(customer.getCustomerEmail())
+                        .authority(customer.getAuthority())
+                        .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                        .totalAmount(customer.getTotalAmount())
+                        .level(customer.getLevel())
                         .build();
 
-                getHaveCouponBaseResList.add(getHaveCouponBaseRes);
+                getCustomerListResList.add(getCustomerListRes);
+
             }
+            return getCustomerListResList;
 
-            GetCustomerListRes getCustomerListRes = GetCustomerListRes.builder()
-                    .idx(customer.getIdx())
-                    .customerEmail(customer.getCustomerEmail())
-                    .authority(customer.getAuthority())
-                    .getHaveCouponBaseResList(getHaveCouponBaseResList)
-                    .totalAmount(customer.getTotalAmount())
-                    .level(customer.getLevel())
-                    .build();
 
-            getCustomerListResList.add(getCustomerListRes);
-
-        }
-        return getCustomerListResList;
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

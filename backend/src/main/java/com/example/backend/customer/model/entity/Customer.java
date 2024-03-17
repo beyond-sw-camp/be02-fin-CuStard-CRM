@@ -11,6 +11,7 @@ import com.example.backend.log.entity.SearchLog;
 import com.example.backend.orders.model.entity.Orders;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,8 +31,9 @@ public class Customer extends BaseTimeEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
-
+    @Column(nullable = false, length = 25, unique = true)
     private String customerEmail;
+    @Column(nullable = false, length = 25)
     private String customerPwd;
     private String authority;
     private boolean status;

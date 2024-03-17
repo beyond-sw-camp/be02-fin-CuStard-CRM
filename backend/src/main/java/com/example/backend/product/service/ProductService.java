@@ -1,6 +1,8 @@
 package com.example.backend.product.service;
 
 
+import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.repository.CustomerRepository;
 import com.example.backend.log.entity.ProductDetailLog;
@@ -21,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.example.backend.common.BaseResponseStatus.*;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -31,7 +35,7 @@ public class ProductService {
     private final ProductDetailLogRespository productDetailLogRespository;
     private final OrdersRepository ordersRepository;
 
-    public List<GetProductListRes> list() {
+    public List<GetProductListRes> list() throws BaseException {
         List<GetProductListRes> productListRes = new ArrayList<>();
 
         List<Product> productList = productRepository.findAll();
@@ -48,7 +52,7 @@ public class ProductService {
         return productListRes;
     }
 
-    public GetProductRes read(Long idx, Authentication authentication) {
+    public GetProductRes read(Long idx, Authentication authentication)throws BaseException {
         Optional<Product> result = productRepository.findById(idx);
 
         if (result.isPresent()) {
@@ -71,10 +75,10 @@ public class ProductService {
             }
             return getProductRes;
         }
-        return null;
+        throw new BaseException(PRODUCT_READ_FAIL);
     }
 
-    public List<GetProductListRes> searchByName(String keyword, Authentication authentication) {
+    public List<GetProductListRes> searchByName(String keyword, Authentication authentication)throws BaseException {
         List<Product> productList = productRepository.findByProductNameContaining(keyword);
 
         List<GetProductListRes> productListRes = new ArrayList<>();
@@ -99,7 +103,7 @@ public class ProductService {
         return productListRes;
     }
 
-    public GetProductRecRes recommend() {
+    public GetProductRecRes recommend() throws BaseException{
         // 아이템 간의 유사도를 계산하기 위한 아이템 특성 정보
         Map<String, Map<String, Double>> productFeatures = new HashMap<>();
         // 예시 아이템의 특성 정보 추가
