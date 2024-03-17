@@ -20,73 +20,16 @@
                       <thead>
                       <tr>
                         <th>번호</th>
-                        <th> 고객 이름 </th>
                         <th> 쿠폰 카테고리 </th>
                         <th> 할인율 </th>
-                        <th> 관리자 이름 </th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>
-                          1
-                        </td>
-                        <td>
-                          <img src="assets/images/faces/face1.jpg" alt="image" />
-                          <span class="pl-2">이창훈</span>
-                        </td>
-                        <td> 가전 </td>
-                        <td> 50% </td>
-                        <td> 김주연 </td>
-
-                      </tr>
-                      <tr>
-                        <td>
-                          2
-                        </td>
-                        <td>
-                          <img src="assets/images/faces/face2.jpg" alt="image" />
-                          <span class="pl-2">Estella Bryan</span>
-                        </td>
-                        <td> 02312 </td>
-                        <td> $14,500 </td>
-                        <td> Website </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          3
-                        </td>
-                        <td>
-                          <img src="assets/images/faces/face5.jpg" alt="image" />
-                          <span class="pl-2">Lucy Abbott</span>
-                        </td>
-                        <td> 02312 </td>
-                        <td> $14,500 </td>
-                        <td> App design </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          4
-                        </td>
-                        <td>
-                          <img src="assets/images/faces/face3.jpg" alt="image" />
-                          <span class="pl-2">Peter Gill</span>
-                        </td>
-                        <td> 02312 </td>
-                        <td> $14,500 </td>
-                        <td> Development </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          5
-                        </td>
-                        <td>
-                          <img src="assets/images/faces/face4.jpg" alt="image" />
-                          <span class="pl-2">Sallie Reyes</span>
-                        </td>
-                        <td> 02312 </td>
-                        <td> $14,500 </td>
-                        <td> Website </td>
+                      <tr v-for="coupon in coupons" :key="coupon.idx">
+                        <td>{{ coupon.idx }}</td>
+                        <td>{{ getCategoryName(coupon.couponCategory) }}</td>
+                        <td>{{ coupon.discount }}%</td>
+<!--                        <td>{{ coupon.getHaveCouponBaseResList }}</td>-->
                       </tr>
                       </tbody>
                     </table>
@@ -111,7 +54,7 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="exampleSelectGender">Gender</label>
+                      <label for="exampleSelectGender">Category</label>
                       <select class="form-control" id="exampleSelectGender">
                         <option>패션</option>
                         <option>뷰티</option>
@@ -134,17 +77,6 @@
             </div>
           </div>
         </div>
-        <div class="content-wrapper">
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-            <div class="d-sm-flex justify-content-center justify-content-sm-between">
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
-            </div>
-          </footer>
-          <!-- partial -->
-        </div>
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
@@ -153,9 +85,48 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
-}
+export default {
+  data() {
+    return {
+      coupons: [],
+    };
+  },
+  methods: {
+    fetchCoupon() {
+      axios.get("http://localhost:8080/coupon/list")
+          .then(response => {
+            console.log(response);
+            this.coupons = response.data;
+            console.log(this.coupons); // 데이터 확인
+          })
+          .catch(error => {
+            console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
+          });
+    },
+    getCategoryName(category) {
+      if (category === '1') {
+        return '의류';
+      } else if (category === '2') {
+        return '뷰티';
+      } else if (category === '3') {
+        return '식품';
+      } else if (category === '4') {
+        return '스포츠/레저';
+      } else if (category === '5') {
+        return '가전';
+      } else {
+        return '기타'; // 기타 카테고리를 처리하기 위한 기본 반환값
+      }
+    },
+
+
+  },
+  mounted() {
+    this.fetchCoupon();
+  }
+};
 </script>
 
 <style>
