@@ -75,12 +75,10 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-9">
-                      <h4 class="text-muted font-weight-normal">휴면고객 재접속률</h4>
+                      <h4 class="text-muted font-weight-normal">휴면고객 <br> 재접속</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:250px;">
-                        <div style="font-size: 25px; font-weight: 500;">수정수정수정</div>
-                        <div class="text-success ml-2 mb-0 font-weight-medium" style="font-size: 15px; font-weight: 500; padding-left: 5px;">
-                          +5명
-                        </div>
+                        <div style="font-size: 25px; font-weight: 500;">{{ sleepAccountGrowthRate }}명</div>
+                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ sleepAccountGrowthRate }}명 </div>
                       </div>
                     </div>
                     <div class="col-3">
@@ -243,6 +241,9 @@ export default {
 
       todaySell: 0, //히루매출액
       todaySellCalc: 0, //히루매출액계산
+
+      dormatCs: 0,
+      dormatCsCalc: 0,
 
       qnatitle:'',
 
@@ -438,6 +439,29 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
+    fetchtdormantcs() { //휴면 고객
+      axios.get('http://localhost:8000/today/sleep')
+          .then(response => {
+            this.dormatCs = response.data.sleepAccountGrowthRate;
+            // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+            this.iconClass = this.dormatCs >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
+            this.iconColorClass = this.dormatCs >= 0 ? 'text-success' : 'text-danger';
+            this.textClass = this.dormatCs >= 0 ? 'text-success' : 'text-danger';
+          })
+          .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
+    },
+    fetchtdormantcscalc() { //휴면 고객 계산
+      axios.get('http://localhost:8000/today/sleep')
+          .then(response => {
+            this.dormatCsCalc = response.data.todayOrdersAmount;
+            // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+            this.iconClass = this.dormatCsCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
+            this.iconColorClass = this.dormatCsCalc >= 0 ? 'text-success' : 'text-danger';
+            this.textClass = this.dormatCsCalc >= 0 ? 'text-success' : 'text-danger';
+          })
+          .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
+    },
+
 
     fetchqnalist(){ //1:1문의 내역
       axios.get('http://localhost:8000/admin/qna/list')
