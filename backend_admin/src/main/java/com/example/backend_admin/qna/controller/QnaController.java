@@ -1,5 +1,6 @@
 package com.example.backend_admin.qna.controller;
 
+import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.qna.model.response.GetQnaListRes;
 import com.example.backend_admin.qna.model.response.PostQnaReadRes;
 import com.example.backend_admin.qna.service.QnaService;
@@ -16,14 +17,12 @@ import java.util.List;
 public class QnaController {
     private final QnaService qnaService;
     @RequestMapping(method = RequestMethod.POST, value = "/read/{idx}")
-    public ResponseEntity<PostQnaReadRes> readArticle(@PathVariable Long idx) {
-        PostQnaReadRes postQnaReadRes = qnaService.readQna(idx);
-        return ResponseEntity.ok(postQnaReadRes);
+    public BaseResponse<PostQnaReadRes> readArticle(@PathVariable Long idx) {
+        return qnaService.readQna(idx);
     }
     @RequestMapping(method = RequestMethod.GET, value = "/list")
-    public ResponseEntity<List<GetQnaListRes>> findAll() {
-        List<GetQnaListRes> articles = qnaService.list();
-        return ResponseEntity.ok(articles);
+    public BaseResponse<List<GetQnaListRes>> findAll() {
+        return qnaService.list();
     }
 
 }
