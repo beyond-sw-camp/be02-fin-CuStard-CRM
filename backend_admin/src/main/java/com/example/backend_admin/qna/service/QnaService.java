@@ -60,7 +60,7 @@ public class QnaService {
                 //답변이 없는 경우
             }
         } else {
-            return BaseResponse.failResponse(404, "존재하지 않는 게시물 입니다.");
+            return BaseResponse.failResponse(404, "존재하지 않는 게시물입니다.");
         }
     }
 }
