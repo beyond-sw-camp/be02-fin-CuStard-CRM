@@ -105,20 +105,43 @@ export default {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
           });
     },
-    getCategoryName(category) {
-      if (category === '1') {
+    getCategoryName(couponCategory) {
+      if (couponCategory === 1) {
         return '의류';
-      } else if (category === '2') {
+      } else if (couponCategory === 2) {
         return '뷰티';
-      } else if (category === '3') {
+      } else if (couponCategory === 3) {
         return '식품';
-      } else if (category === '4') {
+      } else if (couponCategory === 4) {
         return '스포츠/레저';
-      } else if (category === '5') {
+      } else if (couponCategory === 5) {
         return '가전';
-      } else {
-        return '기타'; // 기타 카테고리를 처리하기 위한 기본 반환값
       }
+    },
+    submitCoupon() {
+      const categoryMapping = {
+        '패션': 1,
+        '뷰티': 2,
+        '가전': 3,
+        '식품': 4,
+        '스포츠/레저': 5,
+      };
+
+      // 선택된 카테고리 값을 백엔드가 요구하는 숫자 코드로 변환
+      const couponCategory = categoryMapping[this.couponData.category];
+
+      axios.post("http://localhost:8080/coupon/create", {
+        // adminIdx: 1, // 예시 값, 실제로는 적절한 값을 사용해야 합니다.
+        discount: this.couponData.discount,
+        couponCategory: couponCategory, // 변환된 카테고리 코드 사용
+      })
+          .then(response => {
+            console.log(response);
+            alert('쿠폰이 성공적으로 생성되었습니다.');
+          })
+          .catch(error => {
+            console.error('쿠폰 생성 중 오류가 발생했습니다:', error);
+          });
     },
 
 

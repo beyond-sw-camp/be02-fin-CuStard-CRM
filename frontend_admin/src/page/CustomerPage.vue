@@ -19,12 +19,12 @@
                     </select>
                     <select id="gradeFilter" class="filter" @change="sortCustomers('grade', $event.target.value)">
                       <option value="">등급별 선택</option>
-                      <option value="vip">DIAMOND</option>
-                      <option value="premium">PLATINUM</option>
-                      <option value="regular">GOLD</option>
-                      <option value="regular">SILVER</option>
-                      <option value="regular">BRONZE</option>
-                      <option value="regular">NEWBIE</option>
+                      <option value="DIAMOND">DIAMOND</option>
+                      <option value="PLATINUM">PLATINUM</option>
+                      <option value="GOLD">GOLD</option>
+                      <option value="SILVER">SILVER</option>
+                      <option value="BRONZE">BRONZE</option>
+                      <option value="NEWBIE">NEWBIE</option>
 
                     </select>
 
@@ -120,8 +120,9 @@ export default {
     },
 
     sortCustomers(type, value) {
-      // 정렬 또는 필터링을 수행하기 전에 항상 원본 목록을 기준으로 시작합니다.
-      this.customers = [...this.originalCustomers];
+      this.customers = [...this.originalCustomers]; // 원본 데이터로 리셋
+
+      console.log('Filtering by:', type, value);
 
       if (type === 'amount') {
         if (value === 'highToLow') {
@@ -129,13 +130,15 @@ export default {
         } else if (value === 'lowToHigh') {
           this.customers.sort((a, b) => a.totalAmount - b.totalAmount);
         }
-      } else if (type === 'grade') {
-        if (value) {
-          // 선택된 등급에 해당하는 고객만 필터링
-          this.customers = this.customers.filter(customer => customer.level === value);
-        }
+      } else if (type === 'grade' && value) {
+        this.customers = this.customers.filter(customer => customer.level === value);
       }
+
+      console.log('Filtered customers:', this.customers);
     },
+
+
+
 
   },
   mounted() {

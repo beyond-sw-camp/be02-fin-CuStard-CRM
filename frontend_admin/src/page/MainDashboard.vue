@@ -18,12 +18,15 @@
                       <h4 class="text-muted font-weight-normal">방문자 수</h4>
                       <div class="d-flex align-items-center align-self-start" style="width: 300px;">
                         <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ visitorCount }}명</div>
-                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ visitorcalc }}명 </div>
+                        <div :class="['ml-2', 'mb-0', 'font-weight-medium', visitorcalc >= 0 ? 'text-success' : 'text-danger']">
+                          {{ visitorcalc }}명
+                        </div>
+
                       </div>
                     </div>
                     <div class="col-3">
-                      <div :class="['icon', iconColorClass]">
-                        <span :class="['mdi', 'icon-item', iconClass]"></span>
+                      <div :class="['icon', visitorcalc >= 0 ? 'text-success' : 'text-danger']">
+                        <span :class="['mdi', 'icon-item', visitorcalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left']"></span>
                       </div>
                     </div>
                   </div>
@@ -38,12 +41,12 @@
                       <h4 class="text-muted font-weight-normal">결제건 수</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:150px;">
                         <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ todayOrder }}건</div>
-                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ todayOrderCalc }}건 </div>
+                        <div :class="['ml-2', 'mb-0', 'font-weight-medium', todayOrderCalc >= 0 ? 'text-success' : 'text-danger'] " > {{ todayOrderCalc }}건 </div>
                       </div>
                     </div>
                     <div class="col-3">
-                      <div :class="['icon', iconColorClass]">
-                        <span :class="['mdi', 'icon-item', iconClass]"></span>
+                      <div :class="['icon', todayOrderCalc >= 0 ? 'text-success' : 'text-danger']">
+                        <span :class="['mdi', 'icon-item', todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left']"></span>
                       </div>
                     </div>
                   </div>
@@ -58,12 +61,12 @@
                       <h4 class="text-muted font-weight-normal">신규 유입</h4>
                       <div class="d-flex align-items-center align-self-start" style="width:150px;">
                         <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ newSignup }}명</div>
-                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ newSignupCalc }}명 </div>
+                        <div :class="[newSignupCalcClass,'ml-2', 'mb-0', 'font-weight-medium'] "> {{ newSignupCalc }}명 </div>
                       </div>
                     </div>
                     <div class="col-3">
-                      <div :class="['icon', iconColorClass]">
-                        <span :class="['mdi', 'icon-item', iconClass]"></span>
+                      <div :class="['icon', todayOrderCalc >= 0 ? 'text-success' : 'text-danger']">
+                        <span :class="['mdi', 'icon-item', todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left']"></span>
                       </div>
                     </div>
                   </div>
@@ -75,15 +78,15 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-9">
-                      <h4 class="text-muted font-weight-normal">휴면고객 <br> 재접속</h4>
+                      <h4 class="text-muted font-weight-normal">휴면고객재접속</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:250px;">
-                        <div style="font-size: 25px; font-weight: 500;">{{ sleepAccountGrowthRate }}명</div>
-                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ sleepAccountGrowthRate }}명 </div>
+                        <div style="font-size: 25px; font-weight: 500;">{{ dormatCs }}명</div>
+                        <div :class="[dormatCsCalcClass ,'ml-2', 'mb-0', 'font-weight-medium'] "> {{ dormatCsCalc }}명 </div>
                       </div>
                     </div>
                     <div class="col-3">
-                      <div :class="['icon', iconColorClass]">
-                        <span :class="['mdi', 'icon-item', iconClass]"></span>
+                      <div :class="['icon', todayOrderCalc >= 0 ? 'text-success' : 'text-danger']">
+                        <span :class="['mdi', 'icon-item', todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left']"></span>
                       </div>
                     </div>
                   </div>
@@ -98,12 +101,12 @@
                       <h4 class="text-muted font-weight-normal">하루 매출액</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:250px;">
                         <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ todaySell }}원</div>
-                        <div :class="['text-success' ,'ml-2', 'mb-0', 'font-weight-medium',textClass] " style="font-size: 15px; font-weight: 500; padding-left: 5px;"> {{ todaySellCalc }}원 </div>
+                        <div :class="[todaySellCalcClass, 'ml-2', 'mb-0', 'font-weight-medium'] "> {{ todaySellCalc }}원 </div>
                       </div>
                     </div>
                     <div class="col-3">
-                      <div :class="['icon', iconColorClass]">
-                        <span :class="['mdi', 'icon-item', iconClass]"></span>
+                      <div :class="['icon', todayOrderCalc >= 0 ? 'text-success' : 'text-danger']">
+                        <span :class="['mdi', 'icon-item', todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left']"></span>
                       </div>
                     </div>
                   </div>
@@ -255,6 +258,13 @@ export default {
       qnalist:0,
 
 
+      visitorCalcClass: '', // 방문자 수 계산에 따른 클래스
+      todayOrderCalcClass: '', // 결제건 수 계산에 따른 클래스
+      newSignupCalcClass: '', // 신규 유입 계산에 따른 클래스
+      todaySellCalcClass: '', // 하루 매출액 계산에 따른 클래스
+      dormatCsCalcClass: '', // 휴면 고객 계산에 따른 클래스
+
+
       doughnutPieData: {
         datasets: [{
           data: [],
@@ -355,6 +365,15 @@ export default {
 
 
   methods: {
+
+    updateCalcClasses() {
+      this.visitorCalcClass = this.visitorcalc >= 0 ? 'text-success' : 'text-danger';
+      this.todayOrderCalcClass = this.todayOrderCalc >= 0 ? 'text-success' : 'text-danger';
+      this.newSignupCalcClass = this.newSignupCalc >= 0 ? 'text-success' : 'text-danger';
+      this.todaySellCalcClass = this.todaySellCalc >= 0 ? 'text-success' : 'text-danger';
+      this.dormatCsCalcClass = this.dormatCsCalc >= 0 ? 'text-success' : 'text-danger';
+    },
+
     fetchVisitorCount() { //방문자 수
       axios.get('http://localhost:8000/today/login')
           .then(response => {
@@ -362,17 +381,19 @@ export default {
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
-    fetchCalcCount() { //방문자 수
+    fetchCalcCount() {
       axios.get('http://localhost:8000/today/login')
           .then(response => {
             this.visitorcalc = response.data.difLogin;
-            // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
-            this.iconClass = this.visitorcalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
-            this.iconColorClass = this.visitorcalc >= 0 ? 'text-success' : 'text-danger';
-            this.textClass = this.visitorcalc >= 0 ? 'text-success' : 'text-danger';
+            // 데이터 업데이트 후 클래스 업데이트
+            this.updateCalcClasses();
+            this.iconClass = this.todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
+            this.iconColorClass = this.todayOrderCalc >= 0 ? 'text-success' : 'text-danger';
+            this.textClass = this.todayOrderCalc >= 0 ? 'text-success' : 'text-danger';
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
+
     fetchOrders() { //결제  수
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
@@ -389,6 +410,7 @@ export default {
           .then(response => {
             this.todayOrderCalc = response.data.difOrdersCount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+            this.updateCalcClasses();
             this.iconClass = this.todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.todayOrderCalc >= 0 ? 'text-success' : 'text-danger';
             this.textClass = this.todayOrderCalc >= 0 ? 'text-success' : 'text-danger';
@@ -411,6 +433,7 @@ export default {
           .then(response => {
             this.newSignupCalc = response.data.difSignup;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+            this.updateCalcClasses();
             this.iconClass = this.newSignupCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.newSignupCalc >= 0 ? 'text-success' : 'text-danger';
             this.textClass = this.newSignupCalc >= 0 ? 'text-success' : 'text-danger';
@@ -433,6 +456,7 @@ export default {
           .then(response => {
             this.todaySellCalc = response.data.difOrdersAmount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+            this.updateCalcClasses();
             this.iconClass = this.todaySellCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.todaySellCalc >= 0 ? 'text-success' : 'text-danger';
             this.textClass = this.todaySell >= 0 ? 'text-success' : 'text-danger';
@@ -453,8 +477,9 @@ export default {
     fetchtdormantcscalc() { //휴면 고객 계산
       axios.get('http://localhost:8000/today/sleep')
           .then(response => {
-            this.dormatCsCalc = response.data.todayOrdersAmount;
+            this.dormatCsCalc = response.data.sleepAccountGrowthRate;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
+            this.updateCalcClasses();
             this.iconClass = this.dormatCsCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.dormatCsCalc >= 0 ? 'text-success' : 'text-danger';
             this.textClass = this.dormatCsCalc >= 0 ? 'text-success' : 'text-danger';
@@ -555,8 +580,10 @@ export default {
 </script>
 
 <style>
-.text-danger {
-  color: red;
+.text-success {
+  color: #28a745; /* Green for positive numbers */
 }
-
+.text-danger {
+  color: #dc3545; /* Red for negative numbers */
+}
 </style>
