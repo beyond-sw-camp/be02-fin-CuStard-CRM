@@ -30,8 +30,8 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search/{keyword}")
-    public ResponseEntity<List<GetProductListRes>> searchByName(@PathVariable String keyword, Authentication authentication){
-        return ResponseEntity.ok().body(productService.searchByName(keyword, authentication));
+    public ResponseEntity<List<GetProductListRes>> searchByName(@PathVariable String keyword, @RequestHeader(value = "Authorization") String token){
+        return ResponseEntity.ok().body(productService.searchByName(keyword, token));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/recommend")
