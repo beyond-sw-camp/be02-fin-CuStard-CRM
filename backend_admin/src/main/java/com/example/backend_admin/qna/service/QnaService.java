@@ -2,6 +2,7 @@ package com.example.backend_admin.qna.service;
 
 import com.example.backend_admin.answer.model.Answer;
 import com.example.backend_admin.answer.repository.AnswerRepository;
+import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.qna.model.Qna;
 import com.example.backend_admin.qna.model.response.GetQnaListRes;
 import com.example.backend_admin.qna.model.response.PostQnaReadRes;
@@ -19,7 +20,7 @@ public class QnaService {
     private final QnaRepository qnaRepository;
     private final AnswerRepository answerRepository;
 
-    public List<GetQnaListRes> list() {
+    public BaseResponse<List<GetQnaListRes>> list() {
         List<Qna> resultQna = qnaRepository.findAll();
         List<GetQnaListRes> getQnaListRes = new ArrayList<>();
 
@@ -35,31 +36,31 @@ public class QnaService {
             }
             getQnaListRes.add(qnaListRes);
         }
-        return getQnaListRes;
+        return BaseResponse.successResponse("1:1 문의 목록 조회 성공", getQnaListRes);
     }
 
-    public PostQnaReadRes readQna(Long idx) {
+    public BaseResponse<PostQnaReadRes> readQna(Long idx) {
         Optional<Qna> result = qnaRepository.findById(idx);
         if (result.isPresent()) {
             Qna qna = result.get();
             Optional<Answer> resultAnswer = answerRepository.findByQnaIdx(idx);
             if (resultAnswer.isPresent()) {
                 Answer answer = resultAnswer.get();
-                return PostQnaReadRes.builder()
+                return BaseResponse.successResponse("1:1 문의 상세 조회 성공", PostQnaReadRes.builder()
                         .title(qna.getTitle())
                         .qnaContent(qna.getQnaContent())
                         .answerContent(answer.getAnswerContent())
-                        .build();
+                        .build());
                 //답변이 있는 경우
             } else {
-                return PostQnaReadRes.builder()
+                return BaseResponse.successResponse("1:1 문의 상세 조회 성공", PostQnaReadRes.builder()
                         .title(qna.getTitle())
                         .qnaContent(qna.getQnaContent())
-                        .build();
+                        .build());
                 //답변이 없는 경우
             }
-        }else{
-            return null;
+        } else {
+            return BaseResponse.failResponse(404, "존재하지 않는 게시물입니다.");
         }
     }
 }
