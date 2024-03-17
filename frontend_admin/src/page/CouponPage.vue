@@ -105,6 +105,7 @@ export default {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
           });
     },
+
     getCategoryName(couponCategory) {
       if (couponCategory === 1) {
         return '의류';
@@ -143,6 +144,7 @@ export default {
             console.error('쿠폰 생성 중 오류가 발생했습니다:', error);
           });
     },
+
 
 
   },

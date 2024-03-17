@@ -78,6 +78,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-9">
+
                       <h4 class="text-muted font-weight-normal">휴면고객재접속</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:250px;">
                         <div style="font-size: 25px; font-weight: 500;">{{ dormatCs }}명</div>
@@ -477,9 +478,11 @@ export default {
     fetchtdormantcscalc() { //휴면 고객 계산
       axios.get('http://localhost:8000/today/sleep')
           .then(response => {
+
             this.dormatCsCalc = response.data.sleepAccountGrowthRate;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.updateCalcClasses();
+
             this.iconClass = this.dormatCsCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.dormatCsCalc >= 0 ? 'text-success' : 'text-danger';
             this.textClass = this.dormatCsCalc >= 0 ? 'text-success' : 'text-danger';
