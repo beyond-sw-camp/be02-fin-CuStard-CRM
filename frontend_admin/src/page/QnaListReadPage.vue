@@ -65,8 +65,11 @@ export default {
         answerContent: this.answerContent
       };
 
-      axios.post(`http://localhost:8000/admin/qna/answer/${this.$route.params.idx}`, requestData)
-          .then(response => {
+      axios.post(`http://localhost:8000/admin/qna/answer/${this.$route.params.idx}`, requestData, {
+        headers:{
+          Authorization: localStorage.getItem("accessToken")
+        }
+      }).then(response => {
             if (response.status === 200) {
               alert("답변이 작성되었습니다.");
             } else {
