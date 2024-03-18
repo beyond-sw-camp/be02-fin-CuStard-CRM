@@ -4,7 +4,9 @@ import com.example.backend_admin.calculate.model.response.GetSleepAccountGrowthR
 import com.example.backend_admin.calculate.model.response.GetTodayLoginByThreeHour;
 import com.example.backend_admin.calculate.model.response.GetTodayLoginRes;
 import com.example.backend_admin.calculate.model.response.GetTodaySignupRes;
+import com.example.backend_admin.customer.entity.Customer;
 import com.example.backend_admin.customer.repository.CustomerRepository;
+import com.example.backend_admin.log.entity.LoginLog;
 import com.example.backend_admin.log.repository.LoginLogRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -72,5 +74,8 @@ public class CalculateLogService {
         }
 
         return GetTodayLoginByThreeHour.builder().timeDataList(timeDataList).build();
+    }
+    public List<List<Long>> findLoginTime(Long idx){
+        return loginLogRespository.findLoginTime(idx);
     }
 }
