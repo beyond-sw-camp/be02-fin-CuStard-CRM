@@ -54,11 +54,16 @@ public class BatchService {
 
     }
 
-    public void sleeperCouponWriter(SleeperCouponWriterReq sleeperCouponWriterReq) throws MessagingException {
-        adminService.sleeperCoupon(PostAdminSleeperCouponReq.builder()
-                .targetList(sleeperCouponWriterReq.getTargetList())
-                .build());
-        emailService.sendSleeperEmail(sleeperCouponWriterReq.getTargetList());
+    public ResponseEntity sleeperCouponWriter(SleeperCouponWriterReq sleeperCouponWriterReq) throws MessagingException {
+        try {
+            adminService.sleeperCoupon(PostAdminSleeperCouponReq.builder()
+                    .targetList(sleeperCouponWriterReq.getTargetList())
+                    .build());
+            emailService.sendSleeperEmail(sleeperCouponWriterReq.getTargetList());
+            return ResponseEntity.ok().body("쿠폰 발급 완료");
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
 
     }
     public LevelCouponReaderRes levelCouponReader(){

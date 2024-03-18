@@ -102,7 +102,7 @@ public enum BaseResponseStatus {
     ADMIN_ANSWER_ISPRESENT(false,8005,"이미 답변이 존재하는 게시물입니다."),
 
     /*
-     * 9000 : QNA
+     * 9000 : rating
      */
 
     /*
