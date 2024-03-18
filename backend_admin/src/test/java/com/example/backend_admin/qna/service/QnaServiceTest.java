@@ -40,7 +40,6 @@ class QnaServiceTest {
     private static Admin admin;
     private static Qna qna1;
     private static Qna qna2;
-
     private static Answer answer;
 
     @BeforeAll
@@ -123,7 +122,6 @@ class QnaServiceTest {
 
         //when
         BaseResponse<PostQnaReadRes> response = qnaService.readQna(2L);
-
 
         //then
         assertEquals("1:1 문의 상세 조회 성공", response.getMessage());
