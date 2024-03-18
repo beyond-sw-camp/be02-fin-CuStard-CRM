@@ -6,5 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GetCategoryOrdersRes {
-    int[] array;
+    int[] orders;
+    int[] productRead;
 }

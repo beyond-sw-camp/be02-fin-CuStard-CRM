@@ -14,6 +14,7 @@ import com.example.backend.product.model.response.GetProductListRes;
 import com.example.backend.product.model.response.GetProductRecRes;
 import com.example.backend.product.model.response.GetProductRes;
 import com.example.backend.product.repository.ProductRepository;
+import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -74,7 +75,7 @@ public class ProductService {
         return null;
     }
 
-    public List<GetProductListRes> searchByName(String keyword, Authentication authentication) {
+    public List<GetProductListRes> searchByName(String keyword, String token) {
         List<Product> productList = productRepository.findByProductNameContaining(keyword);
 
         List<GetProductListRes> productListRes = new ArrayList<>();
@@ -89,11 +90,13 @@ public class ProductService {
                     .build());
         }
 
-        if (authentication != null && authentication.isAuthenticated()) {
-            Customer customer = (Customer) authentication.getPrincipal();
-            Optional<Customer> c = customerRepository.findById(customer.getIdx());
-            if (c.isPresent()) {
-                searchLogService.SearchLogging(customer, keyword);
+        if (token != null) {
+            token = TokenProvider.replaceToken(token);
+            Long customerIdx = TokenProvider.getIdx(token);
+
+            Optional<Customer> customer = customerRepository.findById(customerIdx);
+            if (customer.isPresent()) {
+                searchLogService.SearchLogging(customer.get(), keyword);
             }
         }
         return productListRes;

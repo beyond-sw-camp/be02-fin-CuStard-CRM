@@ -38,6 +38,7 @@
                       <thead>
                       <tr>
                         <th>번호</th>
+                        <th>이름</th>
                         <th>이메일</th>
                         <th>등급</th>
                         <th>총 구매 금액</th>
@@ -47,10 +48,11 @@
                       <tbody>
                       <tr class="table-info" v-for="customer in customers" :key="customer.idx" @click="goToCustomerDetail(customer.idx)">
                         <td>{{ customer.idx }}</td>
+                        <td>{{ customer.name }}</td>
                         <td>{{ customer.customerEmail }}</td>
                         <td>{{ customer.level }}</td>
                         <td>{{ customer.totalAmount }}</td>
-                        <td>{{ customer.getHaveCouponBaseResList }}</td>
+                        <td>{{ customer.lastLogin}}</td>
                       </tr>
                       </tbody>
                     </table>

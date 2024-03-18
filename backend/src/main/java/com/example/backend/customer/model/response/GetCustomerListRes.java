@@ -6,6 +6,7 @@ import com.example.backend.havecoupon.model.response.GetHaveCouponListRes;
 import com.example.backend.havecoupon.model.response.GetHaveCouponReadRes;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,12 @@ import java.util.List;
 @Builder
 public class GetCustomerListRes {
     private Long idx;
+    private String name;
     private String customerEmail;
     private String authority;
     private Integer totalAmount;
     private CustomerLevel level;
-
+    private String lastLogin;
 
     List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
 }

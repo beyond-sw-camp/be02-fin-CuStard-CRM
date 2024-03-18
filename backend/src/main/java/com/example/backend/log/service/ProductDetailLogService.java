@@ -18,6 +18,7 @@ public class ProductDetailLogService {
         productDetailLogRespository.save(ProductDetailLog.builder()
                         .customer(customer)
                         .product(product)
+                        .category(product.getCategory())
                         .build());
     }
 }
