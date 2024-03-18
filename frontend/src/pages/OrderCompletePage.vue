@@ -21,18 +21,6 @@
         <a href="/">홈으로 돌아가기</a>
       </div>
     </div>
-    <footer>
-      <ul class="bottom_util">
-        <li><a href="">TEAM 2</a></li>
-        <li><a href="">CRM</a></li>
-        <li><a href="" target="_blank">CuStard</a></li>
-      </ul>
-      <div class="bottom_logo">
-        <img src="../../public/img/logo.png" class="footlogo" >
-      </div>
-      <p class="copy_info"><span>서울 동작구 보라매로 87 4층 </span> <span>TEL : 02-000-0000</span>화이팅!</p>
-      <p class="copy">HANHWA SW CAMP 2기</p>
-    </footer>
   </div>
 </template>
 
@@ -244,63 +232,7 @@ html, button, input, select, textarea {
   width: 50px;
   height: 50px;
 }
-/* footer */
-footer {
-  position: relative;
-  clear: both;
-  width: 100%;
-  background: #c4c4c417;
-  text-align: center;
-  height: 200px;
-  margin-top: 10%;
-}
-footer .bottom_util {
-  border-bottom: solid 1px #4646462b;;
-  border-top: solid 1px #4646462b;;
-  padding: 16px 0;
-}
-footer .bottom_util li {
-  display: inline-block;
-  margin: 3px 19px;
-}
-footer .bottom_ccm {
-  position: absolute;
-  text-align: right;
-}
-footer .bottom_ccm span {
-  display: block;
-  width: 98%;
-  max-width: 1178px;
-  margin: auto;
-}
-footer .copy_info {
-  width: 90%;
-  max-width: 650px;
-  margin: auto;
-  margin-top: 45px;
-  margin-bottom: 14px;
-  font-size: 12px;
-  color: #6C6C6C;
-}
-footer .copy_info span {
-  display: inline-block;
-  margin-right: 10px;
-  padding-right: 10px;
-}
-footer .copy {
-  padding-bottom: 15px;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: #6C6C6C;
-}
-footer .bottom_util li a {
-  color: #818181;
-}
-footer .bottom_util li a em {
-  color: #FFF;
-  font-weight: 400;
-}
+
 /* 임시 */
 .content{
   height: 100px;
@@ -319,19 +251,13 @@ footer .bottom_util li a em {
   right: 75px;
   top: 95px
 }
-(255B)
-https://res.kurly.com/pc/ico/1908/ico_down_16x10.png
 
-5:34
-*{
-  font-family: 'GmarketSans';
-  box-sizing: border-box; /* 상자 모델을 사용하여 푸터가 올바르게 표시되도록 설정 */
-}
+
 .login-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 80vh;
   flex-direction: column; /* 세로 방향으로 정렬하도록 추가 */
 }
 .text-with-image {
@@ -348,10 +274,10 @@ https://res.kurly.com/pc/ico/1908/ico_down_16x10.png
   justify-content: center;
 }
 .text-with-image img {
-  width: 130px;
+  width: 80px;
   height: auto;
-  margin-right: -15px;
-  margin-left: -30px;
+  margin-right: 5px;
+  margin-left: -60px;
   border-radius: 20%;
 }
 .login-container h2 {
@@ -368,7 +294,7 @@ https://res.kurly.com/pc/ico/1908/ico_down_16x10.png
 .login-container button {
   width: 100%;
   padding: 10px;
-  background-color: #99154E;
+  background-color: #ffbe0e;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -385,7 +311,8 @@ https://res.kurly.com/pc/ico/1908/ico_down_16x10.png
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 10px;
-  margin-top: 15%;
+  margin-top: 0px;
+  font-family: "Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif;
 }
 .content-container a {
   color: #333;
@@ -509,12 +436,13 @@ a {
   transition: color 0.3s; /* 컬러 전환에 대한 트랜지션 효과 추가 */
 }
 a:hover {
-  color: #00AB03; /* 호버 시의 컬러 변경 */
+  color: #99154E; /* 호버 시의 컬러 변경 */
 }
 .order-details {
   text-align: left;
   margin-bottom: 20px;
   margin-top: 20px;
+  color: #333;
 }
 .order-details p {
   margin: 10px 0;
@@ -523,11 +451,13 @@ a:hover {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
+  color: #333;
+  
 }
 .additional-actions a {
   display: inline-block;
   background-color: #FFBE0E;
-  color: white;
+  color: #fff;
   padding: 10px 20px;
   text-decoration: none;
   border-radius: 5px;

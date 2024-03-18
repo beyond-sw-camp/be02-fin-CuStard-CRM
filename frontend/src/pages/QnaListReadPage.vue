@@ -70,26 +70,33 @@ export default {
 .qna-article {
   max-width: 800px;
   margin: 0 auto;
+  margin-top: 60px;
+  padding-top: 20px; /* 위쪽 여백 */
+  padding-bottom: 100px; /* 아래쪽 여백 */
 }
 
 input[type="password"] {
-  padding: 8px;
-  margin-right: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  width: 100%;
 }
 
 button[type="submit"] {
-  padding: 8px 20px;
-  background-color: #007bff;
+  background-color: #ffbe0e;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  padding: 10px;
   cursor: pointer;
+  transition: background-color 0.5s;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #99154E;
 }
 
 .article-container {

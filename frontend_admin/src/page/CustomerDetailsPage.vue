@@ -16,24 +16,28 @@
                     <table class="table table-bordered table-contextual">
                       <thead>
                       <tr>
-                        <th> 이름</th>
-                        <th> 아이디</th>
-                        <th> 나이</th>
-                        <th> 지역</th>
-                        <th> 등급</th>
-                        <th> 총 구매 금액</th>
-                        <th> 마지막 접속일</th>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>등급</th>
+                        <th>나이</th>
+                        <th>성별</th>
+                        <th>배송지</th>
+                        <th>총 구매 금액</th>
+                        <th>마지막 접속일</th>
                       </tr>
                       </thead>
                       <tbody>
                       <tr class="table-info">
-                        <td> 이창훈</td>
-                        <td> LCH-97</td>
-                        <td> 27</td>
-                        <td> 서울시</td>
-                        <td> VIP</td>
-                        <td> 1000000</td>
-                        <td> 24-03-14-12-06-00</td>
+                        <td>{{ customer.idx }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.customerEmail }}</td>
+                        <td>{{ customer.level }}</td>
+                        <td>{{ customer.age }}</td>
+                        <td>{{ customer.gender }}</td>
+                        <td>{{ customer.address }}</td>
+                        <td>{{ customer.totalAmount }}</td>
+                        <td>{{ customer.lastLogin}}</td>
                       </tr>
                       </tbody>
                     </table>
@@ -132,7 +136,9 @@
                       </div>
                     </div>
                     <h4 class="card-title">카테고리 별 구매 금액 </h4>
-                    <canvas id="barChart" style="height: 175px; display: block; width: 351px;" width="438" height="218"
+                    <canvas id="pieChart"
+                            ref="CustomerCategoryChart"
+                            style="height: 175px; display: block; width: 351px;" width="438" height="218"
                             class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
@@ -149,7 +155,7 @@
                       </div>
                     </div>
                     <h4 class="card-title">조회 카테고리 </h4>
-                    <canvas id="pieChart" style="height: 185px; display: block; width: 371px;" width="463" height="231"
+                    <canvas id="pieChart" ref="productReadCategory" style="height: 185px; display: block; width: 371px;" width="463" height="231"
                             class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
@@ -173,13 +179,81 @@
 
 <script>
 import axios from 'axios';
+import {Chart} from "chart.js";
 
 export default {
   data() {
     return {
       qnasWaiting: [],
-      qnasAnswered: []
+      qnasAnswered: [],
+      customer: [],
 
+      ordersCategoryData: {
+        datasets: [{
+          data: [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          '패션',
+          '뷰티' ,
+          '가전' ,
+          '식품' ,
+          '스포츠/레저'
+        ]
+      }, doughnutPieOptions: {
+        responsive: true,
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        }
+      },
+      productReadCategoryData: {
+        datasets: [{
+          data: [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          '패션',
+          '뷰티' ,
+          '가전' ,
+          '식품' ,
+          '스포츠/레저'
+        ]
+      },
     };
   },
   methods: {
@@ -197,12 +271,62 @@ export default {
           });
     },
 
+    fetchCustomers() {
+      // productIdx 변수를 사용하여 고객 정보를 불러오는 URL 수정
+      axios.get(`http://localhost:8080/customer/read/${this.$route.params.customerId}`)
+          .then(response => {
+            // console.log(response)
+            this.customer = response.data; // 응답으로 받은 데이터를 customers 배열에 저장
+            console.log(this.customer)
+          })
+          .catch(error => {
+            console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
+          });
+    },
+
     goToArticle(idx) {
       this.$router.push({path: `/admin/qna/read/${idx}`});
-    }
+    },
+
+    createChart() {
+      axios.get(`http://localhost:8000/customer/orders/${this.$route.params.customerId}`)
+          .then(response => {
+            const responseData = response.data;
+            this.ordersCategoryData.datasets[0].data = responseData.orders;
+            this.productReadCategoryData.datasets[0].data = responseData.productRead;
+            // 데이터 로딩이 완료된 후에 차트를 생성합니다.
+            this.$nextTick(() => {
+              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
+              if (this.customerCategoryChartInstance) {
+                this.customerCategoryChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+              }
+
+              this.customerCategoryChartInstance = new Chart(this.$refs.CustomerCategoryChart, {
+                type: 'doughnut',
+                data: this.ordersCategoryData,
+                options: this.doughnutPieOptions
+              });
+            });
+            this.$nextTick(() => {
+              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
+              if (this.productCategoryChartInstance) {
+                this.productCategoryChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+              }
+
+              this.productCategoryChartInstance = new Chart(this.$refs.productReadCategory, {
+                type: 'doughnut',
+                data: this.productReadCategoryData,
+                options: this.doughnutPieOptions
+              });
+            });
+          })
+          .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
+    },
   },
   mounted() {
     this.loadArticles();
+    this.fetchCustomers();
+    this.createChart();
   }
 };
 </script>

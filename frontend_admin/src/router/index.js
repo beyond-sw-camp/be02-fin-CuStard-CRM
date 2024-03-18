@@ -11,7 +11,7 @@ const routes = [
     { path: '/', component: MainDashboardPage },
 
     { path: '/customerlist', component: CustomerPage },
-    { path: '/customerdetail', component: CustomerDetailsPage },
+    { path: '/customerdetail/:customerId', name: 'CustomerDetail', component: CustomerDetailsPage },
 
 
     { path: '/coupon', component: CouponPage },

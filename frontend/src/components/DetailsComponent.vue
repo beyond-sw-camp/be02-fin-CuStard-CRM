@@ -66,7 +66,10 @@ export default {
       console.log(route.params.productIdx);
       this.productIdx = route.params.productIdx;
 
-      const response = await axios.get(`http://localhost:8080/product/read/${this.productIdx}`);
+      const response = await axios.get(`http://localhost:8080/product/read/${this.productIdx}`, {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        }});
       console.log(response);
       this.productDetail = response.data;
       console.log(this.productDetail);

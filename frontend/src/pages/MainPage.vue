@@ -1,8 +1,8 @@
 <template>
   <div>
     <section v-for="(categorySlides, category) in categoriesWithSlides" :key="category">
-      <div class="div" v-html="getCategoryName(category)"></div>
-      <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
+      <div :class="'div div' + category" v-html="getCategoryName(category)"></div>
+      <Carousel :itemsToShow="5" :wrapAround="true" :transition="500">
         <Slide v-for="product in categorySlides" :key="product.idx">
           <div class="carousel__slide product">
             <div class="carousel__item-column">
@@ -63,7 +63,7 @@ export default defineComponent({
     // 카테고리 번호를 이름으로 변환
     const getCategoryName = (category) => {
       if (category === '1') {
-        return '패션<br><span style="font-weight: normal; font-size:17px;">개성을 빛내줄 최신 패션 트렌드!</span>';
+        return '의류<br><span style="font-weight: normal; font-size:17px;">개성을 빛내줄 최신 패션 트렌드!</span>';
       }else if (category === '2') {
         return '뷰티<br><span style="font-weight: normal; font-size:17px;">아름다움의 진정한 의미!</span>';
       }
@@ -100,17 +100,96 @@ export default defineComponent({
 
 
   <style>
-  .div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: stretch;
-    margin-top: 45px;
-    font-size: 22px;
-    background-color: #ffcdcd57;
-    padding: 20px;
-
-  }
+  .div.div1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
+  color:#333;
+  align-content: stretch;
+  margin-top: 45px;
+  font-size: 22px;
+  padding: 65px;
+  background-image: url("../assets/Gray\ Minimalist\ New\ Collection\ Banner.gif");
+  background-position: 100% 49%;
+  background-size: 1000px cover;
+  background-color: #e2e2e2;
+  background-repeat: no-repeat;
+}
+.div.div2  {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
+  color:#333;
+  align-content: stretch;
+  margin-top: 45px;
+  font-size: 22px;
+  padding: 65px;
+  background-image: url("../assets/Baeuty.gif");
+  background-position: 100% 50%;
+  background-size: 2200px cover;
+  background-color: #CFC9C4;
+  background-repeat: no-repeat;
+}
+.div.div3  {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
+  color:#333;
+  align-content: stretch;
+  margin-top: 45px;
+  font-size: 22px;
+  padding: 65px;
+  background-image: url("../assets/burger.gif");
+  background-position: 130% 50%;
+  background-size: 55% 150%;
+  background-color: #fff;
+  background-repeat: no-repeat;
+}
+.div.div4  {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
+  color:#333;
+  align-content: stretch;
+  margin-top: 45px;
+  font-size: 22px;
+  padding: 65px;
+  background-image: url("../assets/sakai.gif");
+  background-position: 50% 49%;
+  background-size: 900px 185%;
+  background-color: #a1a1a1;
+  background-repeat: no-repeat;
+}
+.div.div5  {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
+  color:#333;
+  align-content: stretch;
+  margin-top: 45px;
+  font-size: 22px;
+  padding: 65px;
+  background-image: url("../assets/home.gif");
+  background-position: 185% 49%;
+  background-size: 1000px cover;
+  background-color: #f0f1f1;
+  background-repeat: no-repeat;
+}
   .div2{
     display: flex;
     flex-direction: column;
@@ -156,7 +235,8 @@ export default defineComponent({
   .carousel__slide {
     padding: 10px;
     width: 150px;
-    height: 200px;
+    height: 400px;
+    bottom: -30px;
   }
 
   .carousel__item-details {

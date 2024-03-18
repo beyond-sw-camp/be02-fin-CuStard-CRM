@@ -15,10 +15,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Getter
 @Setter
@@ -31,14 +29,20 @@ public class Customer extends BaseTimeEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    private String name;
     private String customerEmail;
     private String customerPwd;
     private String authority;
     private boolean status;
 
+    private Integer age;
+    private String gender;
+    private String address;
     private CustomerLevel level;
 
     private Integer totalAmount;
+    private String lastLogin;
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<HaveCoupon> haveCouponList = new ArrayList<>();

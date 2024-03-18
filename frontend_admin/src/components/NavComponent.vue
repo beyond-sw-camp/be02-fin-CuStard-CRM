@@ -30,7 +30,7 @@
                   alt=""
               />
               <p class="mb-0 d-none d-sm-block navbar-profile-name">
-                Henry Klein
+                Admin
               </p>
               <i class="mdi mdi-menu-down d-none d-sm-block"></i>
             </div>
@@ -63,6 +63,7 @@
       </button>
     </div>
   </nav>
+
 
 
 </template>

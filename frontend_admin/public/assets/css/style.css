@@ -20655,7 +20655,7 @@ div.tagsinput {
       .sidebar .sidebar-brand-wrapper .sidebar-brand img {
         width: calc(244px - 120px);
         max-width: 100%;
-        height: 28px;
+        object-fit: contain;
         margin: auto;
         vertical-align: middle; }
       .sidebar .sidebar-brand-wrapper .sidebar-brand.brand-logo-mini {
@@ -21110,7 +21110,8 @@ div.tagsinput {
 
 .container-scroller {
   display: flex;
-  position: relative; }
+  position: relative;
+flex-grow: 1}
 
 .main-panel {
   transition: width 0.25s ease, margin 0.25s ease;

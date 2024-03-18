@@ -66,11 +66,7 @@ export default {
         answerContent: this.answerContent
       };
 
-      axios.post(`http://localhost:8000/admin/qna/answer/${this.$route.params.idx}`, requestData, {
-        headers: {
-          'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Imp1aHllb24wOTI4QGdtYWlsLmNvbSIsInJvbGUiOiJBZG1pbmlzdHJhdG9yIiwiaWR4IjoxLCJpYXQiOjE3MTAyMjE4NzMsImV4cCI6MTcxMDUyMTg3M30.MLsKM9L3XZclTkm_WWaSxFkiffk-B_MoDL9Q4wNwm7I'
-        }
-      })
+      axios.post(`http://localhost:8000/admin/qna/answer/${this.$route.params.idx}`, requestData)
           .then(response => {
             if (response.status === 200) {
               alert("답변이 작성되었습니다.");

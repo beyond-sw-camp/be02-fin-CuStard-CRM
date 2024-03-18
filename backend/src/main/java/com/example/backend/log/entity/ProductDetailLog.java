@@ -28,4 +28,6 @@ public class ProductDetailLog extends BaseTimeEntity {
     @JoinColumn(name = "product_idx")
     private Product product;
 
+    private Integer category;
+
 }

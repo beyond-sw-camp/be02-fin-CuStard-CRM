@@ -26,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.example.backend.common.CustomerLevel.NEWBIE;
@@ -113,6 +114,11 @@ public class CustomerService implements UserDetailsService {
                         .build();
 
                 loginLogService.loginLogging(member.get());
+                String now = LocalDateTime.now().toString();
+                System.out.println(now);
+                System.out.println(now.split("T")[0]);
+                member.get().setLastLogin(now.split("T")[0]);
+                customerRepository.save(member.get());
                 return postCustomerLoginRes;
             } else {
                 return null;
@@ -154,9 +160,16 @@ public class CustomerService implements UserDetailsService {
             }
             return GetCustomerReadRes.builder()
                     .idx(customer.getIdx())
+                    .name(customer.getName())
                     .customerEmail(customer.getCustomerEmail())
                     .authority(customer.getAuthority())
                     .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                    .totalAmount(customer.getTotalAmount())
+                    .level(customer.getLevel())
+                    .age(customer.getAge())
+                    .address(customer.getAddress())
+                    .gender(customer.getGender())
+                    .lastLogin(customer.getLastLogin())
                     .build();
         }
         return null;
@@ -181,9 +194,13 @@ public class CustomerService implements UserDetailsService {
 
             GetCustomerListRes getCustomerListRes = GetCustomerListRes.builder()
                     .idx(customer.getIdx())
+                    .name(customer.getName())
                     .customerEmail(customer.getCustomerEmail())
                     .authority(customer.getAuthority())
                     .getHaveCouponBaseResList(getHaveCouponBaseResList)
+                    .totalAmount(customer.getTotalAmount())
+                    .level(customer.getLevel())
+                    .lastLogin(customer.getLastLogin())
                     .build();
 
             getCustomerListResList.add(getCustomerListRes);

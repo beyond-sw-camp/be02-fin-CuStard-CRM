@@ -1,11 +1,8 @@
 package com.example.backend_admin.qna.model;
 
 import lombok.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import com.example.backend_admin.customer.entity.Customer;
 
 @Entity
 @Getter
@@ -24,5 +21,9 @@ public class Qna {
     private String qnaContent; //본문 내용
 
     private String qnaPwd;
+
+    @OneToOne
+    @JoinColumn(name = "customerIdx")
+    private Customer customer;
 
 }
