@@ -2,6 +2,7 @@ package com.example.backend_admin.coupon.service;
 
 import com.example.backend_admin.admin.model.entity.Admin;
 import com.example.backend_admin.admin.model.response.GetAdminReadRes;
+import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.coupon.model.entity.Coupon;
 import com.example.backend_admin.coupon.model.request.PostCouponCreateReq;
 import com.example.backend_admin.coupon.model.response.GetCouponReadRes;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class CouponService {
     private final CouponRepository couponRepository;
 
-    public PostCouponCreateRes create(PostCouponCreateReq postCouponCreateReq){
+    public PostCouponCreateRes create(PostCouponCreateReq postCouponCreateReq) throws BaseException {
         Coupon coupon = couponRepository.save(Coupon.builder()
                 .admin(Admin.builder().idx(postCouponCreateReq.getAdminIdx()).build())
                 .discount(postCouponCreateReq.getDiscount())
@@ -33,7 +34,7 @@ public class CouponService {
                 .discount(coupon.getDiscount())
                 .build();
     }
-    public List<GetCouponReadRes> list(){
+    public List<GetCouponReadRes> list()throws BaseException{
         List<Coupon> couponList = couponRepository.findAll();
 
         List<GetCouponReadRes> getCouponReadResList = new ArrayList<>();
@@ -51,7 +52,7 @@ public class CouponService {
         }
         return getCouponReadResList;
     }
-    public GetCouponReadRes read(Long idx){
+    public GetCouponReadRes read(Long idx)throws BaseException{
         Optional<Coupon> result = couponRepository.findById(idx);
 
         if (result.isPresent()){

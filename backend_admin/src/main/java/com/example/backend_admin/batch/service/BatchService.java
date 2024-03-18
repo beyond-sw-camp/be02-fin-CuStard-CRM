@@ -7,6 +7,8 @@ import com.example.backend_admin.batch.model.request.LevelCouponWriterReq;
 import com.example.backend_admin.batch.model.request.SleeperCouponWriterReq;
 import com.example.backend_admin.batch.model.response.SleeperCouponReaderRes;
 import com.example.backend_admin.batch.model.response.LevelCouponReaderRes;
+import com.example.backend_admin.common.BaseException;
+import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.customer.entity.Customer;
 import com.example.backend_admin.customer.repository.CustomerRepository;
@@ -14,6 +16,7 @@ import com.example.backend_admin.email.service.EmailService;
 import com.example.backend_admin.log.entity.LoginLog;
 import com.example.backend_admin.log.repository.LoginLogRespository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -106,11 +109,19 @@ public class BatchService {
     public void levelCouponProcessor(){
 
     }
-    public void levelCouponWriter(LevelCouponWriterReq levelCouponWriterReq) throws MessagingException{
-        adminService.levelCoupon(PostAdminLevelCouponReq.builder()
-                .targetList(levelCouponWriterReq.getTargetList())
-                .build());
-        emailService.sendLevelCoupon(levelCouponWriterReq.getTargetList());
+    public ResponseEntity levelCouponWriter(LevelCouponWriterReq levelCouponWriterReq) throws MessagingException{
+        try {
+            adminService.levelCoupon(PostAdminLevelCouponReq.builder()
+                    .targetList(levelCouponWriterReq.getTargetList())
+                    .build());
+            emailService.sendLevelCoupon(levelCouponWriterReq.getTargetList());
+            return ResponseEntity.ok().body("쿠폰 생성 완료");
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
+
+
     }
 
 }

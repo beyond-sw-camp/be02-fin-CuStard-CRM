@@ -40,14 +40,19 @@ public class QnaController {
             return ResponseEntity.ok(postQnaReadRes);
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
+        } catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
     }
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
-    public ResponseEntity<List<GetQnaListRes>> findAll() {
-        List<GetQnaListRes> articles = qnaService.list();
-        return ResponseEntity.ok(articles);
+    public ResponseEntity findAll() {
+        try {
+            return ResponseEntity.ok().body(qnaService.list());
+        } catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
     }
 
 }

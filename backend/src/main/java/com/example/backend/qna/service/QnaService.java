@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.backend.common.BaseResponseStatus.QNA_REGISTER_INCORRECT_PASSWORD;
+import static com.example.backend.common.BaseResponseStatus.QNA_REGISTER_NOT_EXIST_QNA;
+
 @Service
 @RequiredArgsConstructor
 public class QnaService {
@@ -66,7 +69,7 @@ public class QnaService {
         }
     }
 
-    public List<GetQnaListRes> list() {
+    public List<GetQnaListRes> list() throws BaseException{
         List<Qna> resultQna = qnaRepository.findAll();
         List<GetQnaListRes> getQnaListRes = new ArrayList<>();
 
@@ -84,7 +87,7 @@ public class QnaService {
         return getQnaListRes;
     }
 
-    public PostQnaReadRes readQna(Long idx, PostQnaReadReq postQnaReadReq) {
+    public PostQnaReadRes readQna(Long idx, PostQnaReadReq postQnaReadReq) throws BaseException{
         Optional<Qna> result = qnaRepository.findById(idx);
         if (result.isPresent()) {
             Qna qna = result.get();
@@ -110,12 +113,12 @@ public class QnaService {
                 }
             } else {
                 //비밀번호 일치하지 않음 처리
+                throw new BaseException(QNA_REGISTER_INCORRECT_PASSWORD);
             }
-        } else {
-            return null;
-            //존재하지 않는 게시글 번호
         }
-        return null;
+        throw new BaseException(QNA_REGISTER_NOT_EXIST_QNA);
+
+
     }
 }
 

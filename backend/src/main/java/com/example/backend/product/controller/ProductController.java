@@ -1,5 +1,7 @@
 package com.example.backend.product.controller;
 
+import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponse;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.product.model.response.GetProductListRes;
 import com.example.backend.product.model.response.GetProductRecRes;
@@ -20,22 +22,38 @@ public class ProductController {
     private final ProductService productService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
-    public ResponseEntity<List<GetProductListRes>> list() {
-        return ResponseEntity.ok().body(productService.list());
+    public ResponseEntity list() {
+        try {
+            return ResponseEntity.ok().body(productService.list());
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/read/{idx}")
-    public ResponseEntity<GetProductRes> read(@PathVariable Long idx, Authentication authentication) {
-        return ResponseEntity.ok().body(productService.read(idx, authentication));
+    public ResponseEntity read(@PathVariable Long idx, Authentication authentication) {
+        try {
+            return ResponseEntity.ok().body(productService.read(idx, authentication));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search/{keyword}")
-    public ResponseEntity<List<GetProductListRes>> searchByName(@PathVariable String keyword, @RequestHeader(value = "Authorization") String token){
-        return ResponseEntity.ok().body(productService.searchByName(keyword, token));
+    public ResponseEntity searchByName(@PathVariable String keyword, @RequestHeader(value = "Authorization") String token){
+        try {
+            return ResponseEntity.ok().body(productService.searchByName(keyword, token));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus())));
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/recommend")
-    public ResponseEntity<GetProductRecRes> recommendItem(){
-        return ResponseEntity.ok().body(productService.recommend());
+    public ResponseEntity recommendItem(){
+        try {
+            return ResponseEntity.ok().body(productService.recommend());
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus())));
+        }
     }
 }

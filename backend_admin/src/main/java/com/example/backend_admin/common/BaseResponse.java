@@ -11,12 +11,12 @@ public class BaseResponse<T> {
     private final String message;
     private final T result;
 
-    public static <T> BaseResponse<T> successResponse(String message, T result) {
-        return new BaseResponse<>(true, 1000, message, result);
+    public static <T> BaseResponse<T> successResponse(T result) {
+        return new BaseResponse<>(true, BaseResponseStatus.SUCCESS.getCode(), BaseResponseStatus.SUCCESS.getMessage(), result);
     }
 
-    public static <T> BaseResponse<T> failResponse(Integer code, String message) {
-        return new BaseResponse<>(false, code, message, null);
+    public static <T> BaseResponse<T> failResponse(BaseResponseStatus baseResponseStatus) {
+        return new BaseResponse<>(false, baseResponseStatus.getCode(), baseResponseStatus.getMessage(), null);
     }
 }
 

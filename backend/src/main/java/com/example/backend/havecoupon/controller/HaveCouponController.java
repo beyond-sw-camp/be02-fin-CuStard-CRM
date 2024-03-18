@@ -1,11 +1,16 @@
 package com.example.backend.havecoupon.controller;
 
 
+import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponse;
 import com.example.backend.havecoupon.model.request.PostHaveCouponCreateReq;
 import com.example.backend.havecoupon.service.HaveCouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import static com.example.backend.common.BaseResponseStatus.HAVE_COUPON_LIST_EMPTY_IDX;
 
 @RestController
 @RequestMapping("/have")
@@ -17,13 +22,22 @@ public class HaveCouponController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public ResponseEntity list(){
-        return ResponseEntity.ok().body(haveCouponService.list());
+        try{
+            return ResponseEntity.ok().body(haveCouponService.list());
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
     }
     @RequestMapping(method = RequestMethod.GET, value = "/read/{idx}")
     public ResponseEntity read(@PathVariable Long idx){
-        return  ResponseEntity.ok().body(haveCouponService.read(idx));
+        if (idx == null){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(HAVE_COUPON_LIST_EMPTY_IDX));
+        }
+        try {
+            return  ResponseEntity.ok().body(haveCouponService.read(idx));
+        }catch (BaseException exception){
+            return  ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
     }
-    public void delete(){
 
-    }
 }

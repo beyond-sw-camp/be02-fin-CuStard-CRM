@@ -1,4 +1,4 @@
-package com.example.backend.common;
+package com.example.backend_admin.common;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -97,8 +97,29 @@ public enum BaseResponseStatus {
 
     ADMIN_ANSWER_EMPTY_TOKEN(false,8001, "로그인 해주세요."),
     ADMIN_ANSWER_EMPTY_IDX(false, 8002, "게시글을 찾지 못했습니다."),
-    ADMIN_ANSWER_EMPTY_ANSWERCONTENT(false, 8003, "답변이 비어있습니다.");
+    ADMIN_ANSWER_EMPTY_ANSWERCONTENT(false, 8003, "답변이 비어있습니다."),
+    ADMIN_ANSWER_NOT_FOUND(false,8004,"존재하지 않는 게시물입니다."),
+    ADMIN_ANSWER_ISPRESENT(false,8005,"이미 답변이 존재하는 게시물입니다."),
 
+    /*
+     * 9000 : QNA
+     */
+
+    /*
+     * 10000 : coupon
+     */
+
+    COUPON_CREATE_EMPTY_CATEGORY(false,10001,"카테고리를 입력해주세요"),
+    COUPON_CREATE_EMPTY_DISCOUNT(false,10001,"할인을 입력해주세요"),
+    COUPON_CREATE_EMPTY_ADMINIDX(false,10001,"로그인을 해주세요"),
+    ;
+    /*
+     * 11000 :
+     */
+
+    /*
+     * 8000 : ANSWER
+     */
     private boolean isSuccess;
     private int code;
     private String message;
