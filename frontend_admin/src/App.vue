@@ -1,24 +1,23 @@
 <template>
-  <nav-component />
-  <side-component />
+  <nav-component v-if="!$route.meta.hideNav" />
+  <side-component v-if="!$route.meta.hideNav" />
   <router-view></router-view>
-
 </template>
 
 <script>
-
 import NavComponent from "@/components/NavComponent.vue";
 import SideComponent from "@/components/SideComponent.vue";
 
 export default {
   name: 'App',
   components: {
-    SideComponent,
-    NavComponent
-
+    NavComponent,
+    SideComponent
   }
 }
 </script>
+
+
 
 <style>
 #app {

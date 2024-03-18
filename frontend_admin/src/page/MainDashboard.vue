@@ -81,7 +81,7 @@
 
                       <h4 class="text-muted font-weight-normal">휴면고객재접속</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:250px;">
-                        <div style="font-size: 25px; font-weight: 500;">{{ dormatCs }}명</div>
+                        <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ dormatCs }}명</div>
                         <div :class="[dormatCsCalcClass ,'ml-2', 'mb-0', 'font-weight-medium'] "> {{ dormatCsCalc }}명 </div>
                       </div>
                     </div>
@@ -116,7 +116,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-4   grid-margin stretch-card">
+            <div class="col-lg-5  grid-margin stretch-card">
               <div class="card" >
                 <div class="card-body">
                   <div class="chartjs-size-monitor">
@@ -144,7 +144,7 @@
                     </div>
                     <div
                         class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                      <h6 class="font-weight-bold mb-0">842건</h6>
+                      <h6 class="font-weight-bold mb-0">{{this.ordersCount}} 건</h6>
                     </div>
                   </div>
                   <div
@@ -154,13 +154,13 @@
                     </div>
                     <div
                         class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                      <h6 class="font-weight-bold mb-0">5923400원</h6>
+                      <h6 class="font-weight-bold mb-0">{{this.ordersAmount}}} 원</h6>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-7 grid-margin stretch-card">
+            <div class="col-lg-5 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
 
@@ -195,7 +195,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card" >
+            <div class="col-lg-5 grid-margin stretch-card" >
               <div class="card">
                 <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                   <h4 class="card-title">월별 매출 </h4>
@@ -203,11 +203,12 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 grid-margin stretch-card">
+            <div class="col-lg-5 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                   <h4 class="card-title">시간대 별 로그인</h4>
-                  <canvas id="areaChart" style="height: 198px; display: block; width: 396px;" width="396" height="198" class="chartjs-render-monitor"></canvas>
+                  <canvas id="areaChart" ref="loginChart" style="height: 198px; display: block; width: 396px;" width="396" height="198" class="chartjs-render-monitor"></canvas>
+
 
                 </div>
               </div>
@@ -265,6 +266,8 @@ export default {
       todaySellCalcClass: '', // 하루 매출액 계산에 따른 클래스
       dormatCsCalcClass: '', // 휴면 고객 계산에 따른 클래스
 
+      ordersCount: '',
+      ordersAmount: '',
 
       doughnutPieData: {
         datasets: [{
@@ -305,6 +308,7 @@ export default {
 
       barData: {
         datasets: [{
+          label: '월 매출액',
           data: [],
           backgroundColor: [
             'rgba(255, 99, 132, 0.5)',
@@ -336,20 +340,7 @@ export default {
           ],
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-          '1월',
-          '2월',
-          '3월',
-          '4월',
-          '5월',
-          '6월',
-          '7월',
-          '8월',
-          '9월',
-          '10월',
-          '11월',
-          '12월'
-        ]
+        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
       }, options: {
         responsive: true,
         animation: {
@@ -357,9 +348,62 @@ export default {
           animateRotate: true
         }
       },
+
+      areaData : {
+        labels: ["00", "01","02","03","04","05", "06", "07","08","09","10","11",
+          "12","13","14","15", "16","17","18","19`","20", "21","22","23"],
+        datasets: [{
+          label: '접속자 수',
+          data: [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1,
+          fill: true, // 3: no fill
+        }]
+      },
+
+      areaOptions : {
+        plugins: {
+          filler: {
+            propagate: true
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero:  true
+          },
+          yAxes: [{
+            ticks: {
+              min: 0.0
+            },
+            gridLines: {
+              color: "rgba(204, 204, 204,0.1)"
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              color: "rgba(204, 204, 204,0.1)"
+            }
+          }]
+        }
+      },
+
       qnasWaitings: 0,
       qnasWaiting: []
-
 
     };
   },
@@ -503,11 +547,14 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
 
-    createPieChart() {
+    createChart() {
       axios.get('http://localhost:8000/category/orders')
           .then(response => {
             const responseData = response.data;
             this.doughnutPieData.datasets[0].data = responseData.orders;
+            this.ordersCount = responseData.ordersCount;
+            this.ordersAmount = responseData.ordersAmount;
+
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
             this.$nextTick(() => {
               // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
@@ -522,8 +569,7 @@ export default {
             });
           })
           .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
-    },
-    createBarChart() {
+
       axios.get('http://localhost:8000/month/orders')
           .then(response => {
             const responseData = response.data;
@@ -542,6 +588,28 @@ export default {
             });
           })
           .catch(error => console.error("월별 매출액을 불러오는 데 실패했습니다.", error));
+
+      axios.get('http://localhost:8000/today/count')
+          .then(response => {
+            const responseData = response.data;
+            console.log(responseData);
+            this.areaData.datasets[0].data = responseData.timeDataList;
+            console.log(this.areaData);
+            // 데이터 로딩이 완료된 후에 차트를 생성합니다.
+            this.$nextTick(() => {
+              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
+              if (this.chartInstance3) {
+                this.chartInstance3.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+              }
+              this.chartInstance3 = new Chart(this.$refs.loginChart, {
+                type: 'line',
+                data: this.areaData,
+
+                options: this.areaOptions
+              });
+            });
+          })
+          .catch(error => console.error("시간대별 로그인을 불러오는 데 실패했습니다.", error));
     },
 
     loadArticles() {
@@ -572,8 +640,7 @@ export default {
 
     this.fetchqnalist();
 
-    this.createPieChart();
-    this.createBarChart()
+    this.createChart();
     this.loadArticles();
 
   }

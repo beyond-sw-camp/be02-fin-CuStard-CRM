@@ -23,6 +23,7 @@ import com.example.backend_admin.log.repository.LoginLogRespository;
 import com.example.backend_admin.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -75,9 +76,9 @@ public class AdminService implements UserDetailsService {
 
         }
     }
-        public PostAdminLoginRes adminLogin(PostAdminLoginReq postAdminLoginReq) {
+        public Object adminLogin(PostAdminLoginReq postAdminLoginReq) {
             Optional<Admin> result = adminRepository.findByAdminEmail(postAdminLoginReq.getAdminEmail());
-
+            System.out.println(postAdminLoginReq.getAdminEmail());
             if (result.isPresent()) {
                 if (passwordEncoder.matches(postAdminLoginReq.getAdminPwd(), result.get().getAdminPwd())) {
 
@@ -88,12 +89,13 @@ public class AdminService implements UserDetailsService {
                             .build();
 
 
-                    return postAdminLoginRes;
+                    return ResponseEntity.ok().body(postAdminLoginRes);
                 } else {
-                    return null;
+                    return ResponseEntity.badRequest().body("비번 틀림");
                 }
             }
-            return null;
+            System.out.println(postAdminLoginReq.getAdminEmail());
+            return ResponseEntity.badRequest().body("뭔가 잘못됨");
         }
 
         public String levelCoupon(PostAdminLevelCouponReq postAdminLevelCouponReq){

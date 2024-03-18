@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-4 grid-margin stretch-card">
+            <div class="col-lg-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">1:1 문의 내역</h4>
@@ -101,19 +101,20 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-8 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="chartjs-size-monitor">
-                      <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                      </div>
-                      <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                      </div>
+            </div>
+            <div class="col-lg-4 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="chartjs-size-monitor">
+                    <div class="chartjs-size-monitor-expand">
+                      <div class=""></div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink">
+                      <div class=""></div>
+                    </div>
                     </div>
                     <h4 class="card-title">로그인 시간</h4>
-                    <canvas id="areaChart" style="height: 148px; display: block; width: 297px;" width="371" height="185"
+                    <canvas id="areaChart" ref="customerLoginChart" style="height: 148px; display: block; width: 297px;" width="371" height="185"
                             class="chartjs-render-monitor"></canvas>
 
                   </div>
@@ -122,9 +123,8 @@
               </div>
             </div>
 
-
-            <div class="row">
-              <div class="col-lg-6 grid-margin stretch-card">
+          <div class="row">
+              <div class="col-lg-4 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="chartjs-size-monitor">
@@ -143,7 +143,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 grid-margin stretch-card">
+              <div class="col-lg-4 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="chartjs-size-monitor">
@@ -173,7 +173,6 @@
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
-  </div>
 
 </template>
 
@@ -254,6 +253,58 @@ export default {
           '스포츠/레저'
         ]
       },
+      areaData : {
+        labels: ["00", "01","02","03","04","05", "06", "07","08","09","10","11",
+          "12","13","14","15", "16","17","18","19`","20", "21","22","23"],
+        datasets: [{
+          label: '방문 횟수',
+          data: [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1,
+          fill: true, // 3: no fill
+        }]
+      },
+
+      areaOptions : {
+        plugins: {
+          filler: {
+            propagate: true
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero:  true
+          },
+          yAxes: [{
+            ticks: {
+              min: 0.0
+            },
+            gridLines: {
+              color: "rgba(204, 204, 204,0.1)"
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              color: "rgba(204, 204, 204,0.1)"
+            }
+          }]
+        }
+      },
     };
   },
   methods: {
@@ -321,6 +372,27 @@ export default {
             });
           })
           .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
+
+      axios.get(`http://localhost:8000/login/time/${this.$route.params.customerId}`)
+          .then(response => {
+            const responseData = response.data;
+            this.areaData.datasets[0].data = responseData.timeDataList;
+            // 데이터 로딩이 완료된 후에 차트를 생성합니다.
+
+            this.$nextTick(() => {
+              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
+              if (this.customerLoginChartInstance) {
+                this.customerLoginChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+              }
+
+              this.customerLoginChartInstance = new Chart(this.$refs.customerLoginChart, {
+                type: 'line',
+                data: this.areaData,
+                options: this.areaOptions
+              });
+            });
+          })
+          .catch(error => console.error("고객의 시간대별 로그인을 불러오는 데 실패했습니다.", error));
     },
   },
   mounted() {

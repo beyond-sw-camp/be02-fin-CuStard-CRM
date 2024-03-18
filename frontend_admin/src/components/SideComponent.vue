@@ -3,7 +3,7 @@
     <div
         class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top"
     >
-      <a class="sidebar-brand brand-logo" href="/"
+      <a class="sidebar-brand brand-logo" href="/main"
       ><img
           src="assets/images/custard-dashboard-logo.png"
           width="30px"
@@ -20,7 +20,7 @@
             <div class="count-indicator">
               <img
                   class="img-xs rounded-circle"
-                  src="assets/images/faces/face15.jpg"
+                  src="assets/images/faces/profile2.png"
                   alt=""
               />
               <span class="count bg-success"></span>
@@ -32,7 +32,7 @@
         </div>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/main">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>

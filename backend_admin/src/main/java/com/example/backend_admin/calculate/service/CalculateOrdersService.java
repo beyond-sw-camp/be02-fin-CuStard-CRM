@@ -7,6 +7,7 @@ import com.example.backend_admin.log.entity.ProductDetailLog;
 import com.example.backend_admin.log.repository.ProductDetailLogRespository;
 import com.example.backend_admin.orders.model.entity.Orders;
 import com.example.backend_admin.orders.repository.OrdersRepository;
+import com.example.backend_admin.product.model.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.backend_admin.product.repository.ProductRepository;
@@ -41,14 +42,23 @@ public class CalculateOrdersService {
 
         List<Orders> ordersList = ordersRepository.findByCreatedDateAfter(today.minusDays(14));
         int[] array = new int[6];
-
+        int ordersAmount = 0;
         for(Orders orders : ordersList){
             Long productIdx = orders.getProductIdx();
-            Integer category = productRepository.findById(productIdx).get().getCategory();
+            Product product = productRepository.findById(orders.getProductIdx()).get();
+
+            Integer category = product.getCategory();
+            Integer price = product.getProductPrice();
+
             array[category] = orders.getProductPrice();
+            ordersAmount += price;
         }
 
-        return GetCategoryOrdersRes.builder().orders(array).build();
+        return GetCategoryOrdersRes.builder()
+                .orders(array)
+                .ordersCount(ordersList.size())
+                .ordersAmount(ordersAmount)
+                .build();
     }
 
     public GetCategoryOrdersRes monthOrdersRes() {

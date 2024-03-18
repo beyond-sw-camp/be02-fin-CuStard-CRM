@@ -11,28 +11,32 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <div class="filter-container">
-                    <select id="amountFilter" class="filter" @change="sortCustomers('amount', $event.target.value)">
-                      <option value="">주문금액순 선택</option>
-                      <option value="highToLow">높은 금액순</option>
-                      <option value="lowToHigh">낮은 금액순</option>
-                    </select>
-                    <select id="gradeFilter" class="filter" @change="sortCustomers('grade', $event.target.value)">
-                      <option value="">등급별 선택</option>
-                      <option value="DIAMOND">DIAMOND</option>
-                      <option value="PLATINUM">PLATINUM</option>
-                      <option value="GOLD">GOLD</option>
-                      <option value="SILVER">SILVER</option>
-                      <option value="BRONZE">BRONZE</option>
-                      <option value="NEWBIE">NEWBIE</option>
 
-                    </select>
-
-                  </div>
                   <div id="results">
                     <!-- 정렬 및 필터링된 결과가 여기에 표시됩니다 -->
                   </div>
-                  <h4 class="card-title">고객 정보</h4>
+                  <div class="select">
+                    <h4 class="card-title csInfo">고객 정보</h4>
+                    <div class="filter-container">
+                      <select id="amountFilter" class="btn btn-outline-secondary dropdown-toggle filter" @change="sortCustomers('amount', $event.target.value)">
+                        <option value="">주문금액순 선택</option>
+                        <option value="highToLow">높은 금액순</option>
+                        <option value="lowToHigh">낮은 금액순</option>
+                      </select>
+                      <select id="gradeFilter" class="filter btn btn-outline-secondary dropdown-toggle" @change="sortCustomers('grade', $event.target.value)">
+                        <option value="">등급별 선택</option>
+                        <option value="DIAMOND">DIAMOND</option>
+                        <option value="PLATINUM">PLATINUM</option>
+                        <option value="GOLD">GOLD</option>
+                        <option value="SILVER">SILVER</option>
+                        <option value="BRONZE">BRONZE</option>
+                        <option value="NEWBIE">NEWBIE</option>
+
+                      </select>
+
+                    </div>
+                  </div>
+
                   <div class="table-responsive">
                     <table class="table table-bordered table-contextual">
                       <thead>
@@ -152,4 +156,18 @@ export default {
 
 <style>
 
+.select{
+  display: flex;
+}
+.csInfo{
+  margin-right: 25px;
+  margin-top: 7px;
+}
+select{
+  padding: 2px;
+  margin-right: 10px;
+}
+select > option{
+  text-align: left;
+}
 </style>
