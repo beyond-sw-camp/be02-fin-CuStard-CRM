@@ -26,7 +26,7 @@
             <div class="navbar-profile">
               <img
                   class="img-xs rounded-circle"
-                  src="assets/images/faces/face15.jpg"
+                  src="assets/images/faces/profile2.png"
                   alt=""
               />
               <p class="mb-0 d-none d-sm-block navbar-profile-name">
@@ -41,17 +41,15 @@
           >
             <h6 class="p-3 mb-0">Profile</h6>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
+            <a @click="logout()" class="dropdown-item preview-item">
               <div class="preview-thumbnail">
                 <div class="preview-icon bg-dark rounded-circle">
                   <i class="mdi mdi-logout text-danger"></i>
                 </div>
               </div>
-              <a @click="logout()">
                 <div class="preview-item-content">
                   <p class="preview-subject mb-1">Log out</p>
                 </div>
-              </a>
             </a>
           </div>
         </li>
@@ -71,18 +69,17 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 
-const router = useRouter();
+// const router = useRouter();
 
 export default {
   methods: {
     logout() {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("adminIdx");
+      this.$router.push({path: "/"});
 
-      router.push("/");
-      router.go();
     }
   }
 }

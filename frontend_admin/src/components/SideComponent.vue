@@ -20,7 +20,7 @@
             <div class="count-indicator">
               <img
                   class="img-xs rounded-circle"
-                  src="assets/images/faces/face15.jpg"
+                  src="assets/images/faces/profile2.png"
                   alt=""
               />
               <span class="count bg-success"></span>
