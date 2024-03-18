@@ -2,6 +2,9 @@ package com.example.backend_admin.calculate.service;
 
 import com.example.backend_admin.calculate.model.response.GetCategoryOrdersRes;
 import com.example.backend_admin.calculate.model.response.GetTodayOrdersRes;
+import com.example.backend_admin.customer.entity.Customer;
+import com.example.backend_admin.log.entity.ProductDetailLog;
+import com.example.backend_admin.log.repository.ProductDetailLogRespository;
 import com.example.backend_admin.orders.model.entity.Orders;
 import com.example.backend_admin.orders.repository.OrdersRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import java.util.List;
 public class CalculateOrdersService {
     private final OrdersRepository ordersRepository;
     private final ProductRepository productRepository;
+    private final ProductDetailLogRespository productDetailLogRespository;
     LocalDateTime today = LocalDateTime.now();
 
     public GetTodayOrdersRes todayOrders() {
@@ -44,7 +48,7 @@ public class CalculateOrdersService {
             array[category] = orders.getProductPrice();
         }
 
-        return GetCategoryOrdersRes.builder().array(array).build();
+        return GetCategoryOrdersRes.builder().orders(array).build();
     }
 
     public GetCategoryOrdersRes monthOrdersRes() {
@@ -56,19 +60,26 @@ public class CalculateOrdersService {
             array[month-1] = orders.getProductPrice();
         }
 
-        return GetCategoryOrdersRes.builder().array(array).build();
+        return GetCategoryOrdersRes.builder().orders(array).build();
     }
 
     public GetCategoryOrdersRes customerOrdersRes(Long idx){
         List<Orders> ordersList = ordersRepository.findByCustomerIdx(idx);
 
-        int[] array = new int[6];
+        int[] ordersCategory = new int[6];
         for(Orders orders : ordersList){
             Long productIdx = orders.getProductIdx();
             Integer category = productRepository.findById(productIdx).get().getCategory();
-            array[category] = orders.getProductPrice();
+            ordersCategory[category] = orders.getProductPrice();
         }
 
-        return GetCategoryOrdersRes.builder().array(array).build();
+        int[] productCategory = new int[6];
+       List<ProductDetailLog> productDetailLogs = productDetailLogRespository.findByCustomerIdx(idx);
+        for(ProductDetailLog productDetailLog :productDetailLogs){
+            productCategory[productDetailLog.getCategory()]++;
+        }
+
+        return GetCategoryOrdersRes.builder().orders(ordersCategory).productRead(productCategory).build();
     }
+
 }
