@@ -8,4 +8,6 @@ import lombok.Getter;
 public class GetCategoryOrdersRes {
     int[] orders;
     int[] productRead;
+    int ordersCount;
+    int ordersAmount;
 }
