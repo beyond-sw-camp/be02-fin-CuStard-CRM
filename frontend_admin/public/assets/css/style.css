@@ -8661,13 +8661,14 @@ pre {
 .table-info,
 .table-info > th,
 .table-info > td {
-  background-color: #8457d5; }
+  /*background-color: #00000030; */
+}
 
 .table-info th,
 .table-info td,
 .table-info thead th,
 .table-info tbody + tbody {
-  border-color: #c5acf3; }
+  border-color: #c5acf38a; }
 
 .table-hover .table-info:hover {
   background-color: #7543d0; }

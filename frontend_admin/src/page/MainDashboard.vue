@@ -81,7 +81,7 @@
 
                       <h4 class="text-muted font-weight-normal">휴면고객재접속</h4>
                       <div class="d-flex align-items-center align-self-start" style="  width:250px;">
-                        <div style="font-size: 25px; font-weight: 500;">{{ dormatCs }}명</div>
+                        <div class="font-weight-medium" style="font-size: 25px; font-weight: 500;">{{ dormatCs }}명</div>
                         <div :class="[dormatCsCalcClass ,'ml-2', 'mb-0', 'font-weight-medium'] "> {{ dormatCsCalc }}명 </div>
                       </div>
                     </div>
