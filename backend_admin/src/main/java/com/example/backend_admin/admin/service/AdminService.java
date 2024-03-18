@@ -174,7 +174,7 @@ public class AdminService implements UserDetailsService {
             return "쿠폰 발급 완료";
         }
         //TODO: 장기 미접속자는 매일매일 쿠폰을 받기 때문에 수정 필요 및 testDateTime 제거 필요
-        public PostAdminSleeperCouponRes sleeperCoupon( PostAdminSleeperCouponReq postAdminSleeperCouponReq){
+        public PostAdminSleeperCouponRes sleeperCoupon( PostAdminSleeperCouponReq postAdminSleeperCouponReq)throws BaseException{
 
             Long cnt=0L;
 

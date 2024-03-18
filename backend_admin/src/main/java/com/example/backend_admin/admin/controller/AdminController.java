@@ -54,7 +54,7 @@ public class AdminController {
         try {
             return ResponseEntity.ok().body(adminService.sleeperCoupon(postAdminSleeperCouponReq));
         }catch (BaseException exception){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()))
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
 
 
