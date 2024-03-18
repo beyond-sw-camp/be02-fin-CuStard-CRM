@@ -25,9 +25,9 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public ResponseEntity login(@RequestBody PostAdminLoginReq request){
+    public Object login(@RequestBody PostAdminLoginReq request){
 
-        return ResponseEntity.ok().body(adminService.adminLogin(request));
+        return adminService.adminLogin(request);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/level/coupon")

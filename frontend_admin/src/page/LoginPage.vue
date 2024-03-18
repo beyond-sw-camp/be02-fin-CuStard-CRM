@@ -18,13 +18,12 @@
                 <div class="form-group d-flex align-items-center justify-content-between">
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input"> Remember me
-                    </label>
+                      <input type="checkbox" class="form-check-input"> Remember me </label>
                   </div>
                   <a href="#" class="forgot-pass">Forgot password</a>
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
+                  <button type="button" class="btn btn-primary btn-block enter-btn" @click="login">Login</button>
                 </div>
                 <p class="sign-up">Don't have an Account?<a href="#"> Sign Up</a></p>
               </form>
@@ -40,7 +39,7 @@
 </template>
 
 <script>
-import { useAdminStore } from "@/stores/useAdminStore";
+import {useAdminStore} from "@/stores/useAdminStore";
 
 export default {
   data() {
@@ -48,35 +47,36 @@ export default {
       loginForm: {
         adminEmail: '',
         adminPwd: '',
-      }
+      },
+      isLoading: false // 로딩 상태를 추적하기 위한 변수
     };
   },
   methods: {
     async login() {
-      const adminStore = useAdminStore(); // 스토어 직접 사용
-      const result = await adminStore.login(this.loginForm);
-      console.log('ZZ')
+      const adminStore = useAdminStore();
+      this.isLoading = true; // 로딩 상태 시작
 
-      // 로그인 응답에서 authority 값을 확인
-      if (result && result.authority === "Administrator") {
-        console.log(`로그인 성공`);
-
-        this.$router.push("/");
-        // 로그인 성공 처리
-      } else if (result && result.authority !== "Administrator") {
-        // 권한이 Administrator가 아닌 경우
-        alert("Administrator 권한이 필요합니다.");
-      } else {
-        // 로그인 실패 처리. result가 undefined이거나 message 속성이 없는 경우를 대비해 안전한 접근 방식 사용
-        alert(result?.message || "로그인 실패");
-        // 폼 초기화
+      try {
+        const result = await adminStore.login(this.loginForm);
+        if (result && result.accessToken) {
+          // 로그인 성공 처리
+          localStorage.setItem('adminIdx', result.adminIdx);
+          localStorage.setItem('accessToken', "Bearer " + result.accessToken);
+          this.$router.push("/main");
+        } else {
+          // 결과에 accessToken이 없으면 로그인 실패로 간주
+          throw new Error("로그인 실패");
+        }
+      } catch (error) {
+        alert(error.message || "로그인에 실패했습니다.");
+      } finally {
+        this.isLoading = false; // 로딩 상태 종료
       }
     },
-
   }
 };
 </script>
 
 <style>
-
+/* Your styles here */
 </style>
