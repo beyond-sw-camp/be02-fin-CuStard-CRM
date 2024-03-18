@@ -1,10 +1,11 @@
 package com.example.backend_admin.calculate.service;
 
+import com.example.backend_admin.calculate.model.response.GetLoginTimeRes;
 import com.example.backend_admin.calculate.model.response.GetSleepAccountGrowthRateRes;
-import com.example.backend_admin.calculate.model.response.GetTodayLoginByThreeHour;
 import com.example.backend_admin.calculate.model.response.GetTodayLoginRes;
 import com.example.backend_admin.calculate.model.response.GetTodaySignupRes;
 import com.example.backend_admin.customer.repository.CustomerRepository;
+import com.example.backend_admin.log.entity.LoginLog;
 import com.example.backend_admin.log.repository.LoginLogRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,21 +57,29 @@ public class CalculateLogService {
                 .sleepAccountGrowthRate(sleepAccountGrowthRate).build();
     }
 
-    public GetTodayLoginByThreeHour todayLoginByThreeHour(){
-        List<List<Long>> countList = loginLogRespository.findByLoginByThreeHour();
-        Long sectionCount = 0L;
-        int time=0;
-        List<Long> timeDataList = new ArrayList<>();
-        for (List<Long> count:countList) {
-            System.out.println(count.get(1));
-            sectionCount = sectionCount + count.get(1);
-            time++;
-            if (time%3==0){
-                timeDataList.add(sectionCount);
-                sectionCount=0L;
-            }
+    public GetLoginTimeRes loginTime(){
+        int[] array = new int[24];
+
+        List<LoginLog> loginLogs = loginLogRespository.findByCreatedDateAfter(today.minusDays(14));
+
+        for(LoginLog log:loginLogs){
+            Integer hour = log.getCreatedDate().getHour();
+            array[hour]++;
         }
 
-        return GetTodayLoginByThreeHour.builder().timeDataList(timeDataList).build();
+        return GetLoginTimeRes.builder().timeDataList(array).build();
+    }
+
+    public GetLoginTimeRes customerLoginTime(Long idx){
+        int[] array = new int[24];
+
+        List<LoginLog> loginLogs = loginLogRespository.findByCustomerIdxAndCreatedDateAfter(idx,today.minusDays(365));
+
+        for(LoginLog log:loginLogs){
+            Integer hour = log.getCreatedDate().getHour();
+            array[hour]++;
+        }
+
+        return GetLoginTimeRes.builder().timeDataList(array).build();
     }
 }

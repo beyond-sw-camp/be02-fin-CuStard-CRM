@@ -47,9 +47,11 @@
                   <i class="mdi mdi-logout text-danger"></i>
                 </div>
               </div>
-              <div class="preview-item-content">
-                <p class="preview-subject mb-1">Log out</p>
-              </div>
+              <a @click="logout()">
+                <div class="preview-item-content">
+                  <p class="preview-subject mb-1">Log out</p>
+                </div>
+              </a>
             </a>
           </div>
         </li>
@@ -69,8 +71,20 @@
 </template>
 
 <script>
-export default {
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+export default {
+  methods: {
+    logout() {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("adminIdx");
+
+      router.push("/");
+      router.go();
+    }
+  }
 }
 </script>
 
