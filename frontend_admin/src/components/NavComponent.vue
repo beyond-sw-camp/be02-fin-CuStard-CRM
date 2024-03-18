@@ -3,7 +3,7 @@
     <div
         class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center"
     >
-      <a class="navbar-brand brand-logo-mini" href="index.html"
+      <a class="navbar-brand brand-logo-mini" href="/main"
       ><img src="assets/images/logo-mini.svg" alt="logo"
       /></a>
     </div>
