@@ -50,10 +50,14 @@ public class CalculateController {
     }
 
     @RequestMapping("/today/count")
-    public GetTodayLoginByThreeHour todayLoginByThreeHour(){
-        return calculateLogService.todayLoginByThreeHour();
+    public GetLoginTimeRes LoginTime(){
+        return calculateLogService.loginTime();
     }
 
+    @RequestMapping("login/time/{idx}")
+    public GetLoginTimeRes customerLoginTime(@PathVariable Long idx){
+        return calculateLogService.customerLoginTime(idx);
+    }
     @RequestMapping("/customer/orders/{idx}")
     public GetCategoryOrdersRes customerOrdersRes(@PathVariable Long idx){
         return calculateOrdersService.customerOrdersRes(idx);
