@@ -2,7 +2,9 @@ package com.example.backend.qna.service;
 
 import com.example.backend.answer.model.entity.Answer;
 import com.example.backend.answer.repository.AnswerRepository;
+import com.example.backend.common.BaseException;
 import com.example.backend.common.BaseResponse;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.repository.CustomerRepository;
 import com.example.backend.qna.model.entity.Qna;
@@ -29,18 +31,18 @@ public class QnaService {
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public BaseResponse<PostQnaRegisterRes> registerQna(String token, PostQnaRegisterReq postQnaRegisterReq) {
+    public BaseResponse registerQna(String token, PostQnaRegisterReq postQnaRegisterReq) throws BaseException {
         token = TokenProvider.replaceToken(token);
         Long customerIdx = TokenProvider.getIdx(token);
         Optional<Customer> result = customerRepository.findById(customerIdx);
 
         if (result.isPresent()) {
             if (postQnaRegisterReq.getTitle() == null) {
-                return BaseResponse.failResponse(400, "제목을 입력하지 않았습니다.");
+                throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_TITLE);
             } else if (postQnaRegisterReq.getQnaContent() == null) {
-                return BaseResponse.failResponse(400, "내용을 입력하지 않았습니다.");
+                throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_QNACONTENT);
             } else if (postQnaRegisterReq.getQnaPwd() == null) {
-                return BaseResponse.failResponse(400, "비밀번호를 입력하지 않았습니다.");
+                throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_PASSWORD);
             } else {
                 Customer customer = result.get();
                 Qna qna = Qna.builder()
@@ -56,10 +58,10 @@ public class QnaService {
                         .title(qna.getTitle())
                         .qnaContent(qna.getQnaContent())
                         .build();
-                return BaseResponse.successResponse("1:1 문의 작성 성공",postQnaRegisterRes);
+                return BaseResponse.successResponse(postQnaRegisterRes);
             }
         } else {
-            return BaseResponse.failResponse(400, "존재하지 않는 사용자입니다.");
+            throw new BaseException(BaseResponseStatus.QNA_REGISTER_UNAUTHORIZED);
 
         }
     }

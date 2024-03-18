@@ -61,13 +61,36 @@ public class BatchService {
     public LevelCouponReaderRes levelCouponReader(){
 
         List<List<Long>> targetList = new ArrayList<>();
-
-        List<Long> newbieList = loginLogRespository.findByNewbieList();
-        List<Long> bronzeList = loginLogRespository.findByBronzeList();
-        List<Long> silverList = loginLogRespository.findBySilverList();
-        List<Long> goldList = loginLogRespository.findByGoldList();
-        List<Long> platinumList = loginLogRespository.findByPlatinumList();
-        List<Long> diamondList = loginLogRespository.findByDiamondList();
+        List<Long> newbieList = new ArrayList<>();
+        List<Long> bronzeList = new ArrayList<>();
+        List<Long> silverList = new ArrayList<>();
+        List<Long> goldList = new ArrayList<>();
+        List<Long> platinumList = new ArrayList<>();
+        List<Long> diamondList = new ArrayList<>();
+        List<Customer> customerNewbieList = customerRepository.findByLevel(CustomerLevel.NEWBIE);
+        for (Customer customer:customerNewbieList) {
+            newbieList.add(customer.getIdx());
+        }
+        List<Customer> customerBronzeList = customerRepository.findByLevel(CustomerLevel.BRONZE);
+        for (Customer customer:customerBronzeList) {
+            bronzeList.add(customer.getIdx());
+        }
+        List<Customer> customerSilverList = customerRepository.findByLevel(CustomerLevel.SILVER);
+        for (Customer customer:customerSilverList) {
+            silverList.add(customer.getIdx());
+        }
+        List<Customer> customerGoldList = customerRepository.findByLevel(CustomerLevel.GOLD);
+        for (Customer customer:customerGoldList) {
+            goldList.add(customer.getIdx());
+        }
+        List<Customer> customerPlatinumList = customerRepository.findByLevel(CustomerLevel.PLATINUM);
+        for (Customer customer:customerPlatinumList) {
+            platinumList.add(customer.getIdx());
+        }
+        List<Customer> customerDiamondList = customerRepository.findByLevel(CustomerLevel.DIAMOND);
+        for (Customer customer:customerDiamondList) {
+            diamondList.add(customer.getIdx());
+        }
 
         targetList.add(newbieList);
         targetList.add(bronzeList);
