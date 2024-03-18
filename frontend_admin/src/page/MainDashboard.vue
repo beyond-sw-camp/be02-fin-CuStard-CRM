@@ -144,7 +144,7 @@
                     </div>
                     <div
                         class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                      <h6 class="font-weight-bold mb-0">842건</h6>
+                      <h6 class="font-weight-bold mb-0">{{this.ordersCount}} 건</h6>
                     </div>
                   </div>
                   <div
@@ -154,7 +154,7 @@
                     </div>
                     <div
                         class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                      <h6 class="font-weight-bold mb-0">5923400원</h6>
+                      <h6 class="font-weight-bold mb-0">{{this.ordersAmount}}} 원</h6>
                     </div>
                   </div>
                 </div>
@@ -266,6 +266,8 @@ export default {
       todaySellCalcClass: '', // 하루 매출액 계산에 따른 클래스
       dormatCsCalcClass: '', // 휴면 고객 계산에 따른 클래스
 
+      ordersCount: '',
+      ordersAmount: '',
 
       doughnutPieData: {
         datasets: [{
@@ -550,6 +552,9 @@ export default {
           .then(response => {
             const responseData = response.data;
             this.doughnutPieData.datasets[0].data = responseData.orders;
+            this.ordersCount = responseData.ordersCount;
+            this.ordersAmount = responseData.ordersAmount;
+
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
             this.$nextTick(() => {
               // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
