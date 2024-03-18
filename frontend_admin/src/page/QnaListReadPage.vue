@@ -50,9 +50,8 @@ export default {
     fetchQnaData() {
       axios.post(`http://localhost:8000/admin/qna/read/${this.$route.params.idx}`)
           .then(response => {
-            console.log(response.data); // 서버로부터 받은 데이터 확인
-            if (response.status === 200) {
-              this.qna = response.data;
+              if (response.status === 200) {
+              this.qna = response.data.result;
             } else {
               alert("오류");
             }

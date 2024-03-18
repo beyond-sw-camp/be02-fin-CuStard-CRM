@@ -615,8 +615,8 @@ export default {
     loadArticles() {
       axios.get("http://localhost:8000/admin/qna/list")
           .then((response) => {
-            this.qnasWaitings = response.data.filter(qna => !qna.answerContent).length;
-            this.qnasWaiting = response.data.filter(qna => !qna.answerContent).slice(0, 5);
+            this.qnasWaitings = response.data.result.filter(qna => !qna.answerContent).length;
+            this.qnasWaiting = response.data.result.filter(qna => !qna.answerContent).slice(0, 5);
           })
           .catch((error) => {
             console.error("데이터 로드 실패:", error);

@@ -310,12 +310,10 @@ export default {
   methods: {
     loadArticles() {
       axios.get("http://localhost:8000/admin/qna/list")
-          .then((response) => { //:TODO customerIdx를 받아온 값으로 변경해야함
-            console.log(response);
-            this.qnasWaiting = response.data.filter(qna => qna.customerIdx === 7 && !qna.answerContent);
-            this.qnasAnswered = response.data.filter(qna => qna.customerIdx === 7 && qna.answerContent);
-            console.log(this.qnasWaiting);
-            console.log(this.qnasAnswered);
+          .then((response) => {
+            const customerId = Number(this.$route.params.customerId);
+            this.qnasWaiting = response.data.result.filter(qna => qna.customerIdx === customerId && !qna.answerContent);
+            this.qnasAnswered = response.data.result.filter(qna => qna.customerIdx === customerId && qna.answerContent);
           })
           .catch((error) => {
             console.error("데이터 로드 실패:", error);
