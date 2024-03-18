@@ -73,6 +73,7 @@ input[type="text"] {
 main {
     max-width: 600px;
     margin: 20px auto;
+    margin-bottom: 80px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;

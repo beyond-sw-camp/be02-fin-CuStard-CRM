@@ -2,7 +2,7 @@
   <div class="signup-content">
     <div class="all">
     <div class="signup-container">
-      <div class="text-with-image">
+      <div class="text-with-image-sign">
         <img src="../assets/custard-logo.png" alt="Custard 로고">
       </div>
       <br>
@@ -11,7 +11,7 @@
       </div>
       <br>
       <div class="confortLogin">SNS계정으로 간편 회원가입</div>
-      <div class="sns-buttons">
+      <div class="sns-buttons-sign">
         <a href="/users/auth/facebook" class="facebook"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2FMjAxOTAzMjlfNSAg%2FMDAxNTUzODM2ODA4MTky.-gS3ZoRn6NftLL0GUjuFUaDNRgoG9vAnH--zyNQIF1Ag.7tgGDNfnJlPGxaTGqye0f5cD0_HKnU6GNQ7wf1FbgZAg.JPEG.btf0c6dsc%2FDFGJSDF%253BLGJ%253BKJSF%253BGKLJR%253BKLDFG.gif&type=sc960_832_gif" alt="Facebook 로고"></a>
         <a href="/users/auth/kakao" class="kakao"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjFfMjYy%2FMDAxNjI2ODMxODU0NzUx.KsijiA7OtIhygOW1opRzuVuxZeOyK-98jGSc0Ao6g6sg.p-mwUQH33OLvab3S-6fa4-bIJsJCdPzSPpRgWg2T8mkg.JPEG.aosmithkr%2F%25C4%25AB%25C4%25AB%25BF%25C0%25C5%25E5%25C0%25CC%25B9%25CC%25C1%25F6.jpg&type=sc960_832" alt="Kakao 로고"></a>
         <a href="/users/auth/naver" class="naver"><img src="../assets/naversimbol.png" alt="Naver 로고"></a>
@@ -27,7 +27,22 @@
         <div class="insertpassword2">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
         <input placeholder="비밀번호" type="password" id="customerPwd" v-model="customerSignup.customerPwd" maxlength="100">
         <br>
-
+        <div class="insertname"><h5>이름</h5></div>
+        <input placeholder="이름" type="text" id="customerName" v-model="customerSignup.customerName" maxlength="100">
+        <br>
+        <div class="insertage"><h5>나이</h5></div>
+        <input placeholder="나이" type="text" id="customerAge" v-model="customerSignup.customerAge" maxlength="3">
+        <br>
+        <div class="insertgender"><h5>성별</h5></div>
+        <select v-model="customerSignup.customerGender" style="width: 400px;">
+          <option value="">선택 안함</option>
+          <option value="female">여자</option>
+          <option value="male">남자</option>
+        </select>
+        <br>
+        <div class="insertaddress"><h5>배송지</h5></div>
+        <textarea placeholder=" 배송지를 입력해주세요" id="customerAddress" v-model="customerSignup.customerAddress" style="width: 395px;"></textarea>
+        <br>
         <div class="insertcheck"><h5>약관동의</h5></div>
         <div class="consent-options">
           <div class="consent-option" v-for="(value, name) in consent" :key="name">
@@ -41,11 +56,13 @@
           </div>
         </div>
         <br>
+
         <input class="loginsubmit" type="submit" value="가입하기">
       </form>
     </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -109,6 +126,7 @@ export default {
     },
     getConsentLabel(key) {
       const labels = {
+        agreeAll: '전체 동의',
         agree1: '만 14세 이상입니다 (필수)',
         agree2: '이용약관 (필수)',
         agree3: '개인정보수집 및 이용동의 (필수)',
@@ -123,8 +141,7 @@ export default {
 
 <style>
 .all{
-  width: 80%
-;
+  width: 400px;
 }
 *{
     font-family: 'GmarketSans';
@@ -143,7 +160,9 @@ body {
 .signup-content {
     justify-content: center;
     display: flex;
-  width: 100%;
+    width: 100%;
+    min-height: 100vh; /* 화면 높이만큼 박스 높이 설정 */
+    align-items: center; /* 수직 가운데 정렬 */
 }
 
 .signup-container {
@@ -151,13 +170,14 @@ body {
     padding: 20px;
     border-radius: 8px;
     width: 100%;
+    max-width: 400px;
     text-align: center;
     margin-top: 20px; /* 이미지와 로고에 겹치지 않도록 여백 추가 */
     border: 1px solid #ccc; /* 보더 추가 */
 
 }
 
-.text-with-image {
+.text-with-image-sign {
     display: flex;
     align-items: center;
     margin-bottom: 0px;
@@ -171,12 +191,12 @@ body {
     justify-content: center;
 }
 
-.text-with-image img {
+.text-with-image-sign img {
     width: 130px;
     height: auto;
-    margin-right: 5px;
+    margin-right: 0px;
     border-radius: 20%;
-    padding-left: 40px;
+    padding-left: 0px;
 }
 
 .signup-container h2 {
@@ -218,11 +238,11 @@ body {
     font-size: 12px;
 }
 
-.sns-buttons {
+.sns-buttons-sign {
     margin-top: 20px;
 }
 
-.sns-buttons a {
+.sns-buttons-sign a {
     display: inline-block;
     margin: 0 10px;
     padding: 10px;
@@ -232,15 +252,15 @@ body {
     cursor: pointer;
 }
 
-.sns-buttons .facebook {
+.sns-buttons-sign .facebook {
     background-color: #3b5998;
 }
 
-.sns-buttons .kakao {
+.sns-buttons-sign .kakao {
     background-color: #ffeb00;
 }
 
-.sns-buttons .naver {
+.sns-buttons-sign .naver {
     background-color: #00c63b;
 }
 
@@ -251,10 +271,10 @@ body {
     margin-bottom: -7px;
 }
 
-.sns-buttons img {
-    width: 15px;
-    height: 15px;
-    margin-right: 3px;
+.sns-buttons-sign img {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
 }
 
 .insertEmail {
@@ -303,6 +323,8 @@ body {
     text-align: center;
     font-size: 14px;
     color: #494949;
+    margin-top: -10px;
+    margin-bottom: -10px;
 }
 
 .line {
@@ -379,5 +401,36 @@ body {
 .loginsubmit:hover{
     background: #99154e;
 }
+.insertname {
+    text-align: left;
+    margin-bottom: -15px;
+    font-size: 15px;
+    color: #494949;
+}
 
+.insertage {
+    text-align: left;
+    margin-bottom: -15px;
+    font-size: 15px;
+    color: #494949;
+}
+
+.insertgender {
+    text-align: left;
+    margin-bottom: -15px;
+    font-size: 15px;
+    color: #494949;
+}
+
+.insertaddress {
+    text-align: left;
+    margin-bottom: -15px;
+    font-size: 15px;
+    color: #494949;
+}
+
+#customerAddress {
+    width: 395px;
+    height: 100px;
+}
 </style>

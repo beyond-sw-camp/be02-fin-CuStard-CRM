@@ -46,6 +46,7 @@ footer {
     background: #c4c4c417;
     text-align: center;
     height: 200px;
+    margin-bottom: -50px;
 }
 
 footer .bottom_util {

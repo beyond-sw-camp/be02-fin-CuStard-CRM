@@ -546,7 +546,7 @@ p {
 .product-image-box{
   width: 500px;
   height: 500px;
-//float: left;
+  float: left;
   padding-left: 20%;
 
 }
