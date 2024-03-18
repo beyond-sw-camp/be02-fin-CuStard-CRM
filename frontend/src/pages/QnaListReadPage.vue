@@ -69,10 +69,9 @@ export default {
 <style scoped>
 .qna-article {
   max-width: 800px;
-  margin: 0 auto;
-  margin-top: 60px;
-  padding-top: 20px; /* 위쪽 여백 */
-  padding-bottom: 100px; /* 아래쪽 여백 */
+  margin: 70px auto;
+  padding-top: 10px; /* 위쪽 여백 */
+  padding-bottom: 160px; /* 아래쪽 여백 */
 }
 
 input[type="password"] {

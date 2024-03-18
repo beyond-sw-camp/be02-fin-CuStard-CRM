@@ -1,8 +1,9 @@
 <template>
   <div class="login-container">
     <div class="content-container">
-      <div class="text-with-image">
+      <div class="text-with-image-login">
         <img src="../assets/custard-logo.png" alt="커스터드 로고">
+        <div class="text">로그인</div>
       </div>
       <form id="loginForm" @submit.prevent="login">
         <input type="text" placeholder="이메일" id="email" v-model="loginForm.customerEmail" required>
@@ -125,22 +126,30 @@ body {
   text-align: center;
 }
 
-.text-with-image {
+.text-with-image-login {
+  text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: #494949;
-  font-size: 13px;
 }
 
-.text-with-image img {
+.text-with-image-login img {
   width: 100px;
   height: auto;
-  margin-right: -20px;
   border-radius: 20%;
-  margin-bottom: 2%;
+  margin-bottom: 10px;
 }
+
+.text {
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  color: #333;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 15px;
+  color: #494949;
+}
+
 
 .login-container h2 {
   color: #333;
@@ -172,7 +181,7 @@ body {
 
 .content-container {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 80px;
   background-color: #fff;
 }
 

@@ -295,6 +295,7 @@ a {
 .css-mxd3pm {
   flex-shrink: 0;
   margin-left: 10px;
+  margin-bottom: -8px;
   font-size: 35px;
   font-weight: normal;
   line-height: 1.33;
@@ -337,8 +338,7 @@ a {
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  position: relative;
-  left: 370px;
+  margin: 0 160px;
   /* top: -55px; */
   width: 465px;
   height: 48px;
