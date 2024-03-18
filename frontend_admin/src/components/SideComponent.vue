@@ -3,7 +3,7 @@
     <div
         class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top"
     >
-      <a class="sidebar-brand brand-logo" href="/"
+      <a class="sidebar-brand brand-logo" href="/main"
       ><img
           src="assets/images/custard-dashboard-logo.png"
           width="30px"
