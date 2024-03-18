@@ -136,7 +136,7 @@
                       </div>
                     </div>
                     <h4 class="card-title">카테고리 별 구매 금액 </h4>
-                    <canvas id="barChart"
+                    <canvas id="pieChart"
                             ref="CustomerCategoryChart"
                             style="height: 175px; display: block; width: 351px;" width="438" height="218"
                             class="chartjs-render-monitor"></canvas>
@@ -155,7 +155,7 @@
                       </div>
                     </div>
                     <h4 class="card-title">조회 카테고리 </h4>
-                    <canvas id="pieChart" style="height: 185px; display: block; width: 371px;" width="463" height="231"
+                    <canvas id="pieChart" ref="productReadCategory" style="height: 185px; display: block; width: 371px;" width="463" height="231"
                             class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
@@ -188,7 +188,7 @@ export default {
       qnasAnswered: [],
       customer: [],
 
-      doughnutPieData: {
+      ordersCategoryData: {
         datasets: [{
           data: [],
           backgroundColor: [
@@ -224,7 +224,36 @@ export default {
           animateRotate: true
         }
       },
+      productReadCategoryData: {
+        datasets: [{
+          data: [],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+        }],
 
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+          '패션',
+          '뷰티' ,
+          '가전' ,
+          '식품' ,
+          '스포츠/레저'
+        ]
+      },
     };
   },
   methods: {
@@ -263,16 +292,30 @@ export default {
       axios.get(`http://localhost:8000/customer/orders/${this.$route.params.customerId}`)
           .then(response => {
             const responseData = response.data;
-            this.doughnutPieData.datasets[0].data = responseData.array;
+            this.ordersCategoryData.datasets[0].data = responseData.orders;
+            this.productReadCategoryData.datasets[0].data = responseData.productRead;
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
             this.$nextTick(() => {
               // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
-              if (this.chartInstance) {
+              if (this.customerCategoryChartInstance) {
                 this.customerCategoryChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
               }
+
               this.customerCategoryChartInstance = new Chart(this.$refs.CustomerCategoryChart, {
                 type: 'doughnut',
-                data: this.doughnutPieData,
+                data: this.ordersCategoryData,
+                options: this.doughnutPieOptions
+              });
+            });
+            this.$nextTick(() => {
+              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
+              if (this.productCategoryChartInstance) {
+                this.productCategoryChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+              }
+
+              this.productCategoryChartInstance = new Chart(this.$refs.productReadCategory, {
+                type: 'doughnut',
+                data: this.productReadCategoryData,
                 options: this.doughnutPieOptions
               });
             });

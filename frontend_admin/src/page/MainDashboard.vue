@@ -455,7 +455,7 @@ export default {
       axios.get('http://localhost:8000/category/orders')
           .then(response => {
             const responseData = response.data;
-            this.doughnutPieData.datasets[0].data = responseData.array;
+            this.doughnutPieData.datasets[0].data = responseData.orders;
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
             this.$nextTick(() => {
               // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
@@ -475,7 +475,7 @@ export default {
       axios.get('http://localhost:8000/month/orders')
           .then(response => {
             const responseData = response.data;
-            this.barData.datasets[0].data = responseData.array;
+            this.barData.datasets[0].data = responseData.orders;
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
             this.$nextTick(() => {
               // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
