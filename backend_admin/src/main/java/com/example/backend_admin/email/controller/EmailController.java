@@ -22,6 +22,6 @@ public class EmailController {
     public ResponseEntity testEmail() throws MessagingException {
 
         emailService.sendEmails();
-        return ResponseEntity.ok().body(BaseResponse.successResponse("전송"));
+        return ResponseEntity.ok().body(BaseResponse.successResponse("전송"));        //TODO: 변경 필요
     }
 }
