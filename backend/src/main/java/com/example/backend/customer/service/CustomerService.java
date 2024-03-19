@@ -3,6 +3,8 @@ package com.example.backend.customer.service;
 
 
 
+import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.model.request.PostCustomerLoginReq;
 import com.example.backend.customer.model.request.PostCustomerSignupReq;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static com.example.backend.common.BaseResponseStatus.*;
 import static com.example.backend.common.CustomerLevel.NEWBIE;
 
 
@@ -55,10 +58,11 @@ public class CustomerService implements UserDetailsService {
     // Member CRUD
 
     // create
-    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq){
+    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq) throws BaseException {
 
         Optional<Customer> duplicatedMember = customerRepository.findByCustomerEmail(postCustomerSignupReq.getCustomerEmail());
         // 멤버 정보를 빌드로 저장
+
         if(!duplicatedMember.isPresent()) {
 
             Customer customer = Customer.builder()
@@ -89,24 +93,39 @@ public class CustomerService implements UserDetailsService {
                     .result(result)
                     .build();
 
-            return postCustomerSignupRes;
-
-        } else {
-
-            PostCustomerSignupRes postCustomerSignupRes = PostCustomerSignupRes.builder()
-                    .isSuccess(false)
-                    .code(4000L)
-                    .message("요청 실패. 중복된 이메일입니다.")
-                    .result(null)
-                    .build();
-
-            return postCustomerSignupRes;
-
+        if (duplicatedMember.isPresent()){
+            throw new BaseException(BaseResponseStatus.CUSTOMER_SIGNUP_DUPLICATE_EMAIL);
         }
+        Customer customer = Customer.builder()
+                .customerEmail(postCustomerSignupReq.getCustomerEmail())
+                .customerPwd(passwordEncoder.encode(postCustomerSignupReq.getCustomerPwd()))
+                .authority("CUSTOMER")
+                .level(NEWBIE)
+                .totalAmount(0)
+                .status(false)
+                .build();
+
+
+        customerRepository.save(customer);
+
+        Customer customer1 = customerRepository.findByCustomerEmail(customer.getCustomerEmail()).get();
+
+        customerEmailVerifyService.sendCustomerMail(customer1);
+        Map<String, String> result = new HashMap<>();
+        result.put("customerEmail", customer.getCustomerEmail());
+
+        PostCustomerSignupRes postCustomerSignupRes = PostCustomerSignupRes.builder()
+                .isSuccess(true)
+                .code(1000L)
+                .message("회원가입 성공.")
+                .result(result)
+                .build();
+
+        return postCustomerSignupRes;
 
 
     }
-    public PostCustomerLoginRes customerLogin(PostCustomerLoginReq postCustomerLoginReq) {
+    public PostCustomerLoginRes customerLogin(PostCustomerLoginReq postCustomerLoginReq) throws BaseException{
         Optional<Customer> member = customerRepository.findByCustomerEmail(postCustomerLoginReq.getCustomerEmail());
 
         if (member.isPresent()) {
@@ -125,13 +144,13 @@ public class CustomerService implements UserDetailsService {
                 customerRepository.save(member.get());
                 return postCustomerLoginRes;
             } else {
-                return null;
+                throw new BaseException(CUSTOMER_LOGIN_INCORRECT_ACCOUNT);
             }
         }
-        return null;
+        throw new BaseException(CUSTOMER_LOGIN_INCORRECT_ACCOUNT);
     }
 
-    public DeleteCustomerDeleteRes delete(String token){
+    public DeleteCustomerDeleteRes delete(String token) throws BaseException{
         token = TokenProvider.replaceToken(token);
 
         Optional<Customer> result = customerRepository.findByCustomerEmail(TokenProvider.getUsername(token));
@@ -146,10 +165,10 @@ public class CustomerService implements UserDetailsService {
 
             return deleteCustomerDeleteRes;
         }
-        return null;
+        throw new BaseException(CUSTOMER_DELETE_FAIL);
     }
 
-    public GetCustomerReadRes read(Long idx){
+    public GetCustomerReadRes read(Long idx) throws BaseException{
         Optional<Customer> result = customerRepository.findById(idx);
 
         if (result.isPresent()){
@@ -176,13 +195,15 @@ public class CustomerService implements UserDetailsService {
                     .lastLogin(customer.getLastLogin())
                     .build();
         }
-        return null;
+        throw new BaseException(CUSTOMER_READ_EMPTY);
     }
-    public List<GetCustomerListRes> list(){
+    public List<GetCustomerListRes> list()throws BaseException{
         List<Customer> result = customerRepository.findAll();
 
         List<GetCustomerListRes> getCustomerListResList = new ArrayList<>();
-
+        if (result.isEmpty()){
+            throw new BaseException(CUSTOMER_LIST_EMPTY);
+        }
         for (Customer customer: result) {
             List<GetHaveCouponBaseRes> getHaveCouponBaseResList = new ArrayList<>();
 
@@ -217,9 +238,10 @@ public class CustomerService implements UserDetailsService {
         System.out.println(username);
         Optional<Customer> result = customerRepository.findByCustomerEmail(username);
         Customer customer = null;
-        if(result.isPresent()) {
-            customer = result.get();
+        if(result.isEmpty()) {
+            throw new UsernameNotFoundException("회원이 존재하지 않습니다.");
         }
+        customer = result.get();
         return customer;
     }
 

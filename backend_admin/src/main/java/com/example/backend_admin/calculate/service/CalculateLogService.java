@@ -4,6 +4,7 @@ import com.example.backend_admin.calculate.model.response.GetLoginTimeRes;
 import com.example.backend_admin.calculate.model.response.GetSleepAccountGrowthRateRes;
 import com.example.backend_admin.calculate.model.response.GetTodayLoginRes;
 import com.example.backend_admin.calculate.model.response.GetTodaySignupRes;
+import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.customer.repository.CustomerRepository;
 import com.example.backend_admin.log.entity.LoginLog;
 import com.example.backend_admin.log.repository.LoginLogRespository;
@@ -22,7 +23,7 @@ public class CalculateLogService {
     private final LoginLogRespository loginLogRespository;
     private final CustomerRepository customerRepository;
     private LocalDateTime today = LocalDateTime.now();
-    public GetTodayLoginRes todayLogin(){
+    public GetTodayLoginRes todayLogin() throws BaseException {
         Long todayLogin = loginLogRespository.countByCreatedDateAfter(today.minusDays(1));
         Long fromYesterdayLogin = loginLogRespository.countByCreatedDateAfter(today.minusDays(2));
 
@@ -32,7 +33,7 @@ public class CalculateLogService {
                 .build();
     }
 
-    public GetTodaySignupRes todaySignUp(){
+    public GetTodaySignupRes todaySignUp()throws BaseException{
         Long todaySignup = customerRepository.countByCreatedDateAfter(today.minusDays(1));
         Long fromYesterdaySignup = customerRepository.countByCreatedDateAfter(today.minusDays(2));
         return GetTodaySignupRes.builder()
@@ -42,7 +43,7 @@ public class CalculateLogService {
 
     }
 
-    public GetSleepAccountGrowthRateRes sleepAccountGrowthRate(){
+    public GetSleepAccountGrowthRateRes sleepAccountGrowthRate()throws BaseException{
         double sleepAccountGrowthRate = ((loginLogRespository.findByAcountCountToday()-loginLogRespository.findByTodaysAgoActiveCount())-(loginLogRespository.findByAcountCountDayAgo()-loginLogRespository.findByOneDaysAgoActiveCount()));
         System.out.println("현재 : " + (loginLogRespository.findByAcountCountToday()-loginLogRespository.findByTodaysAgoActiveCount()));
         System.out.println("이전 : " + (loginLogRespository.findByAcountCountDayAgo()-loginLogRespository.findByOneDaysAgoActiveCount()));
@@ -57,7 +58,7 @@ public class CalculateLogService {
                 .sleepAccountGrowthRate(sleepAccountGrowthRate).build();
     }
 
-    public GetLoginTimeRes loginTime(){
+    public GetLoginTimeRes loginTime()throws BaseException{
         int[] array = new int[24];
 
         List<LoginLog> loginLogs = loginLogRespository.findByCreatedDateAfter(today.minusDays(14));
@@ -70,7 +71,7 @@ public class CalculateLogService {
         return GetLoginTimeRes.builder().timeDataList(array).build();
     }
 
-    public GetLoginTimeRes customerLoginTime(Long idx){
+    public GetLoginTimeRes customerLoginTime(Long idx)throws BaseException{
         int[] array = new int[24];
 
         List<LoginLog> loginLogs = loginLogRespository.findByCustomerIdxAndCreatedDateAfter(idx,today.minusDays(365));

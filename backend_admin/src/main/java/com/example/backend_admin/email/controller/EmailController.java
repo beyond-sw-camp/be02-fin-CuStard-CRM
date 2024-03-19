@@ -1,5 +1,6 @@
 package com.example.backend_admin.email.controller;
 
+import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.email.service.EmailService;
 import com.example.backend_admin.product.model.response.GetProductRecRes;
 import com.example.backend_admin.product.service.ProductService;
@@ -21,6 +22,6 @@ public class EmailController {
     public ResponseEntity testEmail() throws MessagingException {
 
         emailService.sendEmails();
-        return ResponseEntity.ok().body("전송");
+        return ResponseEntity.ok().body(BaseResponse.successResponse("전송"));
     }
 }

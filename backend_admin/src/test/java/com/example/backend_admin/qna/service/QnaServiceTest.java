@@ -3,6 +3,7 @@ package com.example.backend_admin.qna.service;
 import com.example.backend_admin.admin.model.entity.Admin;
 import com.example.backend_admin.answer.model.Answer;
 import com.example.backend_admin.answer.repository.AnswerRepository;
+import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.customer.entity.Customer;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.backend_admin.common.BaseResponseStatus.QNA_REGISTER_NOT_EXIST_QNA;
 import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -82,68 +84,67 @@ class QnaServiceTest {
     }
 
     @Test
-    void qnaService_list_success() {
+    void qnaService_list_success() throws BaseException {
         //given
         List<Qna> result = new ArrayList<>();
         result.add(qna1);
         given(qnaRepository.findAll()).willReturn(result);
 
         //when
-        BaseResponse<List<GetQnaListRes>> response = qnaService.list();
+        List<GetQnaListRes> response = qnaService.list();
 
         //then
         assertNotNull(response);
-        assertEquals("1:1 문의 목록 조회 성공", response.getMessage());
-        assertEquals(1, response.getResult().size());
-        GetQnaListRes qnaListRes = response.getResult().get(0);
+        assertEquals(1, response.size());
+        GetQnaListRes qnaListRes = response.get(0);
         assertEquals(qna1.getIdx(), qnaListRes.getIdx());
         assertEquals(qna1.getTitle(), qnaListRes.getTitle());
         assertEquals(qna1.getCustomer().getIdx(), qnaListRes.getCustomerIdx());
     }
 
     @Test
-    void qnaService_readQnaWithoutAnswer_success() {
+    void qnaService_readQnaWithoutAnswer_success() throws BaseException{
         // given
         given(qnaRepository.findById(any(Long.class))).willReturn(Optional.of(qna1));
 
         //when
-        BaseResponse<PostQnaReadRes> response = qnaService.readQna(1L);
+        PostQnaReadRes response = qnaService.readQna(1L);
 
         //then
-        assertEquals(response.getResult().getTitle(), qna1.getTitle());
-        assertEquals(response.getResult().getQnaContent(), qna1.getQnaContent());
-        assertNull(response.getResult().getAnswerContent());
+        assertEquals(response.getTitle(), qna1.getTitle());
+        assertEquals(response.getQnaContent(), qna1.getQnaContent());
+        assertNull(response.getAnswerContent());
     }
 
     @Test
-    void qnaService_readQnaWithAnswer_success() {
+    void qnaService_readQnaWithAnswer_success() throws BaseException{
         // given
         given(qnaRepository.findById(any(Long.class))).willReturn(Optional.of(qna2));
         given(answerRepository.findByQnaIdx(any(Long.class))).willReturn(Optional.of(answer));
 
         //when
-        BaseResponse<PostQnaReadRes> response = qnaService.readQna(2L);
+        PostQnaReadRes response = qnaService.readQna(2L);
 
 
         //then
-        assertEquals("1:1 문의 상세 조회 성공", response.getMessage());
-        assertNotNull(response.getResult());
-        assertEquals(response.getResult().getTitle(), qna2.getTitle());
-        assertEquals(response.getResult().getQnaContent(), qna2.getQnaContent());
-        assertEquals(response.getResult().getAnswerContent(), answer.getAnswerContent());
+        assertNotNull(response);
+        assertEquals(response.getTitle(), qna2.getTitle());
+        assertEquals(response.getQnaContent(), qna2.getQnaContent());
+        assertEquals(response.getAnswerContent(), answer.getAnswerContent());
     }
 
     @Test
-    void qnaService_readQna_fail_null() {
+    void qnaService_readQna_fail_null() throws BaseException{
         //given
         given(qnaRepository.findById(any(Long.class))).willReturn(Optional.empty());
 
         // when
-        BaseResponse<PostQnaReadRes> response = qnaService.readQna(1L);
+        BaseException exception = assertThrows(BaseException.class, () -> {
+            qnaService.readQna(1L);
+        });
 
         // then
-        assertEquals(404, response.getCode());
-        assertEquals("존재하지 않는 게시물입니다.", response.getMessage());
-        assertNull(response.getResult());
+        assertEquals(QNA_REGISTER_NOT_EXIST_QNA, exception.getBaseResponseStatus());
+
     }
 }

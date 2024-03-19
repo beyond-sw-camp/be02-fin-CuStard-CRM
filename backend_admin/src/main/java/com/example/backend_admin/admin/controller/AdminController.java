@@ -5,6 +5,8 @@ import com.example.backend_admin.admin.model.request.PostAdminLoginReq;
 import com.example.backend_admin.admin.model.request.PostAdminSignupReq;
 import com.example.backend_admin.admin.model.request.PostAdminSleeperCouponReq;
 import com.example.backend_admin.admin.service.AdminService;
+import com.example.backend_admin.common.BaseException;
+import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.log.repository.LoginLogRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,24 +22,42 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/signup")
     public ResponseEntity signup (@RequestBody PostAdminSignupReq postCustomerSignupReq){
 
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.signup(postCustomerSignupReq)));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
 
-        return ResponseEntity.ok().body(adminService.signup(postCustomerSignupReq));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public Object login(@RequestBody PostAdminLoginReq request){
+    public ResponseEntity login(@RequestBody PostAdminLoginReq request){
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.adminLogin(request)));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
 
-        return adminService.adminLogin(request);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/level/coupon")
     public ResponseEntity levelCoupon(@RequestHeader(value = "Authorization") String token,@RequestBody PostAdminLevelCouponReq postAdminLevelCouponReq){
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.levelCoupon(postAdminLevelCouponReq)));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
 
-        return ResponseEntity.ok().body(adminService.levelCoupon(postAdminLevelCouponReq));
     }
     @RequestMapping(method = RequestMethod.POST, value = "/sleeper/coupon")
     public ResponseEntity sleeperCoupon(@RequestHeader(value = "Authorization") String token, @RequestBody PostAdminSleeperCouponReq postAdminSleeperCouponReq){
-        return ResponseEntity.ok().body(adminService.sleeperCoupon(postAdminSleeperCouponReq));
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.sleeperCoupon(postAdminSleeperCouponReq)));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
+
 //        LocalDateTime now = LocalDateTime.now();
 //        System.out.println(now);
 //        LocalDateTime endDateTime = LocalDateTime.of(2024, 3, 13, 15, 30, 0);

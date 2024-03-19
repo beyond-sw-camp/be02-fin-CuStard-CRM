@@ -1,5 +1,6 @@
 package com.example.backend.orders.service;
 
+import com.example.backend.common.BaseException;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.repository.CustomerRepository;
 import com.example.backend.orders.model.entity.GetPortoneRes;
@@ -29,7 +30,7 @@ public class OrdersService {
     private final CustomerRepository customerRepository;
 
     @Transactional
-    public ResponseEntity<GetOrdersCreateRes> createOrder(String token, String impUid) throws IamportResponseException, IOException {
+    public GetOrdersCreateRes createOrder(String token, String impUid) throws IamportResponseException, IOException, BaseException {
         IamportResponse<Payment> iamportResponse = paymentService.getPaymentInfo(impUid);
         Integer amount = iamportResponse.getResponse().getAmount().intValue();
         String customDataString = iamportResponse.getResponse().getCustomData();
@@ -55,7 +56,7 @@ public class OrdersService {
             customer.setTotalAmount(getPortoneRes.getPrice()+customer.getTotalAmount());
             customerRepository.save(customer);
 
-            return ResponseEntity.ok(getOrdersCreateRes);
+            return getOrdersCreateRes;
         }
         return null;
     }

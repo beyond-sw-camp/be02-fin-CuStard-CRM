@@ -1,5 +1,6 @@
 package com.example.backend.orders.service;
 
+import com.example.backend.common.BaseException;
 import com.example.backend.orders.model.entity.GetPortoneRes;
 import com.example.backend.product.model.entity.Product;
 import com.example.backend.product.repository.ProductRepository;
@@ -15,10 +16,13 @@ import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
+import java.net.BindException;
 import java.net.URL;
 
 import java.util.Map;
 import java.util.Optional;
+
+import static com.example.backend.common.BaseResponseStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -68,13 +72,13 @@ public class PaymentService {
     }
 
     //결제 정보를 가져옴
-    public IamportResponse getPaymentInfo(String impUid) throws IamportResponseException, IOException {
+    public IamportResponse getPaymentInfo(String impUid) throws IamportResponseException, IOException,BaseException {
         IamportResponse<Payment> response = iamportClient.paymentByImpUid(impUid);
         return response;
     }
 
     //Portone에서 결제 정보 가져와서 검증 처리
-    public Boolean paymentValidation(String impUid) throws IamportResponseException, IOException {
+    public Boolean paymentValidation(String impUid) throws IamportResponseException, IOException,BaseException {
         IamportResponse<Payment> response = getPaymentInfo(impUid);
         Integer price = response.getResponse().getAmount().intValue();
         String customDataString = response.getResponse().getCustomData();
@@ -91,9 +95,11 @@ public class PaymentService {
             Integer priceFromDb = product.get().getProductPrice();
             if(price.equals(priceFromDb) ) {
                 return true;
+            }else {
+                throw new BaseException(ORDERS_VALIDATION_INCORRECT_INFOMATION);
             }
         }
-        return false;
+        throw new BaseException(ORDERS_VALIDATION_EMPTY_PRODUCT);
     }
 
 }

@@ -3,8 +3,11 @@ package com.example.backend_admin.calculate.controller;
 import com.example.backend_admin.calculate.model.response.*;
 import com.example.backend_admin.calculate.service.CalculateLogService;
 import com.example.backend_admin.calculate.service.CalculateOrdersService;
+import com.example.backend_admin.common.BaseException;
+import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.orders.model.entity.Orders;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,47 +23,95 @@ public class CalculateController {
     private final CalculateOrdersService calculateOrdersService;
 
     @RequestMapping("/today/login")
-    public GetTodayLoginRes todayLogin(){
-        return calculateLogService.todayLogin();
+    public ResponseEntity todayLogin(){
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(calculateLogService.todayLogin()));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
     @RequestMapping("/today/signup")
-    public GetTodaySignupRes todaySignup(){
-        return calculateLogService.todaySignUp();
+    public ResponseEntity todaySignup(){
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse( calculateLogService.todaySignUp()));
+        }catch (BaseException exception){
+           return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
     @RequestMapping("/today/orders")
-    public GetTodayOrdersRes todayOrders(){return calculateOrdersService.todayOrders();}
+    public ResponseEntity todayOrders() {
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(calculateOrdersService.todayOrders()));
+        } catch (BaseException exception) {
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+    }
 
 
     @RequestMapping("/category/orders")
-    public GetCategoryOrdersRes categoryOrdersRes(){
-        return calculateOrdersService.categoryOrderRes();
+    public ResponseEntity categoryOrdersRes(){
+
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(calculateOrdersService.categoryOrderRes()));
+        }catch (BaseException exception){
+           return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
     @RequestMapping("/month/orders")
-    public GetCategoryOrdersRes monthOrdersRes(){
-        return calculateOrdersService.monthOrdersRes();
+    public ResponseEntity monthOrdersRes(){
+
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(calculateOrdersService.monthOrdersRes()));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
 
     @RequestMapping("/today/sleep")
-    public GetSleepAccountGrowthRateRes sleepAccountGrowthRate(){
-        return calculateLogService.sleepAccountGrowthRate();
+    public ResponseEntity sleepAccountGrowthRate(){
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(calculateLogService.sleepAccountGrowthRate()));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
     @RequestMapping("/today/count")
-    public GetLoginTimeRes LoginTime(){
-        return calculateLogService.loginTime();
+    public ResponseEntity LoginTime(){
+        try {
+           return ResponseEntity.ok().body(BaseResponse.successResponse(calculateLogService.loginTime()));
+        }catch (BaseException exception){
+           return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
     @RequestMapping("login/time/{idx}")
-    public GetLoginTimeRes customerLoginTime(@PathVariable Long idx){
-        return calculateLogService.customerLoginTime(idx);
+    public ResponseEntity customerLoginTime(@PathVariable Long idx){
+        try {
+           return ResponseEntity.ok().body(BaseResponse.successResponse(calculateLogService.customerLoginTime(idx)));
+        }catch (BaseException exception){
+           return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
     @RequestMapping("/customer/orders/{idx}")
-    public GetCategoryOrdersRes customerOrdersRes(@PathVariable Long idx){
-        return calculateOrdersService.customerOrdersRes(idx);
+    public ResponseEntity customerOrdersRes(@PathVariable Long idx){
+        try {
+           return ResponseEntity.ok().body(BaseResponse.successResponse(calculateOrdersService.customerOrdersRes(idx)));
+        }catch (BaseException exception){
+           return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
 

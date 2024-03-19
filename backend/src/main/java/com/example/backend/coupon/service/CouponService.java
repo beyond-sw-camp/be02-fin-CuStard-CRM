@@ -21,18 +21,7 @@ import java.util.Optional;
 public class CouponService {
     private final CouponRepository couponRepository;
 
-    public PostCouponCreateRes create(PostCouponCreateReq postCouponCreateReq){
-        Coupon coupon = couponRepository.save(Coupon.builder()
-                .discount(postCouponCreateReq.getDiscount())
-                .couponCategory(postCouponCreateReq.getCouponCategory())
-                .build());
 
-        return PostCouponCreateRes.builder()
-                .idx(coupon.getIdx())
-                .discount(coupon.getDiscount())
-                .couponCategory(coupon.getCouponCategory())
-                .build();
-    }
     public List<GetCouponListRes> list(){
         List<Coupon> couponList = couponRepository.findAll();
         List<GetCouponListRes> getCouponListResList = new ArrayList<>();
