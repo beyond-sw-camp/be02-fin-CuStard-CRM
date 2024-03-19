@@ -51,7 +51,7 @@ export default {
       axios.post(`http://localhost:8000/admin/qna/read/${this.$route.params.idx}`)
           .then(response => {
               if (response.status === 200) {
-              this.qna = response.data.result;
+              this.qna = response.data;
             } else {
               alert("오류");
             }
