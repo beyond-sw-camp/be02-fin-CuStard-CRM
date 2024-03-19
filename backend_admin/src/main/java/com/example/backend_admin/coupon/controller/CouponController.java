@@ -28,7 +28,7 @@ public class CouponController {
             return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_ADMINIDX));
         }
         try {
-            return ResponseEntity.ok().body(couponService.create(postCouponCreateReq));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(postCouponCreateReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }

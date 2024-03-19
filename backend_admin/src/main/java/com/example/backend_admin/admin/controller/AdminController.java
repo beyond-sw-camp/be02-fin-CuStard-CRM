@@ -23,7 +23,7 @@ public class AdminController {
     public ResponseEntity signup (@RequestBody PostAdminSignupReq postCustomerSignupReq){
 
         try {
-            return ResponseEntity.ok().body(adminService.signup(postCustomerSignupReq));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.signup(postCustomerSignupReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -31,9 +31,9 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public Object login(@RequestBody PostAdminLoginReq request){
+    public ResponseEntity login(@RequestBody PostAdminLoginReq request){
         try {
-            return adminService.adminLogin(request);
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.adminLogin(request)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -43,7 +43,7 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/level/coupon")
     public ResponseEntity levelCoupon(@RequestHeader(value = "Authorization") String token,@RequestBody PostAdminLevelCouponReq postAdminLevelCouponReq){
         try {
-            return ResponseEntity.ok().body(adminService.levelCoupon(postAdminLevelCouponReq));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.levelCoupon(postAdminLevelCouponReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -52,7 +52,7 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/sleeper/coupon")
     public ResponseEntity sleeperCoupon(@RequestHeader(value = "Authorization") String token, @RequestBody PostAdminSleeperCouponReq postAdminSleeperCouponReq){
         try {
-            return ResponseEntity.ok().body(adminService.sleeperCoupon(postAdminSleeperCouponReq));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.sleeperCoupon(postAdminSleeperCouponReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }

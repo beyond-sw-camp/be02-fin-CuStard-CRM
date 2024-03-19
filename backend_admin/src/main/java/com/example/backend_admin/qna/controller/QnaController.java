@@ -20,7 +20,7 @@ public class QnaController {
     @RequestMapping(method = RequestMethod.POST, value = "/read/{idx}")
     public ResponseEntity readArticle(@PathVariable Long idx) {
         try{
-            return ResponseEntity.ok().body(qnaService.readQna(idx));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(qnaService.readQna(idx)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -29,7 +29,7 @@ public class QnaController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public ResponseEntity findAll() {
         try {
-            return ResponseEntity.ok().body(qnaService.list());
+            return ResponseEntity.ok().body(BaseResponse.successResponse(qnaService.list()));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
