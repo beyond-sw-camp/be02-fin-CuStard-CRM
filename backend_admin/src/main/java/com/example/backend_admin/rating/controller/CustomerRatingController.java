@@ -1,6 +1,7 @@
 package com.example.backend_admin.rating.controller;
 
 
+import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.rating.service.CustomerRatingService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,12 @@ public class CustomerRatingController {
     private final CustomerRatingService customerRatingService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/rating")
-    public BaseResponse<String> rating(){
-        return customerRatingService.rating();
+    public ResponseEntity rating(){
+
+        try {
+            return ResponseEntity.ok().body(customerRatingService.rating());
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
     }
 }

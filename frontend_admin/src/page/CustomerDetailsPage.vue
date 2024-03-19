@@ -312,8 +312,8 @@ export default {
       axios.get("http://localhost:8000/admin/qna/list")
           .then((response) => {
             const customerId = Number(this.$route.params.customerId);
-            this.qnasWaiting = response.data.result.filter(qna => qna.customerIdx === customerId && !qna.answerContent);
-            this.qnasAnswered = response.data.result.filter(qna => qna.customerIdx === customerId && qna.answerContent);
+            this.qnasWaiting = response.data.filter(qna => qna.customerIdx === customerId && !qna.answerContent);
+            this.qnasAnswered = response.data.filter(qna => qna.customerIdx === customerId && qna.answerContent);
           })
           .catch((error) => {
             console.error("데이터 로드 실패:", error);
