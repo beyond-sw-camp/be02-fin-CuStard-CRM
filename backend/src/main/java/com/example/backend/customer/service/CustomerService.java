@@ -62,37 +62,6 @@ public class CustomerService implements UserDetailsService {
 
         Optional<Customer> duplicatedMember = customerRepository.findByCustomerEmail(postCustomerSignupReq.getCustomerEmail());
         // 멤버 정보를 빌드로 저장
-
-        if(!duplicatedMember.isPresent()) {
-
-            Customer customer = Customer.builder()
-                    .customerEmail(postCustomerSignupReq.getCustomerEmail())
-                    .customerPwd(passwordEncoder.encode(postCustomerSignupReq.getCustomerPwd()))
-                    .authority("CUSTOMER")
-                    .level(NEWBIE)
-                    .totalAmount(0)
-                    .name(postCustomerSignupReq.getName())
-                    .age(postCustomerSignupReq.getAge())
-                    .gender(postCustomerSignupReq.getGender())
-                    .address(postCustomerSignupReq.getAddress())
-                    .status(false)
-                    .build();
-
-            customerRepository.save(customer);
-
-            Customer customer1 = customerRepository.findByCustomerEmail(customer.getCustomerEmail()).get();
-
-            customerEmailVerifyService.sendCustomerMail(customer1);
-            Map<String, String> result = new HashMap<>();
-            result.put("customerEmail", customer.getCustomerEmail());
-
-            PostCustomerSignupRes postCustomerSignupRes = PostCustomerSignupRes.builder()
-                    .isSuccess(true)
-                    .code(1000L)
-                    .message("회원가입 성공.")
-                    .result(result)
-                    .build();
-
         if (duplicatedMember.isPresent()){
             throw new BaseException(BaseResponseStatus.CUSTOMER_SIGNUP_DUPLICATE_EMAIL);
         }
@@ -103,8 +72,13 @@ public class CustomerService implements UserDetailsService {
                 .level(NEWBIE)
                 .totalAmount(0)
                 .status(false)
-                .build();
 
+                .name(postCustomerSignupReq.getName())
+                .gender(postCustomerSignupReq.getGender())
+                .address(postCustomerSignupReq.getAddress())
+                .age(postCustomerSignupReq.getAge())
+
+                .build();
 
         customerRepository.save(customer);
 
