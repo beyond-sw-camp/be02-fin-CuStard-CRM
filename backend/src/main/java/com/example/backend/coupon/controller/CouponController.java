@@ -1,5 +1,6 @@
 package com.example.backend.coupon.controller;
 
+import com.example.backend.common.BaseResponse;
 import com.example.backend.coupon.model.request.PostCouponCreateReq;
 import com.example.backend.coupon.service.CouponService;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,11 @@ public class CouponController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/read/{idx}")
     public ResponseEntity read(@PathVariable Long idx){
-        return ResponseEntity.ok().body(couponService.read(idx));
+        return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.read(idx)));
     }
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public ResponseEntity list(){
-        return ResponseEntity.ok().body(couponService.list());
+        return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.list()));
     }
     public void creat(){
 

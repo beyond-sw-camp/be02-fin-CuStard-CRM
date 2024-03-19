@@ -24,7 +24,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public ResponseEntity list() {
         try {
-            return ResponseEntity.ok().body(productService.list());
+            return ResponseEntity.ok().body(BaseResponse.successResponse(productService.list()));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -33,7 +33,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/read/{idx}")
     public ResponseEntity read(@PathVariable Long idx, Authentication authentication) {
         try {
-            return ResponseEntity.ok().body(productService.read(idx, authentication));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(productService.read(idx, authentication)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -51,7 +51,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/recommend")
     public ResponseEntity recommendItem(){
         try {
-            return ResponseEntity.ok().body(productService.recommend());
+            return ResponseEntity.ok().body(BaseResponse.successResponse(productService.recommend()));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus())));
         }

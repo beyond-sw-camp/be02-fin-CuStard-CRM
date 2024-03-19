@@ -38,9 +38,9 @@ public class CouponController {
 
     public ResponseEntity read(@PathVariable Long idx){
         try {
-            return ResponseEntity.ok().body(couponService.read(idx));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.read(idx)));
         }catch (BaseException exception){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+            return ResponseEntity.ok().body(BaseResponse.failResponse( exception.getBaseResponseStatus()));
         }
 
     }
@@ -48,7 +48,7 @@ public class CouponController {
     public ResponseEntity list(){
 
         try {
-            return ResponseEntity.ok().body(couponService.list());
+            return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.list()));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }

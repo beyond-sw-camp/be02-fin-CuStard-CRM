@@ -25,7 +25,7 @@ public class QnaController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResponseEntity registerArticle(@RequestHeader(value = "Authorization") String token, @RequestBody PostQnaRegisterReq postQnaRegisterReq) {
         try {
-            return ResponseEntity.ok().body(qnaService.registerQna(token, postQnaRegisterReq));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(qnaService.registerQna(token, postQnaRegisterReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(exception.getBaseResponseStatus());
         }
@@ -49,7 +49,7 @@ public class QnaController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public ResponseEntity findAll() {
         try {
-            return ResponseEntity.ok().body(qnaService.list());
+            return ResponseEntity.ok().body(BaseResponse.successResponse(qnaService.list()));
         } catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
