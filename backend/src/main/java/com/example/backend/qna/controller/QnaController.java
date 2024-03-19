@@ -37,7 +37,7 @@ public class QnaController {
         try {
             Long idxValue = Long.parseLong(idx);
             PostQnaReadRes postQnaReadRes = qnaService.readQna(idxValue, postQnaReadReq);
-            return ResponseEntity.ok(postQnaReadRes);
+            return ResponseEntity.ok(BaseResponse.successResponse(postQnaReadRes));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         } catch (BaseException exception){

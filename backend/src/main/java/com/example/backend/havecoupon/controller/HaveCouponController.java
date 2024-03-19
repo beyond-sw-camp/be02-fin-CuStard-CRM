@@ -23,7 +23,7 @@ public class HaveCouponController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public ResponseEntity list(){
         try{
-            return ResponseEntity.ok().body(haveCouponService.list());
+            return ResponseEntity.ok().body(BaseResponse.successResponse(haveCouponService.list()));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -34,7 +34,7 @@ public class HaveCouponController {
             return ResponseEntity.ok().body(BaseResponse.failResponse(HAVE_COUPON_LIST_EMPTY_IDX));
         }
         try {
-            return  ResponseEntity.ok().body(haveCouponService.read(idx));
+            return  ResponseEntity.ok().body(BaseResponse.successResponse(haveCouponService.read(idx)));
         }catch (BaseException exception){
             return  ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }

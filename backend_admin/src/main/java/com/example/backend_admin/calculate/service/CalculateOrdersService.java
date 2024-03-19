@@ -2,6 +2,7 @@ package com.example.backend_admin.calculate.service;
 
 import com.example.backend_admin.calculate.model.response.GetCategoryOrdersRes;
 import com.example.backend_admin.calculate.model.response.GetTodayOrdersRes;
+import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.customer.entity.Customer;
 import com.example.backend_admin.log.entity.ProductDetailLog;
 import com.example.backend_admin.log.repository.ProductDetailLogRespository;
@@ -23,7 +24,7 @@ public class CalculateOrdersService {
     private final ProductDetailLogRespository productDetailLogRespository;
     LocalDateTime today = LocalDateTime.now();
 
-    public GetTodayOrdersRes todayOrders() {
+    public GetTodayOrdersRes todayOrders() throws BaseException {
         Integer todayOrdersCount = ordersRepository.countByCreatedDateAfter(today.minusDays(1));
         Integer fromYesterdayOrdersCount = ordersRepository.countByCreatedDateAfter(today.minusDays(2));
 
@@ -38,7 +39,7 @@ public class CalculateOrdersService {
                 .build();
     }
 
-    public GetCategoryOrdersRes categoryOrderRes() {
+    public GetCategoryOrdersRes categoryOrderRes() throws BaseException{
 
         List<Orders> ordersList = ordersRepository.findByCreatedDateAfter(today.minusDays(14));
         int[] array = new int[6];
@@ -61,7 +62,7 @@ public class CalculateOrdersService {
                 .build();
     }
 
-    public GetCategoryOrdersRes monthOrdersRes() {
+    public GetCategoryOrdersRes monthOrdersRes() throws BaseException{
         List<Orders> ordersList = ordersRepository.findByCreatedDateAfter(today.minusDays(365));
         int[] array = new int[12];
 
@@ -73,7 +74,7 @@ public class CalculateOrdersService {
         return GetCategoryOrdersRes.builder().orders(array).build();
     }
 
-    public GetCategoryOrdersRes customerOrdersRes(Long idx){
+    public GetCategoryOrdersRes customerOrdersRes(Long idx)throws BaseException{
         List<Orders> ordersList = ordersRepository.findByCustomerIdx(idx);
 
         int[] ordersCategory = new int[6];

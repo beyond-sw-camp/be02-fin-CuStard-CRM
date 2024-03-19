@@ -41,7 +41,7 @@ public class CustomerController {
             return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_PASSWORD));
         }
         try {
-            return ResponseEntity.ok().body(customerService.signup(postCustomerSignupReq));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.signup(postCustomerSignupReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -69,7 +69,7 @@ public class CustomerController {
             return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_PASSWORD));
         }
         try {
-            return ResponseEntity.ok().body(customerService.customerLogin(request));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.customerLogin(request)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -78,7 +78,7 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.GET, value = "/customer/list")
     public ResponseEntity list(){
         try {
-            return ResponseEntity.ok().body(customerService.list());
+            return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.list()));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -86,7 +86,7 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.GET, value = "/customer/read/{idx}")
     public ResponseEntity read(@PathVariable Long idx){
         try {
-            return  ResponseEntity.ok().body(customerService.read(idx));
+            return  ResponseEntity.ok().body(BaseResponse.successResponse(customerService.read(idx)) );
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
@@ -94,7 +94,7 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/customer/delete")
     public ResponseEntity delete(@RequestHeader(value = "Authorization") String token){
         try {
-            return ResponseEntity.ok().body(customerService.delete(token));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.delete(token)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }

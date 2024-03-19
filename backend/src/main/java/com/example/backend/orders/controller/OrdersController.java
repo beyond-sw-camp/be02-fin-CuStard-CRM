@@ -32,7 +32,7 @@ public class OrdersController {
         }
         try {
             if (paymentService.paymentValidation(impUid)) {
-                return ordersService.createOrder(token, impUid);
+                return ResponseEntity.ok().body(BaseResponse.successResponse(ordersService.createOrder(token, impUid)));
             }
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
