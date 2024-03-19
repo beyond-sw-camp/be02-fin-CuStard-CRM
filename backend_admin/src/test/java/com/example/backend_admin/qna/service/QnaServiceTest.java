@@ -132,7 +132,7 @@ class QnaServiceTest {
     }
 
     @Test
-    void qnaService_readQna_fail_null() throws BaseException{
+    void qnaService_readQna_fail_null(){
         //given
         given(qnaRepository.findById(any(Long.class))).willReturn(Optional.empty());
 

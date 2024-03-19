@@ -20,7 +20,7 @@ public class AnswerController {
     @RequestMapping(method = RequestMethod.POST,value = "/answer/{idx}")
     public ResponseEntity registerAnswer(@RequestHeader(value = "Authorization") String token, @PathVariable Long idx, @RequestBody PostAnswerRegisterReq postAnswerRegisterReq) {
         try {
-            return ResponseEntity.ok().body(answerService.registerAnswer(token, idx, postAnswerRegisterReq));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(answerService.registerAnswer(token, idx, postAnswerRegisterReq)));
         } catch (BaseException exception) {
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }

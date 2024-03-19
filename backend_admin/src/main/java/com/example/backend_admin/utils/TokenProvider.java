@@ -17,13 +17,10 @@ import java.util.Date;
 @Component
 @Getter
 public class TokenProvider {
-//    @Value("${jwt.secret-key}")
-//    private static String secretKey;
-//    @Value("${jwt.token.expired-time-ms}")
-//    private static Integer expiredTimeMs;
-    //:TODO 테스트에서 환경 변수 사용 가능하게 수정
-    private static String secretKey = "abcdefghijklmnopqrstuvwxyz0123456789";
-    private static Integer expiredTimeMs = 30000000;
+    @Value("${jwt.secret-key}")
+    private static String secretKey;
+    @Value("${jwt.token.expired-time-ms}")
+    private static Integer expiredTimeMs;
 
 
     public TokenProvider(@Value("${jwt.secret-key}") String secretKey, @Value("${jwt.token.expired-time-ms}") Integer expiredTimeMs) {
