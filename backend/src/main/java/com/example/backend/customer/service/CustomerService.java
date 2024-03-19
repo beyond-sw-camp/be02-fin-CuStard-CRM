@@ -67,6 +67,10 @@ public class CustomerService implements UserDetailsService {
                     .authority("CUSTOMER")
                     .level(NEWBIE)
                     .totalAmount(0)
+                    .name(postCustomerSignupReq.getName())
+                    .age(postCustomerSignupReq.getAge())
+                    .gender(postCustomerSignupReq.getGender())
+                    .address(postCustomerSignupReq.getAddress())
                     .status(false)
                     .build();
 
