@@ -1,5 +1,6 @@
 package com.example.backend_admin.rating.service;
 
+import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.customer.entity.Customer;
@@ -21,7 +22,7 @@ public class CustomerRatingService {
     private final OrdersRepository ordersRepository;
     private final LoginLogRespository loginLogRespository;
 
-    public BaseResponse<String> rating() {
+    public String rating() throws BaseException {
         List<Customer> customerList = customerRepository.findAll();
         List<Orders> ordersList;
         List<LoginLog> loginLogs;
@@ -42,7 +43,7 @@ public class CustomerRatingService {
             customer.setLevel(level);
             customerRepository.save(customer);
         }
-        return BaseResponse.successResponse("모든 고객에 대해 등급 산정이 완료되었습니다.", null);
+        return "등급 산정이 완료되었습니다.";
     }
 
     public CustomerLevel calculateLevel(Integer score){

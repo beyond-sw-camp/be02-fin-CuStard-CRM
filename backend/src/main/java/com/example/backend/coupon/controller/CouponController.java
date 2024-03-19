@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class CouponController {
     private final CouponService couponService;
-    @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity creat(@RequestBody PostCouponCreateReq postCouponCreateReq){
 
-        return ResponseEntity.ok().body(couponService.create(postCouponCreateReq));
-    }
     @RequestMapping(method = RequestMethod.GET, value = "/read/{idx}")
     public ResponseEntity read(@PathVariable Long idx){
         return ResponseEntity.ok().body(couponService.read(idx));

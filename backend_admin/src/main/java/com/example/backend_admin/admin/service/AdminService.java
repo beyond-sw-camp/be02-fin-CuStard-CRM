@@ -9,6 +9,7 @@ import com.example.backend_admin.admin.model.response.PostAdminLoginRes;
 import com.example.backend_admin.admin.model.response.PostAdminSignupRes;
 import com.example.backend_admin.admin.model.response.PostAdminSleeperCouponRes;
 import com.example.backend_admin.admin.repository.AdminRepository;
+import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.common.BaseResponse;
 import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.coupon.model.request.PostCouponCreateReq;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.backend_admin.common.BaseResponseStatus.*;
+
 @Service
 @RequiredArgsConstructor
 public class AdminService implements UserDetailsService {
@@ -49,7 +52,7 @@ public class AdminService implements UserDetailsService {
     @Value("${jwt.token.expired-time-ms}")
     private Integer expiredTimeMs;
 
-    public BaseResponse signup(PostAdminSignupReq postAdminSignupReq) {
+    public PostAdminSignupRes signup(PostAdminSignupReq postAdminSignupReq)throws BaseException {
 
         Optional<Admin> duplicatedAdmin = adminRepository.findByAdminEmail(postAdminSignupReq.getAdminEmail());
         // 멤버 정보를 빌드로 저장
@@ -62,21 +65,17 @@ public class AdminService implements UserDetailsService {
                     .build());
 
 
-            BaseResponse baseResponse = BaseResponse.successResponse("회원가입 성공", PostAdminSignupRes.builder()
+            PostAdminSignupRes postAdminSignupRes = PostAdminSignupRes.builder()
                     .idx(admin.getIdx())
                     .adminEmail(admin.getAdminEmail())
-                    .build());
+                    .build();
 
-            return baseResponse;
-
-        } else {
-
-
-            return BaseResponse.failResponse(2000, "계정 중복");
+            return postAdminSignupRes;
 
         }
+        throw new BaseException(ADMIN_SIGNUP_DUPLICATE_EMAIL);
     }
-        public Object adminLogin(PostAdminLoginReq postAdminLoginReq) {
+        public Object adminLogin(PostAdminLoginReq postAdminLoginReq) throws BaseException{
             Optional<Admin> result = adminRepository.findByAdminEmail(postAdminLoginReq.getAdminEmail());
             System.out.println(postAdminLoginReq.getAdminEmail());
             if (result.isPresent()) {
@@ -89,16 +88,15 @@ public class AdminService implements UserDetailsService {
                             .build();
 
 
-                    return ResponseEntity.ok().body(postAdminLoginRes);
+                    return postAdminLoginRes;
                 } else {
-                    return ResponseEntity.badRequest().body("비번 틀림");
+                    throw new BaseException(ADMIN_LOGIN_INCORRECT_ACCOUNT);
                 }
             }
-            System.out.println(postAdminLoginReq.getAdminEmail());
-            return ResponseEntity.badRequest().body("뭔가 잘못됨");
+            throw new BaseException(ADMIN_LOGIN_INCORRECT_ACCOUNT);
         }
 
-        public String levelCoupon(PostAdminLevelCouponReq postAdminLevelCouponReq){
+        public String levelCoupon(PostAdminLevelCouponReq postAdminLevelCouponReq) throws BaseException{
 
 //            token = TokenProvider.replaceToken(token);
 //            Long adminIdx = TokenProvider.getIdx(token);
@@ -176,7 +174,7 @@ public class AdminService implements UserDetailsService {
             return "쿠폰 발급 완료";
         }
         //TODO: 장기 미접속자는 매일매일 쿠폰을 받기 때문에 수정 필요 및 testDateTime 제거 필요
-        public PostAdminSleeperCouponRes sleeperCoupon( PostAdminSleeperCouponReq postAdminSleeperCouponReq){
+        public PostAdminSleeperCouponRes sleeperCoupon( PostAdminSleeperCouponReq postAdminSleeperCouponReq)throws BaseException{
 
             Long cnt=0L;
 

@@ -1,5 +1,7 @@
 package com.example.backend.havecoupon.service;
 
+import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.coupon.model.entity.Coupon;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.havecoupon.Repository.HaveCouponRepository;
@@ -19,28 +21,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HaveCouponService {
     private final HaveCouponRepository haveCouponRepository;
-    public PostHaveCouponCreateRes create(PostHaveCouponCreateReq postHaveCouponCreateReq){
-        HaveCoupon haveCoupon = haveCouponRepository.save(HaveCoupon.builder()
-                .count(postHaveCouponCreateReq.getCount())
-                .customer(Customer.builder()
-                        .idx(postHaveCouponCreateReq.getCustomerIdx())
-                        .build())
-                .coupon(Coupon.builder()
-                        .idx(postHaveCouponCreateReq.getCouponIdx())
-                        .build())
-                .build());
 
-        return PostHaveCouponCreateRes.builder()
-                .idx(haveCoupon.getIdx())
-                .count(haveCoupon.getCount())
-                .customerIdx(postHaveCouponCreateReq.getCustomerIdx())
-                .couponIdx(postHaveCouponCreateReq.getCouponIdx())
-                .build();
-    }
-    public List<GetHaveCouponListRes> list(){
+
+    public List<GetHaveCouponListRes> list()throws BaseException {
         List<HaveCoupon> result = haveCouponRepository.findAll();
         List<GetHaveCouponListRes> getHaveCouponListResList = new ArrayList<>();
 
+        if (result.isEmpty()){
+            throw new BaseException(BaseResponseStatus.HAVECOUPON_LIST_EMPTY);
+        }
         for (HaveCoupon haveCoupon: result) {
 
             Customer customer = haveCoupon.getCustomer();
@@ -57,7 +46,7 @@ public class HaveCouponService {
         return getHaveCouponListResList;
 
     }
-    public GetHaveCouponReadRes read(Long idx){
+    public GetHaveCouponReadRes read(Long idx) throws BaseException{
         Optional<HaveCoupon> result = haveCouponRepository.findById(idx);
 
         if(result.isPresent()){
@@ -72,8 +61,7 @@ public class HaveCouponService {
                     .discount(coupon.getDiscount())
                     .build();
         }
-        return null;
+        throw new BaseException(BaseResponseStatus.HAVECOUPON_LIST_EMPTY);
     }
-    public void delete(){
-    }
+
 }
