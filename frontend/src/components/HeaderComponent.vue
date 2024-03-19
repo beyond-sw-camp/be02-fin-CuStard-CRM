@@ -6,8 +6,7 @@
         <a v-show="!isLoggedIn" href="/signup" class="css-xygizb eo7pjfk2">회원가입</a>
         <div class="css-1qgm48u eo7pjfk0"></div>
         <a v-show="!isLoggedIn" href="/login" class="css-oyffzd eo7pjfk2">로그인</a>
-        <div class="css-1qgm48u eo7pjfk0 login"></div>
-        <a @click="logout()" class="css-oyffzd eo7pjfk2">로그아웃</a>
+        <a v-show="isLoggedIn" @click="logout" class="css-oyffzd eo7pjfk2">로그아웃</a>
         <div class="css-1qgm48u eo7pjfk0"></div>
         <!-- <div class="css-1qolcqm eo7pjfk3"> </div> -->
       </div>
@@ -57,16 +56,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from 'vue';
+// import { useRouter } from 'vue-router';
 import axios from 'axios';
-
-
 
 const coupons = ref([]);
 const showDropdown = ref(false);
-const router = useRouter();
+// const router = useRouter();
 const searchInput = ref('');
 
 // 카테고리 번호에 따른 이름을 반환하는 메서드
@@ -88,22 +84,6 @@ function getCategoryName(categoryId) {
       return '기타';
   }
 }
-
-// const fetchCoupons = async () => {
-//   const url = "http://localhost:8080/coupon/list"; // 예: 'http://localhost:8080/api/coupons'
-//   try {
-//     const response = await fetch(url);
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     const data = await response.json();
-//     coupons.value = data; // 응답 데이터를 coupons 상태에 저장
-//     showDropdown.value = true;
-//   } catch (error) {
-//     console.error("Fetching coupons failed:", error);
-//     showDropdown.value = false;
-//   }
-// };
 
 // 쿠폰 데이터를 불러오는 함수
   const fetchCoupons = async () => {
@@ -129,24 +109,17 @@ function getCategoryName(categoryId) {
     }
   };
 
-
-
-
 const logout = () => {
-  sessionStorage.removeItem("atoken");
-  router.push("");
-  router.go();
-}
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("customerIdx");
+  location.reload();
+};
+
+
 
 const isLoggedIn = computed(() => {
-  if (sessionStorage.getItem("atoken") !== null) {
-    return true;
-  } else {
-    return false;
-  }
-
+  return localStorage.getItem("accessToken") !== null;
 });
-
 // const search = async (keyword) => {
 //   this.$router.push(`/search/${keyword}`);
 // }
@@ -189,6 +162,18 @@ a {
   height: 100px;
   margin: 0px auto;
   letter-spacing: -0.3px;
+}
+.css-c4pbxv {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  /* right: -200px;
+  top: -49px; */
+  /* border: 1px solid red; */
+  width: 200px;
+  justify-content: flex-end;
+  right: -81px;
 }
 
 .css-1xfyvd1 {
@@ -330,6 +315,7 @@ a {
   width: 1050px;
   margin: 0px auto;
   right: 100px;
+  display: contents;
 }
 
 .css-w444a2 {
@@ -395,5 +381,8 @@ a {
 .answer{
   width: 120px;
   color: #333;
+  right: -167px;
+  position: relative;
+  //border: 1px solid red;
 }
 </style>

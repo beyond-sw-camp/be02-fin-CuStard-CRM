@@ -28,20 +28,20 @@
         <input placeholder="비밀번호" type="password" id="customerPwd" v-model="customerSignup.customerPwd" maxlength="100">
         <br>
         <div class="insertname"><h5>이름</h5></div>
-        <input placeholder="이름" type="text" id="customerName" v-model="customerSignup.customerName" maxlength="100">
+        <input placeholder="이름" type="text" id="customerName" v-model="customerSignup.name" maxlength="100">
         <br>
         <div class="insertage"><h5>나이</h5></div>
-        <input placeholder="나이" type="text" id="customerAge" v-model="customerSignup.customerAge" maxlength="3">
+        <input placeholder="나이" type="text" id="customerAge" v-model="customerSignup.age" maxlength="3">
         <br>
         <div class="insertgender"><h5>성별</h5></div>
-        <select v-model="customerSignup.customerGender" style="width: 400px;">
+        <select v-model="customerSignup.gender" style="width: 400px;">
           <option value="">선택 안함</option>
           <option value="female">여자</option>
           <option value="male">남자</option>
         </select>
         <br>
         <div class="insertaddress"><h5>배송지</h5></div>
-        <textarea placeholder=" 배송지를 입력해주세요" id="customerAddress" v-model="customerSignup.customerAddress" style="width: 395px;"></textarea>
+        <textarea placeholder=" 배송지를 입력해주세요" id="customerAddress" v-model="customerSignup.address" style="width: 395px;"></textarea>
         <br>
         <div class="insertcheck"><h5>약관동의</h5></div>
         <div class="consent-options">
@@ -62,7 +62,7 @@
     </div>
     </div>
   </div>
-  
+
 </template>
 
 <script>
@@ -75,6 +75,11 @@ export default {
       customerSignup: {
         customerEmail: '',
         customerPwd: '',
+        name:'',
+        age:'',
+        gender:'',
+        address:'',
+
       },
       consent: {
         agreeAll: false,
@@ -116,6 +121,10 @@ export default {
       this.customerSignup = {
         customerEmail: '',
         customerPwd: '',
+        name:'',
+        age:'',
+        gender:'',
+        address:'',
       };
       this.resetConsent();
     },
@@ -140,9 +149,7 @@ export default {
 </script>
 
 <style>
-.all{
-  width: 400px;
-}
+
 *{
     font-family: 'GmarketSans';
 }
@@ -158,11 +165,11 @@ body {
 }
 
 .signup-content {
-    justify-content: center;
-    display: flex;
-    width: 100%;
-    min-height: 100vh; /* 화면 높이만큼 박스 높이 설정 */
-    align-items: center; /* 수직 가운데 정렬 */
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
 }
 
 .signup-container {
@@ -170,7 +177,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     width: 100%;
-    max-width: 400px;
+    //max-width: 400px;
     text-align: center;
     margin-top: 20px; /* 이미지와 로고에 겹치지 않도록 여백 추가 */
     border: 1px solid #ccc; /* 보더 추가 */
