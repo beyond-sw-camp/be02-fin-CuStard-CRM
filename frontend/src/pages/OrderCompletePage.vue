@@ -196,17 +196,7 @@ export default {
 }
 
 /* 찜 호버 했을 때 리스트 */
-.css-c4pbxv {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  position: relative;
-  /* right: -200px;
-  top: -49px; */
-  /* border: 1px solid red; */
-  width: 200px;
-  justify-content: flex-end;
-}
+
 .css-ff2aah {
   position: relative;
   margin-left: 20px;
@@ -445,7 +435,7 @@ a:hover {
   border-radius: 5px;
   margin-bottom: 20px;
   color: #333;
-  
+
 }
 .additional-actions a {
   display: inline-block;

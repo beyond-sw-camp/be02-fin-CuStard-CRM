@@ -13,4 +13,9 @@ public class PostCustomerSignupReq {
 
     private String customerEmail;
     private String customerPwd;
+    private Integer age;
+    private String address;
+    private String gender;
+    private String name;
+
 }
