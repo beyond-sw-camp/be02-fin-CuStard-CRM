@@ -22,6 +22,7 @@ public class TokenProvider {
     @Value("${jwt.token.expired-time-ms}")
     private static Integer expiredTimeMs;
 
+
     public TokenProvider(@Value("${jwt.secret-key}") String secretKey, @Value("${jwt.token.expired-time-ms}") Integer expiredTimeMs) {
         this.secretKey = secretKey;
         this.expiredTimeMs = expiredTimeMs;

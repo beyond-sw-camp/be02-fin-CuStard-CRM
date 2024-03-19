@@ -42,7 +42,6 @@ class QnaServiceTest {
     private static Admin admin;
     private static Qna qna1;
     private static Qna qna2;
-
     private static Answer answer;
 
     @BeforeAll
@@ -125,7 +124,6 @@ class QnaServiceTest {
         //when
         PostQnaReadRes response = qnaService.readQna(2L);
 
-
         //then
         assertNotNull(response);
         assertEquals(response.getTitle(), qna2.getTitle());
@@ -134,7 +132,7 @@ class QnaServiceTest {
     }
 
     @Test
-    void qnaService_readQna_fail_null() throws BaseException{
+    void qnaService_readQna_fail_null(){
         //given
         given(qnaRepository.findById(any(Long.class))).willReturn(Optional.empty());
 
