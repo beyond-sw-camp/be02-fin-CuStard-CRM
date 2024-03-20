@@ -6,6 +6,7 @@ import com.example.backend_admin.customer.entity.Customer;
 import com.example.backend_admin.dashboard.model.response.GetCustomerListRes;
 import com.example.backend_admin.dashboard.service.DashboardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +19,13 @@ public class DashboardController {
     private final DashboardService dashboardService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/select/level/{level}")
-    public BaseResponse<List<GetCustomerListRes>> selectByLevel(@PathVariable CustomerLevel level){
-        return dashboardService.selectByLevel(level);
+    public ResponseEntity selectByLevel(@PathVariable CustomerLevel level){
+        return ResponseEntity.ok().body(BaseResponse.successResponse(dashboardService.selectByLevel(level)));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/select/amount")
-    public BaseResponse<List<GetCustomerListRes>> selectByAmount(){
-        return dashboardService.selectByAmount();
+    public ResponseEntity selectByAmount(){
+        return ResponseEntity.ok().body(BaseResponse.successResponse(dashboardService.selectByAmount()));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/dashboard/count/active/user")
