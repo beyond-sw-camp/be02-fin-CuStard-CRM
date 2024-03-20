@@ -1,4 +1,4 @@
-package com.example.backend.havecoupon.model.response;
+package com.example.backend_admin.havecoupon.model.entity.response;
 
 import lombok.*;
 

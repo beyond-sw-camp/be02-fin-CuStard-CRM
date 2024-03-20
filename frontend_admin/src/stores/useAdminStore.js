@@ -13,11 +13,11 @@ export const useAdminStore = defineStore("admin", {
             this.isLoading = true;
             try {
                 let response = await axios.post(`${backend}/admin/login`, adminLogin);
-                if (response.status === 200 && response.data.accessToken) {
+                if (response.data.code === 1000 && response.data.result.accessToken) {
                     this.isLoggedIn = true;
                     return {
-                        accessToken: response.data.accessToken,
-                        adminIdx: response.data.idx
+                        accessToken: response.data.result.accessToken,
+                        adminIdx: response.data.result.idx
                     };
                 } else {
                     throw new Error("로그인 정보가 올바르지 않습니다.");

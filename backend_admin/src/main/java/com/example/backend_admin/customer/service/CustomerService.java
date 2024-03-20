@@ -1,24 +1,13 @@
-package com.example.backend.customer.service;
+package com.example.backend_admin.customer.service;
 
 
-
-
-import com.example.backend.common.BaseException;
-import com.example.backend.common.BaseResponseStatus;
-import com.example.backend.customer.model.entity.Customer;
-import com.example.backend.customer.model.request.PostCustomerLoginReq;
-import com.example.backend.customer.model.request.PostCustomerSignupReq;
-import com.example.backend.customer.model.response.*;
-import com.example.backend.customer.repository.CustomerRepository;
-
-import com.example.backend.havecoupon.model.entity.HaveCoupon;
-import com.example.backend.havecoupon.model.response.GetHaveCouponBaseRes;
-import com.example.backend.havecoupon.model.response.GetHaveCouponListRes;
-import com.example.backend.havecoupon.model.response.GetHaveCouponReadRes;
-
-import com.example.backend.log.service.LoginLogService;
-
-import com.example.backend.utils.TokenProvider;
+import com.example.backend_admin.common.BaseException;
+import com.example.backend_admin.customer.entity.Customer;
+import com.example.backend_admin.customer.entity.response.GetCustomerListRes;
+import com.example.backend_admin.customer.entity.response.GetCustomerReadRes;
+import com.example.backend_admin.customer.repository.CustomerRepository;
+import com.example.backend_admin.havecoupon.model.entity.HaveCoupon;
+import com.example.backend_admin.havecoupon.model.entity.response.GetHaveCouponBaseRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,9 +19,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import static com.example.backend_admin.common.BaseResponseStatus.CUSTOMER_READ_EMPTY;
+import static com.example.backend_admin.common.BaseResponseStatus.CUSTOMER_LIST_EMPTY;
 
-import static com.example.backend.common.BaseResponseStatus.*;
-import static com.example.backend.common.CustomerLevel.NEWBIE;
 
 
 @Service
@@ -41,105 +30,9 @@ import static com.example.backend.common.CustomerLevel.NEWBIE;
 public class CustomerService implements UserDetailsService {
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CustomerEmailVerifyService customerEmailVerifyService;
-    private final TokenProvider tokenProvider;
-    private final LoginLogService loginLogService;
-
-    @Value("${jwt.secret-key}")
-    private String secretKey;
-    @Value("${jwt.token.expired-time-ms}")
-    private Integer expiredTimeMs;
 
     public Customer getMemberByEmail (String customerEmail){
         return customerRepository.findByCustomerEmail(customerEmail).get();
-    }
-
-
-    // Member CRUD
-
-    // create
-    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq) throws BaseException {
-
-        Optional<Customer> duplicatedMember = customerRepository.findByCustomerEmail(postCustomerSignupReq.getCustomerEmail());
-        // 멤버 정보를 빌드로 저장
-        if (duplicatedMember.isPresent()){
-            throw new BaseException(BaseResponseStatus.CUSTOMER_SIGNUP_DUPLICATE_EMAIL);
-        }
-        Customer customer = Customer.builder()
-                .customerEmail(postCustomerSignupReq.getCustomerEmail())
-                .customerPwd(passwordEncoder.encode(postCustomerSignupReq.getCustomerPwd()))
-                .authority("CUSTOMER")
-                .level(NEWBIE)
-                .totalAmount(0)
-                .status(false)
-
-                .name(postCustomerSignupReq.getName())
-                .gender(postCustomerSignupReq.getGender())
-                .address(postCustomerSignupReq.getAddress())
-                .age(postCustomerSignupReq.getAge())
-
-                .build();
-
-        customerRepository.save(customer);
-
-        Customer customer1 = customerRepository.findByCustomerEmail(customer.getCustomerEmail()).get();
-
-        customerEmailVerifyService.sendCustomerMail(customer1);
-        Map<String, String> result = new HashMap<>();
-        result.put("customerEmail", customer.getCustomerEmail());
-
-        PostCustomerSignupRes postCustomerSignupRes = PostCustomerSignupRes.builder()
-                .isSuccess(true)
-                .code(1000L)
-                .message("회원가입 성공.")
-                .result(result)
-                .build();
-
-        return postCustomerSignupRes;
-
-
-    }
-    public PostCustomerLoginRes customerLogin(PostCustomerLoginReq postCustomerLoginReq) throws BaseException{
-        Optional<Customer> member = customerRepository.findByCustomerEmail(postCustomerLoginReq.getCustomerEmail());
-
-        if (member.isPresent()) {
-            if (passwordEncoder.matches(postCustomerLoginReq.getCustomerPwd(), member.get().getCustomerPwd())) {
-
-                PostCustomerLoginRes postCustomerLoginRes = PostCustomerLoginRes.builder()
-                        .accessToken(TokenProvider.generateAccessToken(member.get(), expiredTimeMs))
-                        .idx(member.get().getIdx())
-                        .build();
-
-                loginLogService.loginLogging(member.get());
-                String now = LocalDateTime.now().toString();
-                System.out.println(now);
-                System.out.println(now.split("T")[0]);
-                member.get().setLastLogin(now.split("T")[0]);
-                customerRepository.save(member.get());
-                return postCustomerLoginRes;
-            } else {
-                throw new BaseException(CUSTOMER_LOGIN_INCORRECT_ACCOUNT);
-            }
-        }
-        throw new BaseException(CUSTOMER_LOGIN_INCORRECT_ACCOUNT);
-    }
-
-    public DeleteCustomerDeleteRes delete(String token) throws BaseException{
-        token = TokenProvider.replaceToken(token);
-
-        Optional<Customer> result = customerRepository.findByCustomerEmail(TokenProvider.getUsername(token));
-
-        if (result.isPresent()){
-            DeleteCustomerDeleteRes deleteCustomerDeleteRes = DeleteCustomerDeleteRes.builder()
-                    .customerEmail(result.get().getCustomerEmail())
-                    .build();
-
-            customerRepository.delete(Customer.builder()
-                    .idx(TokenProvider.getIdx(token)).build());
-
-            return deleteCustomerDeleteRes;
-        }
-        throw new BaseException(CUSTOMER_DELETE_FAIL);
     }
 
     public GetCustomerReadRes read(Long idx) throws BaseException{
@@ -157,7 +50,7 @@ public class CustomerService implements UserDetailsService {
             }
             return GetCustomerReadRes.builder()
                     .idx(customer.getIdx())
-                    .name(customer.getName())
+                    .name(customer.getUsername())
                     .customerEmail(customer.getCustomerEmail())
                     .authority(customer.getAuthority())
                     .getHaveCouponBaseResList(getHaveCouponBaseResList)
@@ -193,7 +86,7 @@ public class CustomerService implements UserDetailsService {
 
             GetCustomerListRes getCustomerListRes = GetCustomerListRes.builder()
                     .idx(customer.getIdx())
-                    .name(customer.getName())
+                    .name(customer.getUsername())
                     .customerEmail(customer.getCustomerEmail())
                     .authority(customer.getAuthority())
                     .getHaveCouponBaseResList(getHaveCouponBaseResList)
@@ -218,7 +111,6 @@ public class CustomerService implements UserDetailsService {
         customer = result.get();
         return customer;
     }
-
 
 
 }

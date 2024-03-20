@@ -95,11 +95,9 @@ export default {
   },
   methods: {
     fetchCoupon() {
-      axios.get("http://localhost:8080/coupon/list")
+      axios.get("http://localhost:8080/admin/coupon/list")
           .then(response => {
-            console.log(response);
             this.coupons = response.data;
-            console.log(this.coupons); // 데이터 확인
           })
           .catch(error => {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);

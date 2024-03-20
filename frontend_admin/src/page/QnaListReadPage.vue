@@ -50,8 +50,8 @@ export default {
     fetchQnaData() {
       axios.post(`http://localhost:8000/admin/qna/read/${this.$route.params.idx}`)
           .then(response => {
-              if (response.status === 200) {
-              this.qna = response.data;
+              if (response.data.code === 1000) {
+              this.qna = response.data.result;
             } else {
               alert("오류");
             }
@@ -70,7 +70,7 @@ export default {
           Authorization: localStorage.getItem("accessToken")
         }
       }).then(response => {
-            if (response.status === 200) {
+            if (response.data.code === 1000) {
               alert("답변이 작성되었습니다.");
             } else {
               alert("답변이 작성되지 않았습니다.");

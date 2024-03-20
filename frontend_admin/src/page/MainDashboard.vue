@@ -154,7 +154,7 @@
                     </div>
                     <div
                         class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                      <h6 class="font-weight-bold mb-0">{{this.ordersAmount}}} 원</h6>
+                      <h6 class="font-weight-bold mb-0">{{this.ordersAmount}} 원</h6>
                     </div>
                   </div>
                 </div>
@@ -422,14 +422,14 @@ export default {
     fetchVisitorCount() { //방문자 수
       axios.get('http://localhost:8000/today/login')
           .then(response => {
-            this.visitorCount = response.data.todayLogin;
+            this.visitorCount = response.data.result.todayLogin;
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchCalcCount() {
       axios.get('http://localhost:8000/today/login')
           .then(response => {
-            this.visitorcalc = response.data.difLogin;
+            this.visitorcalc = response.data.result.difLogin;
             // 데이터 업데이트 후 클래스 업데이트
             this.updateCalcClasses();
             this.iconClass = this.todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
@@ -442,7 +442,7 @@ export default {
     fetchOrders() { //결제  수
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
-            this.todayOrder = response.data.todayOrdersCount;
+            this.todayOrder = response.data.result.todayOrdersCount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.iconClass = this.todayOrder >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.todayOrder >= 0 ? 'text-success' : 'text-danger';
@@ -453,7 +453,7 @@ export default {
     fetchOrdersCalc() { //결제 계산
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
-            this.todayOrderCalc = response.data.difOrdersCount;
+            this.todayOrderCalc = response.data.result.difOrdersCount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.updateCalcClasses();
             this.iconClass = this.todayOrderCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
@@ -465,7 +465,7 @@ export default {
     fetchtodaySignup() { //신규유입
       axios.get('http://localhost:8000/today/signup')
           .then(response => {
-            this.newSignup = response.data.todaySignup;
+            this.newSignup = response.data.result.todaySignup;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.iconClass = this.newSignup >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.newSignup >= 0 ? 'text-success' : 'text-danger';
@@ -476,7 +476,7 @@ export default {
     fetchtodaySignupCalc() { //신규유입 계산
       axios.get('http://localhost:8000/today/signup')
           .then(response => {
-            this.newSignupCalc = response.data.difSignup;
+            this.newSignupCalc = response.data.result.difSignup;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.updateCalcClasses();
             this.iconClass = this.newSignupCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
@@ -488,7 +488,7 @@ export default {
     fetchtodaySell() { //일 매출
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
-            this.todaySell = response.data.todayOrdersAmount;
+            this.todaySell = response.data.result.todayOrdersAmount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.iconClass = this.todaySell >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.todaySell >= 0 ? 'text-success' : 'text-danger';
@@ -499,7 +499,7 @@ export default {
     fetchtodaySellCalc() { //일 매출 계산
       axios.get('http://localhost:8000/today/orders')
           .then(response => {
-            this.todaySellCalc = response.data.difOrdersAmount;
+            this.todaySellCalc = response.data.result.difOrdersAmount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.updateCalcClasses();
             this.iconClass = this.todaySellCalc >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
@@ -511,7 +511,7 @@ export default {
     fetchtdormantcs() { //휴면 고객
       axios.get('http://localhost:8000/today/sleep')
           .then(response => {
-            this.dormatCs = response.data.sleepAccountGrowthRate;
+            this.dormatCs = response.data.result.sleepAccountGrowthRate;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.iconClass = this.dormatCs >= 0 ? 'mdi-arrow-top-right' : 'mdi-arrow-bottom-left';
             this.iconColorClass = this.dormatCs >= 0 ? 'text-success' : 'text-danger';
@@ -523,7 +523,7 @@ export default {
       axios.get('http://localhost:8000/today/sleep')
           .then(response => {
 
-            this.dormatCsCalc = response.data.sleepAccountGrowthRate;
+            this.dormatCsCalc = response.data.result.sleepAccountGrowthRate;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
             this.updateCalcClasses();
 
@@ -538,7 +538,7 @@ export default {
     fetchqnalist(){ //1:1문의 내역
       axios.get('http://localhost:8000/admin/qna/list')
           .then(response => {
-            this.qnatitle = response.data.title;
+            this.qnatitle = response.data.result.title;
             // this.todaySellCalc = response.data.difOrdersAmount;
             // this.todaySellCalc = response.data.difOrdersAmount;
             // this.todaySellCalc = response.data.difOrdersAmount;
@@ -550,7 +550,7 @@ export default {
     createChart() {
       axios.get('http://localhost:8000/category/orders')
           .then(response => {
-            const responseData = response.data;
+            const responseData = response.data.result;
             this.doughnutPieData.datasets[0].data = responseData.orders;
             this.ordersCount = responseData.ordersCount;
             this.ordersAmount = responseData.ordersAmount;
@@ -572,7 +572,7 @@ export default {
 
       axios.get('http://localhost:8000/month/orders')
           .then(response => {
-            const responseData = response.data;
+            const responseData = response.data.result;
             this.barData.datasets[0].data = responseData.orders;
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
             this.$nextTick(() => {
@@ -591,10 +591,8 @@ export default {
 
       axios.get('http://localhost:8000/today/count')
           .then(response => {
-            const responseData = response.data;
-            console.log(responseData);
+            const responseData = response.data.result;
             this.areaData.datasets[0].data = responseData.timeDataList;
-            console.log(this.areaData);
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
             this.$nextTick(() => {
               // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
@@ -615,8 +613,8 @@ export default {
     loadArticles() {
       axios.get("http://localhost:8000/admin/qna/list")
           .then((response) => {
-            this.qnasWaitings = response.data.filter(qna => !qna.answerContent).length;
-            this.qnasWaiting = response.data.filter(qna => !qna.answerContent).slice(0, 5);
+            this.qnasWaitings = response.data.result.filter(qna => !qna.answerContent).length;
+            this.qnasWaiting = response.data.result.filter(qna => !qna.answerContent).slice(0, 5);
           })
           .catch((error) => {
             console.error("데이터 로드 실패:", error);

@@ -32,9 +32,13 @@ public class Customer extends BaseTimeEntity implements UserDetails{
     private String authority;
     private boolean status;
 
+    private Integer age;
+    private String gender;
+    private String address;
     private CustomerLevel level;
 
     private Integer totalAmount;
+    private String lastLogin;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<HaveCoupon> haveCouponList = new ArrayList<>();

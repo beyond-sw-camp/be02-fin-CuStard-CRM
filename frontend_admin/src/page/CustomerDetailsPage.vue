@@ -312,8 +312,8 @@ export default {
       axios.get("http://localhost:8000/admin/qna/list")
           .then((response) => {
             const customerId = Number(this.$route.params.customerId);
-            this.qnasWaiting = response.data.filter(qna => qna.customerIdx === customerId && !qna.answerContent);
-            this.qnasAnswered = response.data.filter(qna => qna.customerIdx === customerId && qna.answerContent);
+            this.qnasWaiting = response.data.result.filter(qna => qna.customerIdx === customerId && !qna.answerContent);
+            this.qnasAnswered = response.data.result.filter(qna => qna.customerIdx === customerId && qna.answerContent);
           })
           .catch((error) => {
             console.error("데이터 로드 실패:", error);
@@ -322,11 +322,10 @@ export default {
 
     fetchCustomers() {
       // productIdx 변수를 사용하여 고객 정보를 불러오는 URL 수정
-      axios.get(`http://localhost:8080/customer/read/${this.$route.params.customerId}`)
+      axios.get(`http://localhost:8000/admin/customer/read/${this.$route.params.customerId}`)
           .then(response => {
             // console.log(response)
-            this.customer = response.data; // 응답으로 받은 데이터를 customers 배열에 저장
-            console.log(this.customer)
+            this.customer = response.data.result; // 응답으로 받은 데이터를 customers 배열에 저장
           })
           .catch(error => {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
@@ -340,7 +339,7 @@ export default {
     createChart() {
       axios.get(`http://localhost:8000/customer/orders/${this.$route.params.customerId}`)
           .then(response => {
-            const responseData = response.data;
+            const responseData = response.data.result;
             this.ordersCategoryData.datasets[0].data = responseData.orders;
             this.productReadCategoryData.datasets[0].data = responseData.productRead;
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
@@ -373,7 +372,7 @@ export default {
 
       axios.get(`http://localhost:8000/login/time/${this.$route.params.customerId}`)
           .then(response => {
-            const responseData = response.data;
+            const responseData = response.data.result;
             this.areaData.datasets[0].data = responseData.timeDataList;
             // 데이터 로딩이 완료된 후에 차트를 생성합니다.
 
