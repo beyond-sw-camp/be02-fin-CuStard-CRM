@@ -59,6 +59,7 @@
 import { ref, computed } from 'vue';
 // import { useRouter } from 'vue-router';
 import axios from 'axios';
+let backend = "http://192.168.0.53:8080"
 
 const coupons = ref([]);
 const showDropdown = ref(false);
@@ -95,7 +96,7 @@ function getCategoryName(categoryId) {
       return;
     }
 
-    const url = `http://localhost:8080/have/list?customerIdx=${customerIdx}`;
+    const url = backend + `/have/list?customerIdx=${customerIdx}`;
 
     try {
       const response = await axios.get(url);

@@ -17,6 +17,8 @@ import SearchCardComponent from "@/components/SearchCardComponent.vue";
 const products = ref([]);
 
 const route = useRoute();
+let backend = "http://192.168.0.53:80/api";
+
 
 onMounted(async () => {
   const keyword = route.params.keyword;
@@ -28,7 +30,7 @@ onMounted(async () => {
 async function fetchSearchResults(keyword) {
   try {
     // 서버로부터 검색 결과를 가져오는 요청 보내기
-    const response = await fetch(`http://localhost:8080/product/search/${keyword}`);
+    const response = await fetch(backend + `/product/search/${keyword}`);
     if (!response.ok) {
       throw new Error('검색 결과를 가져오는 데 실패했습니다.');
     }

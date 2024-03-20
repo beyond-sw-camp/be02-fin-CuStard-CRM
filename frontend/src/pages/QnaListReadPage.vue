@@ -33,6 +33,8 @@
 
 <script>
 import axios from 'axios';
+let backend = "http://192.168.0.53:80/api";
+
 
 export default {
   data() {
@@ -44,7 +46,7 @@ export default {
   },
   methods: {
     submitPassword() {
-      axios.post(`http://localhost:8080/qna/read/${this.$route.params.idx}`, { qnaPwd: this.password })
+      axios.post(backend + 'qna/read/${this.$route.params.idx}', { qnaPwd: this.password })
           .then(response => {
             if (response.status === 200) {
               this.qna = response.data;
