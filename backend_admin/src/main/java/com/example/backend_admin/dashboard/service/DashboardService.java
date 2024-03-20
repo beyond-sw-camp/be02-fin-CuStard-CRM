@@ -22,7 +22,7 @@ public class DashboardService {
     private final CustomerRepository customerRepository;
     private final LoginLogRespository loginLogRespository;
 
-    public BaseResponse<List<GetCustomerListRes>> selectByLevel(CustomerLevel level){
+    public List<GetCustomerListRes> selectByLevel(CustomerLevel level){
         List<Customer> customerList = customerRepository.findByLevel(level);
         List<GetCustomerListRes> result = new ArrayList<>();
         for(Customer customer:customerList){
@@ -33,10 +33,10 @@ public class DashboardService {
                             .build());
         }
 
-        return BaseResponse.successResponse(level+"등급 회원 목록입니다.", result);
+        return result;
     }
 
-    public BaseResponse<List<GetCustomerListRes>> selectByAmount() {
+    public List<GetCustomerListRes> selectByAmount() {
         List<Customer> customerList = customerRepository.findAllByOrderByTotalAmountDesc();
         List<GetCustomerListRes> result = new ArrayList<>();
         for(Customer customer:customerList){
@@ -47,7 +47,7 @@ public class DashboardService {
                             .totalAmount(customer.getTotalAmount())
                             .build());
         }
-        return BaseResponse.successResponse("총 주문 금액 순 회원 목록입니다.", result);
+        return result;
     }
 
 //    public void countActiveUser(){
