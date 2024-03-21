@@ -31,6 +31,7 @@ import axios from 'axios';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 let backend = "http://192.168.0.53:80/api";
+// let backend = "http://localhost:8080";
 
 
 export default defineComponent({

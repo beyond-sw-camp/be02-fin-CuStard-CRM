@@ -21,6 +21,7 @@
 import axios from 'axios';
 
 let backend = "http://192.168.0.53:80/api";
+// let backend = "http://localhost:8080";
 
 export default {
   data() {
