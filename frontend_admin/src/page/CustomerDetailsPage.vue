@@ -179,6 +179,7 @@
 <script>
 import axios from 'axios';
 import {Chart} from "chart.js";
+let backend = "http://192.168.0.52:80/api";
 
 export default {
   data() {
@@ -309,7 +310,7 @@ export default {
   },
   methods: {
     loadArticles() {
-      axios.get("http://localhost:8000/admin/qna/list")
+      axios.get(backend + "/admin/qna/list")
           .then((response) => {
             const customerId = Number(this.$route.params.customerId);
             this.qnasWaiting = response.data.result.filter(qna => qna.customerIdx === customerId && !qna.answerContent);
@@ -322,7 +323,7 @@ export default {
 
     fetchCustomers() {
       // productIdx 변수를 사용하여 고객 정보를 불러오는 URL 수정
-      axios.get(`http://localhost:8000/admin/customer/read/${this.$route.params.customerId}`)
+      axios.get(backend + `/admin/customer/read/${this.$route.params.customerId}`)
           .then(response => {
             // console.log(response)
             this.customer = response.data.result; // 응답으로 받은 데이터를 customers 배열에 저장
@@ -337,7 +338,7 @@ export default {
     },
 
     createChart() {
-      axios.get(`http://localhost:8000/customer/orders/${this.$route.params.customerId}`)
+      axios.get(backend + `/customer/orders/${this.$route.params.customerId}`)
           .then(response => {
             const responseData = response.data.result;
             this.ordersCategoryData.datasets[0].data = responseData.orders;
@@ -370,7 +371,7 @@ export default {
           })
           .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
 
-      axios.get(`http://localhost:8000/login/time/${this.$route.params.customerId}`)
+      axios.get(backend + `/login/time/${this.$route.params.customerId}`)
           .then(response => {
             const responseData = response.data.result;
             this.areaData.datasets[0].data = responseData.timeDataList;

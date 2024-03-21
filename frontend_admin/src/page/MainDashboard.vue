@@ -231,6 +231,7 @@
 import axios from "axios";
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
+let backend = "http://192.168.0.52:80/api";
 
 export default {
   data() {
@@ -420,14 +421,14 @@ export default {
     },
 
     fetchVisitorCount() { //방문자 수
-      axios.get('http://localhost:8000/today/login')
+      axios.get(backend + '/today/login')
           .then(response => {
             this.visitorCount = response.data.result.todayLogin;
           })
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchCalcCount() {
-      axios.get('http://localhost:8000/today/login')
+      axios.get(backend + '/today/login')
           .then(response => {
             this.visitorcalc = response.data.result.difLogin;
             // 데이터 업데이트 후 클래스 업데이트
@@ -440,7 +441,7 @@ export default {
     },
 
     fetchOrders() { //결제  수
-      axios.get('http://localhost:8000/today/orders')
+      axios.get(backend + '/today/orders')
           .then(response => {
             this.todayOrder = response.data.result.todayOrdersCount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
@@ -451,7 +452,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchOrdersCalc() { //결제 계산
-      axios.get('http://localhost:8000/today/orders')
+      axios.get(backend + '/today/orders')
           .then(response => {
             this.todayOrderCalc = response.data.result.difOrdersCount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
@@ -463,7 +464,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchtodaySignup() { //신규유입
-      axios.get('http://localhost:8000/today/signup')
+      axios.get(backend + '/today/signup')
           .then(response => {
             this.newSignup = response.data.result.todaySignup;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
@@ -474,7 +475,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchtodaySignupCalc() { //신규유입 계산
-      axios.get('http://localhost:8000/today/signup')
+      axios.get(backend + '/today/signup')
           .then(response => {
             this.newSignupCalc = response.data.result.difSignup;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
@@ -486,7 +487,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchtodaySell() { //일 매출
-      axios.get('http://localhost:8000/today/orders')
+      axios.get(backend + '/today/orders')
           .then(response => {
             this.todaySell = response.data.result.todayOrdersAmount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
@@ -497,7 +498,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchtodaySellCalc() { //일 매출 계산
-      axios.get('http://localhost:8000/today/orders')
+      axios.get(backend + '/today/orders')
           .then(response => {
             this.todaySellCalc = response.data.result.difOrdersAmount;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
@@ -509,7 +510,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchtdormantcs() { //휴면 고객
-      axios.get('http://localhost:8000/today/sleep')
+      axios.get(backend + '/today/sleep')
           .then(response => {
             this.dormatCs = response.data.result.sleepAccountGrowthRate;
             // visitorcalc 값에 따라 아이콘 클래스와 색상 클래스 동적 업데이트
@@ -520,7 +521,7 @@ export default {
           .catch(error => console.error("방문자 수를 불러오는 데 실패했습니다.", error));
     },
     fetchtdormantcscalc() { //휴면 고객 계산
-      axios.get('http://localhost:8000/today/sleep')
+      axios.get(backend + '/today/sleep')
           .then(response => {
 
             this.dormatCsCalc = response.data.result.sleepAccountGrowthRate;
@@ -536,7 +537,7 @@ export default {
 
 
     fetchqnalist(){ //1:1문의 내역
-      axios.get('http://localhost:8000/admin/qna/list')
+      axios.get(backend + '/admin/qna/list')
           .then(response => {
             this.qnatitle = response.data.result.title;
             // this.todaySellCalc = response.data.difOrdersAmount;
@@ -548,7 +549,7 @@ export default {
     },
 
     createChart() {
-      axios.get('http://localhost:8000/category/orders')
+      axios.get(backend + '/category/orders')
           .then(response => {
             const responseData = response.data.result;
             this.doughnutPieData.datasets[0].data = responseData.orders;
@@ -570,7 +571,7 @@ export default {
           })
           .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
 
-      axios.get('http://localhost:8000/month/orders')
+      axios.get(backend + '/month/orders')
           .then(response => {
             const responseData = response.data.result;
             this.barData.datasets[0].data = responseData.orders;
@@ -589,7 +590,7 @@ export default {
           })
           .catch(error => console.error("월별 매출액을 불러오는 데 실패했습니다.", error));
 
-      axios.get('http://localhost:8000/today/count')
+      axios.get(backend + '/today/count')
           .then(response => {
             const responseData = response.data.result;
             this.areaData.datasets[0].data = responseData.timeDataList;
@@ -611,7 +612,7 @@ export default {
     },
 
     loadArticles() {
-      axios.get("http://localhost:8000/admin/qna/list")
+      axios.get(backend + "/admin/qna/list")
           .then((response) => {
             this.qnasWaitings = response.data.result.filter(qna => !qna.answerContent).length;
             this.qnasWaiting = response.data.result.filter(qna => !qna.answerContent).slice(0, 5);

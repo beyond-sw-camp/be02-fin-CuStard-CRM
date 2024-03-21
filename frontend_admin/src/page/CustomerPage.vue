@@ -78,6 +78,7 @@
 
 <script>
 import axios from 'axios';
+let backend = "http://192.168.0.52:80/api";
 
 export default {
   data() {
@@ -89,7 +90,7 @@ export default {
   },
   methods: {
     fetchCustomers() {
-      axios.get("http://localhost:8000/admin/customer/list") //:Todo 백엔드 어드민으로 분리할 것
+      axios.get(backend + "/admin/customer/list") //:Todo 백엔드 어드민으로 분리할 것
           .then(response => {
             this.customers = response.data.result;
             this.originalCustomers = [...response.data.result];
