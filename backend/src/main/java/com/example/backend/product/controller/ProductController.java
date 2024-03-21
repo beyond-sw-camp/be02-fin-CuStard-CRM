@@ -40,9 +40,9 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search/{keyword}")
-    public ResponseEntity searchByName(@PathVariable String keyword, @RequestHeader(value = "Authorization") String token){
+    public ResponseEntity searchByName(@PathVariable String keyword,Authentication authentication){
         try {
-            return ResponseEntity.ok().body(BaseResponse.successResponse(productService.searchByName(keyword, token)));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(productService.searchByName(keyword, authentication)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus())));
         }
