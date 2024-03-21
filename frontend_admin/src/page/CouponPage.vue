@@ -86,7 +86,7 @@
 
 <script>
 import axios from 'axios';
-
+let backend = "http://192.168.0.52:80/api";
 export default {
   data() {
     return {
@@ -95,11 +95,9 @@ export default {
   },
   methods: {
     fetchCoupon() {
-      axios.get("http://localhost:8080/coupon/list")
+      axios.get(backend + "/admin/coupon/list")
           .then(response => {
-            console.log(response);
             this.coupons = response.data;
-            console.log(this.coupons); // 데이터 확인
           })
           .catch(error => {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
@@ -131,7 +129,7 @@ export default {
       // 선택된 카테고리 값을 백엔드가 요구하는 숫자 코드로 변환
       const couponCategory = categoryMapping[this.couponData.category];
 
-      axios.post("http://localhost:8080/coupon/create", {
+      axios.post(backend + "/coupon/create", {
         // adminIdx: 1, // 예시 값, 실제로는 적절한 값을 사용해야 합니다.
         discount: this.couponData.discount,
         couponCategory: couponCategory, // 변환된 카테고리 코드 사용

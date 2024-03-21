@@ -78,38 +78,22 @@
 
 <script>
 import axios from 'axios';
+let backend = "http://192.168.0.52:80/api";
 
 export default {
   data() {
     return {
-      qnasWaiting: [],
-      qnasAnswered: [],
       customers: [],
       originalCustomers: [], // 원본 고객 목록을 저장할 속성
 
     };
   },
   methods: {
-    loadArticles() {
-      axios.get("http://localhost:8000/admin/qna/list")
-          .then((response) => { //:TODO customerIdx를 받아온 값으로 변경해야함
-            console.log(response);
-            this.qnasWaiting = response.data.filter(qna => qna.customerIdx === 7 && !qna.answerContent);
-            this.qnasAnswered = response.data.filter(qna => qna.customerIdx === 7 && qna.answerContent);
-            console.log(this.qnasWaiting);
-            console.log(this.qnasAnswered);
-          })
-          .catch((error) => {
-            console.error("데이터 로드 실패:", error);
-          });
-    },
     fetchCustomers() {
-      axios.get("http://localhost:8080/customer/list")
+      axios.get(backend + "/admin/customer/list") //:Todo 백엔드 어드민으로 분리할 것
           .then(response => {
-            console.log(response);
-            this.customers = response.data;
-            this.originalCustomers = [...response.data];
-            console.log(this.customers); // 데이터 확인
+            this.customers = response.data.result;
+            this.originalCustomers = [...response.data.result];
           })
           .catch(error => {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
@@ -118,13 +102,6 @@ export default {
     goToCustomerDetail(idx) {
       this.$router.push({ name: 'CustomerDetail', params: { customerId: idx } });
     },
-
-
-
-    goToArticle(idx) {
-      this.$router.push({path: `/admin/qna/read/${idx}`});
-    },
-
     sortCustomers(type, value) {
       this.customers = [...this.originalCustomers]; // 원본 데이터로 리셋
 
@@ -142,13 +119,8 @@ export default {
 
       console.log('Filtered customers:', this.customers);
     },
-
-
-
-
   },
   mounted() {
-    this.loadArticles();
     this.fetchCustomers();
   }
 };
