@@ -1,0 +1,12 @@
+version: '3.0'
+
+services:
+  admin-frontend:
+    image: zackble/admin-frontend:latest
+    ports:
+      - "3001:3000"
+#    environment:
+#      SOME_ENV_VAR: "some-value"
+#      ANOTHER_ENV_VAR: "another-value"
+    volumes:
+      - "./dist:/usr/share/nginx/html"
