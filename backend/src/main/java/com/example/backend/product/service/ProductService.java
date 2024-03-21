@@ -76,7 +76,7 @@ public class ProductService {
         return null;
     }
 
-    public List<GetProductListRes> searchByName(String keyword, String token) throws BaseException{
+    public List<GetProductListRes> searchByName(String keyword,  Authentication authentication) throws BaseException{
         List<Product> productList = productRepository.findByProductNameContaining(keyword);
 
         List<GetProductListRes> productListRes = new ArrayList<>();
@@ -91,13 +91,13 @@ public class ProductService {
                     .build());
         }
 
-        if (token != null) {
-            token = TokenProvider.replaceToken(token);
-            Long customerIdx = TokenProvider.getIdx(token);
+        if (authentication != null && authentication.isAuthenticated()) {
 
-            Optional<Customer> customer = customerRepository.findById(customerIdx);
-            if (customer.isPresent()) {
-                searchLogService.SearchLogging(customer.get(), keyword);
+            Customer customer = (Customer) authentication.getPrincipal();
+            Optional<Customer> c = customerRepository.findById(customer.getIdx());
+
+            if (c.isPresent()) {
+                searchLogService.SearchLogging(c.get(), keyword);
             }
         }
         return productListRes;
