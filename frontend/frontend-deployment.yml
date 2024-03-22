@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: custard-frontend-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       ver: custard-frontend-v1
@@ -16,5 +16,4 @@ spec:
       containers:
         - name: container
           image: hyeon28/custard_frontend:latest
-      terminationGracePeriodSeconds: 0
-
+      termination PeriodSeconds: 0
