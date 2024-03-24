@@ -14,7 +14,7 @@
       <td align="center"><a href="https://github.com/Hyeon28"><img src="https://avatars.githubusercontent.com/u/96675421?v=4" width="100px;" alt=""/><br /><sub><b> 🐧팀원 : 이주현</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/dohyun0408"><img src="https://avatars.githubusercontent.com/u/149150345?v=4" width="100px;" alt=""/><br /><sub><b> 🐺팀원 : 김도현 </b></sub></a><br /></td>
     </tr>
-  </tbody>
+  </tbody> 
 </table>
 
 
