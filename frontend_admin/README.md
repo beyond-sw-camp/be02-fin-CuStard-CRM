@@ -88,6 +88,9 @@
 
 <details>
 <summary>쿠폰</summary>
+관리자가 생성한 쿠폰을 발급 대상을 지정하여 submti 버튼을 누르면 해당 고객들에게 쿠폰 발급이 진행 됩니다.
+<img src="">
+
 </details>
 
 
