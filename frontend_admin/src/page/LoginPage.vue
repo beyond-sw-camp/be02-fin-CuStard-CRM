@@ -9,11 +9,11 @@
               <form @submit.prevent="login">
                 <div class="form-group">
                   <label>Username or email *</label>
-                  <input type="text" class="form-control p_input" v-model="loginForm.adminEmail">
+                  <input type="text" id="email" class="form-control p_input" v-model="loginForm.adminEmail">
                 </div>
                 <div class="form-group">
                   <label>Password *</label>
-                  <input type="password" class="form-control p_input" v-model="loginForm.adminPwd">
+                  <input type="password" id="password" class="form-control p_input" v-model="loginForm.adminPwd">
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between">
                   <div class="form-check">
