@@ -57,7 +57,7 @@ public class EmailService {
 
 
             helper.setSubject("[광고] CuStard :) 고객님을 위한 추천 상품!");
-            helper.setTo(""); //:TODO 고객 username(이메일)로 변경
+            helper.setTo(customer.getCustomerEmail()); //:TODO 고객 username(이메일)로 변경
             Context context = new Context();
 
             int i = 1;
