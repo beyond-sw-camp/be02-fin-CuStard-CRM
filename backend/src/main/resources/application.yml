@@ -6,7 +6,7 @@ jwt:
     expired-time-ms: ${JWT_EXPIRED_TIME}
 spring:
   datasource:
-    driver-class-name: org.mariadb.jdbc.driver
+    driver-class-name: org.mariadb.jdbc.Driver
     url: ${DB_URL}
     username: ${USER_NAME}
     password: ${PASSWORD}
