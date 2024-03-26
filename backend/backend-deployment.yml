@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: container
-          image: hyeon28/custard_backend:latest
+          image: hyeon28/custard_backend:VERSION
           envFrom:
             - configMapRef:
                 name: backend-config
