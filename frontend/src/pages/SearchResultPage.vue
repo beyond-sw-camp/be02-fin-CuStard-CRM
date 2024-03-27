@@ -17,8 +17,8 @@ import SearchCardComponent from "@/components/SearchCardComponent.vue";
 const products = ref([]);
 
 const route = useRoute();
-let backend = "http://192.168.0.53:80/api";
-// let backend = "http://localhost:8080";
+// let backend = "http://192.168.0.53:80/api";
+let backend = "http://localhost:8080";
 
 onMounted(async () => {
   const keyword = route.params.keyword;
