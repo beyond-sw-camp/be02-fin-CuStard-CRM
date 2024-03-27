@@ -1,9 +1,8 @@
-package com.example.backend_admin.calculate.service;
+package com.example.backend_admin.dashboard.service;
 
-import com.example.backend_admin.calculate.model.response.GetCategoryOrdersRes;
-import com.example.backend_admin.calculate.model.response.GetTodayOrdersRes;
+import com.example.backend_admin.dashboard.model.dto.GetCategoryOrdersRes;
+import com.example.backend_admin.dashboard.model.dto.GetTodayOrdersRes;
 import com.example.backend_admin.common.BaseException;
-import com.example.backend_admin.customer.entity.Customer;
 import com.example.backend_admin.log.entity.ProductDetailLog;
 import com.example.backend_admin.log.repository.ProductDetailLogRespository;
 import com.example.backend_admin.orders.model.entity.Orders;
