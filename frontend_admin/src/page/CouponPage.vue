@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     fetchCoupon() {
-      axios.get(backend + "admin/coupon/list")
+      axios.get(backend + "/admin/coupon/list")
           .then(response => {
             this.coupons = response.data.result;
           })
