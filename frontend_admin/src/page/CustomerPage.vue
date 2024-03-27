@@ -55,7 +55,7 @@
                         <td>{{ customer.name }}</td>
                         <td>{{ customer.customerEmail }}</td>
                         <td>{{ customer.level }}</td>
-                        <td>{{ customer.totalAmount }}</td>
+                        <td>{{ formatNumber(customer.totalAmount) }}</td>
                         <td>{{ customer.lastLogin}}</td>
                       </tr>
                       </tbody>
@@ -79,6 +79,7 @@
 <script>
 import axios from 'axios';
 let backend = "http://192.168.0.52:80/api";
+// let backend = "http://localhost:8080";
 
 export default {
   data() {
@@ -118,6 +119,9 @@ export default {
       }
 
       console.log('Filtered customers:', this.customers);
+    },
+    formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
     },
   },
   mounted() {

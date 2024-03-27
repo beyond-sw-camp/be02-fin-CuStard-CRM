@@ -1,14 +1,10 @@
 <template>
   <div class="container-scroller">
-    <!-- partial:partials/_sidebar.html -->
-    <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_navbar.html -->
-      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row ">
-            <div class="col-12 grid-margin">
+            <div class="grid-margin" style="width: 95%;  padding-left: 10px;">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">고객 정보</h4>
@@ -36,7 +32,7 @@
                         <td>{{ customer.age }}</td>
                         <td>{{ customer.gender }}</td>
                         <td>{{ customer.address }}</td>
-                        <td>{{ customer.totalAmount }}</td>
+                        <td>{{ formatNumber(customer.totalAmount) }}</td>
                         <td>{{ customer.lastLogin}}</td>
                       </tr>
                       </tbody>
@@ -47,7 +43,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-4 grid-margin stretch-card">
+            <div class="grid-margin stretch-card" style="width: 20%; padding-left: 10px;">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">1:1 문의 내역</h4>
@@ -56,14 +52,14 @@
                     <table class="table">
                       <thead>
                       <tr>
-                        <th>번호</th>
+<!--                        <th>번호</th>-->
                         <th>제목</th>
                         <th>답변 상태</th>
                       </tr>
                       </thead>
                       <tbody>
                       <tr v-for="qna in qnasWaiting" :key="qna.idx" @click="goToArticle(qna.idx)">
-                        <td>{{ qna.idx }}</td>
+<!--                        <td>{{ qna.idx }}</td>-->
                         <td>
                           <span class="title-text">{{ qna.title }}</span>
                         </td>
@@ -79,14 +75,14 @@
                     <table class="table">
                       <thead>
                       <tr>
-                        <th>번호</th>
+<!--                        <th>번호</th>-->
                         <th>제목</th>
                         <th>답변 상태</th>
                       </tr>
                       </thead>
                       <tbody>
                       <tr v-for="qna in qnasAnswered" :key="qna.idx" @click="goToArticle(qna.idx)">
-                        <td>{{ qna.idx }}</td>
+<!--                        <td>{{ qna.idx }}</td>-->
                         <td>
                           <span class="title-text">{{ qna.title }}</span>
                         </td>
@@ -102,84 +98,48 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand">
-                      <div class=""></div>
-                    </div>
-                    <div class="chartjs-size-monitor-shrink">
-                      <div class=""></div>
-                    </div>
-                    </div>
-                    <h4 class="card-title">로그인 시간</h4>
-                    <canvas id="areaChart" ref="customerLoginChart" style="height: 148px; display: block; width: 297px;" width="371" height="185"
-                            class="chartjs-render-monitor"></canvas>
-
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-          <div class="row">
-              <div class="col-lg-4 grid-margin stretch-card">
+            <div class="grid-margin stretch-card" style="width: 22%; padding-left: 20px" >
                 <div class="card">
                   <div class="card-body">
-                    <div class="chartjs-size-monitor">
-                      <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                      </div>
-                      <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                      </div>
-                    </div>
                     <h4 class="card-title">카테고리 별 구매 금액 </h4>
                     <canvas id="pieChart"
                             ref="CustomerCategoryChart"
-                            style="height: 175px; display: block; width: 351px;" width="438" height="218"
+                            style="height: 145px; display: block; width: 250px;" width="338" height="190"
                             class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 grid-margin stretch-card">
+            <div class=" grid-margin stretch-card" style="width: 22%; padding-left: 10px;">
                 <div class="card">
                   <div class="card-body">
-                    <div class="chartjs-size-monitor">
-                      <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                      </div>
-                      <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                      </div>
-                    </div>
                     <h4 class="card-title">조회 카테고리 </h4>
-                    <canvas id="pieChart" ref="productReadCategory" style="height: 185px; display: block; width: 371px;" width="463" height="231"
+                    <canvas id="pieChart" ref="productReadCategory" style="height: 145px; display: block; width: 250px;" width="338" height="190"
+                            class="chartjs-render-monitor"></canvas>
+                  </div>
+                </div>
+              </div>
+            <div class="grid-margin stretch-card"  style="width: 31%; padding-left: 20px;">
+              <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">로그인 시간</h4>
+                    <canvas id="areaChart" ref="customerLoginChart" style="height: 148px; display: block; width: 297px; " width="371" height="185"
                             class="chartjs-render-monitor"></canvas>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
-
 </template>
 
 <script>
 import axios from 'axios';
 import {Chart} from "chart.js";
+
 let backend = "http://192.168.0.52:80/api";
+// let backend = "http://localhost:8080";
 
 export default {
   data() {
@@ -210,14 +170,9 @@ export default {
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-          '패션',
-          '뷰티' ,
-          '가전' ,
-          '식품' ,
-          '스포츠/레저'
-        ]
-      }, doughnutPieOptions: {
+        labels: ['패션', '뷰티' , '가전' , '식품' , '스포츠/레저']
+      },
+      doughnutPieOptions: {
         responsive: true,
         animation: {
           animateScale: true,
@@ -244,19 +199,10 @@ export default {
             'rgba(255, 159, 64, 1)'
           ],
         }],
-
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-          '패션',
-          '뷰티' ,
-          '가전' ,
-          '식품' ,
-          '스포츠/레저'
-        ]
+        labels: ['패션','뷰티' , '가전' , '식품' , '스포츠/레저']
       },
       areaData : {
-        labels: ["00", "01","02","03","04","05", "06", "07","08","09","10","11",
-          "12","13","14","15", "16","17","18","19`","20", "21","22","23"],
+        labels: ["00", "01","02","03","04","05", "06", "07","08","09","10","11","12","13","14","15", "16","17","18","19`","20", "21","22","23"],
         datasets: [{
           label: '방문 횟수',
           data: [],
@@ -321,31 +267,21 @@ export default {
           });
     },
 
-    fetchCustomers() {
-      // productIdx 변수를 사용하여 고객 정보를 불러오는 URL 수정
-      axios.get(backend + `/admin/customer/read/${this.$route.params.customerId}`)
-          .then(response => {
-            // console.log(response)
-            this.customer = response.data.result; // 응답으로 받은 데이터를 customers 배열에 저장
-          })
-          .catch(error => {
-            console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
-          });
-    },
-
     goToArticle(idx) {
       this.$router.push({path: `/admin/qna/read/${idx}`});
     },
 
     createChart() {
-      axios.get(backend + `/customer/orders/${this.$route.params.customerId}`)
+      axios.get(backend + `/dashboard/customer/detail/${this.$route.params.customerId}`)
           .then(response => {
-            const responseData = response.data.result;
+            response = response.data.result;
+            this.customer = response.getCustomerReadRes;
+
+            const responseData = response.getCategoryOrdersRes;
             this.ordersCategoryData.datasets[0].data = responseData.orders;
             this.productReadCategoryData.datasets[0].data = responseData.productRead;
-            // 데이터 로딩이 완료된 후에 차트를 생성합니다.
+
             this.$nextTick(() => {
-              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
               if (this.customerCategoryChartInstance) {
                 this.customerCategoryChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
               }
@@ -356,10 +292,10 @@ export default {
                 options: this.doughnutPieOptions
               });
             });
+
             this.$nextTick(() => {
-              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
               if (this.productCategoryChartInstance) {
-                this.productCategoryChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+                this.productCategoryChartInstance.destroy();
               }
 
               this.productCategoryChartInstance = new Chart(this.$refs.productReadCategory, {
@@ -368,19 +304,11 @@ export default {
                 options: this.doughnutPieOptions
               });
             });
-          })
-          .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
-
-      axios.get(backend + `/login/time/${this.$route.params.customerId}`)
-          .then(response => {
-            const responseData = response.data.result;
-            this.areaData.datasets[0].data = responseData.timeDataList;
-            // 데이터 로딩이 완료된 후에 차트를 생성합니다.
+            this.areaData.datasets[0].data = response.getLoginTimeRes.timeDataList;
 
             this.$nextTick(() => {
-              // 차트 인스턴스가 이미 존재하는 경우, 이를 업데이트하거나 파괴 후 재생성해야 할 수도 있습니다.
               if (this.customerLoginChartInstance) {
-                this.customerLoginChartInstance.destroy(); // 기존 차트 인스턴스를 파괴합니다.
+                this.customerLoginChartInstance.destroy();
               }
 
               this.customerLoginChartInstance = new Chart(this.$refs.customerLoginChart, {
@@ -389,14 +317,20 @@ export default {
                 options: this.areaOptions
               });
             });
+
           })
-          .catch(error => console.error("고객의 시간대별 로그인을 불러오는 데 실패했습니다.", error));
+          .catch(error => console.error("카테고리별 판매율을 불러오는 데 실패했습니다.", error));
     },
+    formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
+    }
   },
   mounted() {
     this.loadArticles();
-    this.fetchCustomers();
+    // this.fetchCustomers();
     this.createChart();
+
+
   }
 };
 </script>
