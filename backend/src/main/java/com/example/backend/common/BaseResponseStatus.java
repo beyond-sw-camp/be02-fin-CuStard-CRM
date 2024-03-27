@@ -13,6 +13,7 @@ public enum BaseResponseStatus {
     UNAUTHORIZED(false,401, "권한이 없습니다."),
     FORBIDDEN(false, 403, "요청이 거부되었습니다."),
     BAD_REQUEST(false, 400, "잘못된 요청입니다."),
+    NOT_SUPPORT_METHOD(false,405,"해당 요청을 지원하지 않습니다."),
     /*
      * 1000 : 요청 성공
      */
