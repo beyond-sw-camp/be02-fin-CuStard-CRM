@@ -163,7 +163,7 @@ export default {
         console.error('유효하지 않은 옵션입니다.');
         return;
       }
-      axios.post(backend + "admin/coupon/create", {
+      axios.post(backend + "/admin/coupon/create", {
         selectedOption: this.selectedOption,
         dataToSend: dataToSend,
         discount: this.couponData.discount,
