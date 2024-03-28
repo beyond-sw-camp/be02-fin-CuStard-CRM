@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="3" failures="0" errors="0" time="8.642">
+  <testsuite name="LoginPage.vue" errors="0" failures="0" skipped="0" timestamp="2024-03-24T12:17:54" time="4.122" tests="3">
+    <testcase classname="LoginPage.vue 로그인 폼 입력 렌더링에 대한 테스트" name="LoginPage.vue 로그인 폼 입력 렌더링에 대한 테스트" time="0.137">
+    </testcase>
+    <testcase classname="LoginPage.vue 폼이 제출되면 로그인 메서드 호출됨" name="LoginPage.vue 폼이 제출되면 로그인 메서드 호출됨" time="0.171">
+    </testcase>
+    <testcase classname="LoginPage.vue API 실패 시, 에러 메시지를 보여준다." name="LoginPage.vue API 실패 시, 에러 메시지를 보여준다." time="0.048">
+    </testcase>
+  </testsuite>
+</testsuites>
