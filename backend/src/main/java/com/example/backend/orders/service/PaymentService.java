@@ -99,7 +99,7 @@ public class PaymentService {
                 throw new BaseException(ORDERS_VALIDATION_INCORRECT_INFOMATION);
             }
         }
-        throw new BaseException(ORDERS_VALIDATION_EMPTY_PRODUCT);
+        return null;
     }
 
 }

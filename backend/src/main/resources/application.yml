@@ -1,5 +1,6 @@
 server:
   port: 8080
+
 jwt:
   secret-key: ${JWT_SECRET}
   token:
@@ -26,7 +27,7 @@ spring:
           timeout: 5000
           writetimeout: 5000
 
-  mvc:
+
     throw-exception-if-no-handler-found: true
 
   web:
@@ -58,6 +59,7 @@ imp:
   secretKey: ${IMP_SECRET}
 
 
-#logging:
-#  level:
-#    root: debug
+
+logging:
+  level:
+    root: error

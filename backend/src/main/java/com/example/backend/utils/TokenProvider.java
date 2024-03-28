@@ -21,7 +21,7 @@ public class TokenProvider {
     @Value("${jwt.token.expired-time-ms}")
     private static Integer expiredTimeMs;
 
-    public TokenProvider(@Value("${jwt.secret-key}") String secretKey, @Value("${jwt.token.expired-time-ms}") Integer expiredTimeMs) {
+    public TokenProvider(@Value("${jwt.secret-key}") String secretKey, @Value("${jwt.token.expired-time-ms}") Integer expiredTimeMs)  {
         this.secretKey = secretKey;
         this.expiredTimeMs = expiredTimeMs;
     }
@@ -67,6 +67,8 @@ public class TokenProvider {
     // 토큰에 담겨있는 정보를 이용해서 Claims 객체를 리턴하는 메소드
     public static Claims getClaims(String token) {
 
+
+
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
@@ -75,6 +77,7 @@ public class TokenProvider {
 
         return claims;
     }
+
 
     public static Long getIdx(String token) {
         Long idx = getClaims(token).get("idx", Long.class);

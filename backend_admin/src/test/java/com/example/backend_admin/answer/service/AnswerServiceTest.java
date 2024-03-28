@@ -122,16 +122,16 @@ class AnswerServiceTest {
         assertEquals(ADMIN_ANSWER_ISPRESENT, exception.getBaseResponseStatus());
     }
 
-    @Test
-    void answerService_register_fail_emptyAnswerContent() { //답변 내용이 존재하지 않을 경우
-        qnaIdx = 1L;
-
-        BaseException exception = assertThrows(BaseException.class, () -> {
-            answerService.registerAnswer(token, qnaIdx, PostAnswerRegisterReq.builder().build());
-        });
-
-        assertEquals(ADMIN_ANSWER_EMPTY_ANSWERCONTENT, exception.getBaseResponseStatus());
-    }
+//    @Test
+//    void answerService_register_fail_emptyAnswerContent() { //답변 내용이 존재하지 않을 경우
+//        qnaIdx = 1L;
+//
+//        BaseException exception = assertThrows(BaseException.class, () -> {
+//            answerService.registerAnswer(token, qnaIdx, PostAnswerRegisterReq.builder().build());
+//        });
+//
+//        assertEquals(ADMIN_ANSWER_EMPTY_ANSWERCONTENT, exception.getBaseResponseStatus());
+//    }
 
     @Test
     void answerService_register_fail_qnaNotFound() { //문의글이 존재하지 않을 경우

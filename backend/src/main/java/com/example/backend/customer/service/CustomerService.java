@@ -58,12 +58,12 @@ public class CustomerService implements UserDetailsService {
     // Member CRUD
 
     // create
-    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq)   {
+    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq)  throws BaseException {
 
         Optional<Customer> duplicatedMember = customerRepository.findByCustomerEmail(postCustomerSignupReq.getCustomerEmail());
         // 멤버 정보를 빌드로 저장
         if (duplicatedMember.isPresent()){
-//            throw new BaseException(BaseResponseStatus.CUSTOMER_SIGNUP_DUPLICATE_EMAIL);
+            throw new BaseException(BaseResponseStatus.CUSTOMER_SIGNUP_DUPLICATE_EMAIL);
         }
         Customer customer = Customer.builder()
                 .customerEmail(postCustomerSignupReq.getCustomerEmail())

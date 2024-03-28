@@ -44,29 +44,14 @@ public class CustomerController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/customer/signup")
-    public ResponseEntity signup (@Valid @RequestBody PostCustomerSignupReq postCustomerSignupReq) throws Exception{
+    public ResponseEntity signup (@Valid @RequestBody PostCustomerSignupReq postCustomerSignupReq) {
 
-//        if (postCustomerSignupReq.getCustomerEmail() == null){
-//            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_EMAIL));
-//        }
-//        if (postCustomerSignupReq.getCustomerPwd() == null){
-//            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_PASSWORD));
-//        }
-//        if (postCustomerSignupReq.getCustomerEmail() == null){
-//            throw new BaseException(CUSTOMER_SIGNUP_EMPTY_EMAIL);
-//        }
-//        if (postCustomerSignupReq.getCustomerPwd() == null){
-//            throw new BaseException(CUSTOMER_SIGNUP_EMPTY_PASSWORD);
-//        }
-//        try {
-//            return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.signup(postCustomerSignupReq)));
-//        }catch (BaseException exception){
-//            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
-//        }
-//        throw new AuthenticationException();
-//        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-          throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-//        return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.signup(postCustomerSignupReq)));
+        try {
+            return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.signup(postCustomerSignupReq)));
+        }catch (BaseException exception){
+            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        }
+
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/customerconfirm")
@@ -83,13 +68,8 @@ public class CustomerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/customer/login")
-    public ResponseEntity login(@RequestBody PostCustomerLoginReq request){
-        if (request.getCustomerEmail() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_EMAIL));
-        }
-        if (request.getCustomerPwd() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_PASSWORD));
-        }
+    public ResponseEntity login(@Valid @RequestBody PostCustomerLoginReq request){
+
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.customerLogin(request)));
         }catch (BaseException exception){

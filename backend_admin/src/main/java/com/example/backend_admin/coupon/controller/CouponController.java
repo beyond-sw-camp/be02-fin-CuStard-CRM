@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.example.backend_admin.common.BaseResponseStatus.*;
 
 @RestController
@@ -17,16 +19,8 @@ public class CouponController {
     private final CouponService couponService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(@RequestBody PostCouponCreateReq postCouponCreateReq) {
-        if (postCouponCreateReq.getCouponCategory() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_CATEGORY));
-        }
-        if (postCouponCreateReq.getDiscount() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_DISCOUNT));
-        }
-        if (postCouponCreateReq.getAdminIdx() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_ADMINIDX));
-        }
+    public ResponseEntity create(@Valid @RequestBody PostCouponCreateReq postCouponCreateReq) {
+
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(postCouponCreateReq)));
         }catch (BaseException exception){
