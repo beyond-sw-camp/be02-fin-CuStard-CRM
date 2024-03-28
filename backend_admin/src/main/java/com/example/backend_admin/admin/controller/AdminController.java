@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class AdminController {
     private final AdminService adminService;
     private final LoginLogRespository loginLogRespository;
     @RequestMapping(method = RequestMethod.POST, value = "/signup")
-    public ResponseEntity signup (@RequestBody PostAdminSignupReq postCustomerSignupReq){
+    public ResponseEntity signup (@Valid @RequestBody PostAdminSignupReq postCustomerSignupReq){
 
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.signup(postCustomerSignupReq)));
@@ -41,7 +43,7 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/level/coupon")
-    public ResponseEntity levelCoupon(@RequestHeader(value = "Authorization") String token,@RequestBody PostAdminLevelCouponReq postAdminLevelCouponReq){
+    public ResponseEntity levelCoupon(@RequestHeader(value = "Authorization") String token,@Valid @RequestBody PostAdminLevelCouponReq postAdminLevelCouponReq){
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.levelCoupon(postAdminLevelCouponReq)));
         }catch (BaseException exception){
@@ -50,7 +52,7 @@ public class AdminController {
 
     }
     @RequestMapping(method = RequestMethod.POST, value = "/sleeper/coupon")
-    public ResponseEntity sleeperCoupon(@RequestHeader(value = "Authorization") String token, @RequestBody PostAdminSleeperCouponReq postAdminSleeperCouponReq){
+    public ResponseEntity sleeperCoupon(@RequestHeader(value = "Authorization") String token,@Valid @RequestBody PostAdminSleeperCouponReq postAdminSleeperCouponReq){
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(adminService.sleeperCoupon(postAdminSleeperCouponReq)));
         }catch (BaseException exception){

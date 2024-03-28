@@ -2,6 +2,7 @@ package com.example.backend.config;
 
 
 
+import com.example.backend.config.filter.ExceptionHandlerFilter;
 import com.example.backend.config.filter.JwtFilter;
 import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class SecurityConfig{
                     .anyRequest().permitAll();
 
             http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
-
+            http.addFilterBefore(new ExceptionHandlerFilter(), JwtFilter.class);
             http.formLogin().disable();
 
             return http.build();

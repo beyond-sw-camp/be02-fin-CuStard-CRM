@@ -18,13 +18,7 @@ public class CouponController {
     private final CouponService couponService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(@RequestHeader(value = "Authorization") String token, @RequestBody PostCouponCreateReq postCouponCreateReq) {
-        if (postCouponCreateReq.getCouponCategory() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_CATEGORY));
-        }
-        if (postCouponCreateReq.getDiscount() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_DISCOUNT));
-        }
+    public ResponseEntity create(@RequestHeader(value = "Authorization") String token,@RequestBody PostCouponCreateReq postCouponCreateReq) {
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(token, postCouponCreateReq)));
         }catch (BaseException exception){
@@ -33,6 +27,7 @@ public class CouponController {
 
     }
     @RequestMapping(method = RequestMethod.GET,value = "/read/{idx}")
+
     public ResponseEntity read(@PathVariable Long idx){
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.read(idx)));
