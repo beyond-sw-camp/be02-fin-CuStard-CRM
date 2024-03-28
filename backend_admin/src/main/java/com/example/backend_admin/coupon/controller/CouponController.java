@@ -13,29 +13,26 @@ import static com.example.backend_admin.common.BaseResponseStatus.*;
 @RestController
 @RequestMapping("/admin/coupon")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CouponController {
     private final CouponService couponService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(@RequestBody PostCouponCreateReq postCouponCreateReq) {
+    public ResponseEntity create(@RequestHeader(value = "Authorization") String token, @RequestBody PostCouponCreateReq postCouponCreateReq) {
         if (postCouponCreateReq.getCouponCategory() == null){
             return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_CATEGORY));
         }
         if (postCouponCreateReq.getDiscount() == null){
             return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_DISCOUNT));
         }
-        if (postCouponCreateReq.getAdminIdx() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(COUPON_CREATE_EMPTY_ADMINIDX));
-        }
         try {
-            return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(postCouponCreateReq)));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(token, postCouponCreateReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
 
     }
     @RequestMapping(method = RequestMethod.GET,value = "/read/{idx}")
-
     public ResponseEntity read(@PathVariable Long idx){
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.read(idx)));

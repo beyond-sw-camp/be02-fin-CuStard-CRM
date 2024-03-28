@@ -7,8 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostCouponCreateReq {
-    private Long adminIdx;
+public class PostCouponCreateReq<T> {
+    private String selectedOption;
+    private T dataToSend;
     private Integer discount;
     private Integer couponCategory;
 }

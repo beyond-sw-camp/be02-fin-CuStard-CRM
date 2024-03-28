@@ -1,9 +1,9 @@
-package com.example.backend_admin.calculate.service;
+package com.example.backend_admin.dashboard.service;
 
-import com.example.backend_admin.calculate.model.response.GetLoginTimeRes;
-import com.example.backend_admin.calculate.model.response.GetSleepAccountGrowthRateRes;
-import com.example.backend_admin.calculate.model.response.GetTodayLoginRes;
-import com.example.backend_admin.calculate.model.response.GetTodaySignupRes;
+import com.example.backend_admin.dashboard.model.dto.GetLoginTimeRes;
+import com.example.backend_admin.dashboard.model.dto.GetSleepAccountRes;
+import com.example.backend_admin.dashboard.model.dto.GetTodayLoginRes;
+import com.example.backend_admin.dashboard.model.dto.GetTodaySignupRes;
 import com.example.backend_admin.common.BaseException;
 import com.example.backend_admin.customer.repository.CustomerRepository;
 import com.example.backend_admin.log.entity.LoginLog;
@@ -11,11 +11,8 @@ import com.example.backend_admin.log.repository.LoginLogRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -43,19 +40,17 @@ public class CalculateLogService {
 
     }
 
-    public GetSleepAccountGrowthRateRes sleepAccountGrowthRate()throws BaseException{
+    public GetSleepAccountRes sleepAccountGrowthRate() throws BaseException{
         double sleepAccountGrowthRate = ((loginLogRespository.findByAcountCountToday()-loginLogRespository.findByTodaysAgoActiveCount())-(loginLogRespository.findByAcountCountDayAgo()-loginLogRespository.findByOneDaysAgoActiveCount()));
         System.out.println("현재 : " + (loginLogRespository.findByAcountCountToday()-loginLogRespository.findByTodaysAgoActiveCount()));
         System.out.println("이전 : " + (loginLogRespository.findByAcountCountDayAgo()-loginLogRespository.findByOneDaysAgoActiveCount()));
-//        System.out.println(loginLogRespository.findByAcountCountToday());
-//        System.out.println(loginLogRespository.findByTodaysAgoActiveCount());
-//        System.out.println(loginLogRespository.findByAcountCountDayAgo());
-//        System.out.println(loginLogRespository.findByOneDaysAgoActiveCount());
-        System.out.println(sleepAccountGrowthRate);
-//        sleepAccountGrowthRate = Math.round(sleepAccountGrowthRate*100)/100.0;
 
-        return GetSleepAccountGrowthRateRes.builder()
-                .sleepAccountGrowthRate(sleepAccountGrowthRate).build();
+        Long todaySleepAccount = loginLogRespository.findByAcountCountToday()-loginLogRespository.findByTodaysAgoActiveCount();
+        Long difSleepAccount = loginLogRespository.findByAcountCountDayAgo()-loginLogRespository.findByOneDaysAgoActiveCount();
+        return GetSleepAccountRes.builder()
+                .todaySleepAccount(todaySleepAccount)
+                .difSleepAccount(difSleepAccount)
+                .build();
     }
 
     public GetLoginTimeRes loginTime()throws BaseException{

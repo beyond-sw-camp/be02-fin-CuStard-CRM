@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 let backend = "http://192.168.0.52:80/api";
+// let backend = "http://localhost:8080";
 
 export const useAdminStore = defineStore("admin", {
     state: () => ({

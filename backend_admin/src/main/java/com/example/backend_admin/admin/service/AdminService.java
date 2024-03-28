@@ -1,5 +1,6 @@
 package com.example.backend_admin.admin.service;
 
+import com.example.backend_admin.coupon.service.SetCouponTargetService;
 import com.example.backend_admin.admin.model.entity.Admin;
 import com.example.backend_admin.admin.model.request.PostAdminLevelCouponReq;
 import com.example.backend_admin.admin.model.request.PostAdminLoginReq;
@@ -10,29 +11,20 @@ import com.example.backend_admin.admin.model.response.PostAdminSignupRes;
 import com.example.backend_admin.admin.model.response.PostAdminSleeperCouponRes;
 import com.example.backend_admin.admin.repository.AdminRepository;
 import com.example.backend_admin.common.BaseException;
-import com.example.backend_admin.common.BaseResponse;
-import com.example.backend_admin.common.CustomerLevel;
-import com.example.backend_admin.coupon.model.request.PostCouponCreateReq;
-import com.example.backend_admin.coupon.model.response.PostCouponCreateRes;
 import com.example.backend_admin.coupon.service.CouponService;
-import com.example.backend_admin.customer.entity.Customer;
 import com.example.backend_admin.customer.repository.CustomerRepository;
 import com.example.backend_admin.havecoupon.model.entity.request.PostHaveCouponCreateReq;
 import com.example.backend_admin.havecoupon.service.HaveCouponService;
-import com.example.backend_admin.log.entity.LoginLog;
 import com.example.backend_admin.log.repository.LoginLogRespository;
 import com.example.backend_admin.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +40,7 @@ public class AdminService implements UserDetailsService {
     private final HaveCouponService haveCouponService;
     private final CouponService couponService;
     private final LoginLogRespository loginLogRespository;
+    private final SetCouponTargetService setCouponTargetService;
 
     @Value("${jwt.token.expired-time-ms}")
     private Integer expiredTimeMs;
@@ -98,16 +91,21 @@ public class AdminService implements UserDetailsService {
 
         public String levelCoupon(PostAdminLevelCouponReq postAdminLevelCouponReq) throws BaseException{
 
-//            token = TokenProvider.replaceToken(token);
-//            Long adminIdx = TokenProvider.getIdx(token);
+            List<Integer> coupons = setCouponTargetService.extractLevelCoupon();
+            List<Long> couponIdxs = new ArrayList<>();
 
-            CustomerLevel[] level = CustomerLevel.values();
-            List<Long> couponIdx = new ArrayList<>();
+            for (Integer coupon : coupons) {
+                try {
+                    couponIdxs.add(Long.parseLong(coupon.toString()));
+                } catch (NumberFormatException e) {
+                }
+            }
+
 
             for (int i = 0; i < postAdminLevelCouponReq.getTargetList().size(); i++) {
                 for (Long idx:postAdminLevelCouponReq.getTargetList().get(i)) {
                     haveCouponService.create(PostHaveCouponCreateReq.builder()
-                            .couponIdx(i+1L)
+                            .couponIdx(couponIdxs.get(i))
                             .customerIdx(idx)
                             .count(1)
                             .build());
