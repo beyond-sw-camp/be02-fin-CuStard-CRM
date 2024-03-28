@@ -13,6 +13,7 @@ import static com.example.backend_admin.common.BaseResponseStatus.*;
 @RestController
 @RequestMapping("/admin/coupon")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CouponController {
     private final CouponService couponService;
 
