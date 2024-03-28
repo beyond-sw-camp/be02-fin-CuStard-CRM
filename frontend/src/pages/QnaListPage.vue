@@ -15,6 +15,8 @@
 
 <script>
 import axios from 'axios';
+// let backend = "http://192.168.0.53:80/api";
+let backend = "http://localhost:8080";
 
 export default {
   data() {
@@ -24,9 +26,9 @@ export default {
   },
   methods: {
     loadArticles() {
-      axios.get("http://localhost:8080/qna/list")
+      axios.get(backend + '/qna/list')
           .then((response) => {
-            this.qnas = response.data;
+            this.qnas = response.data.result;
           })
           .catch((error) => {
             console.error("데이터 로드 실패:", error);

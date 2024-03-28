@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs "nodejs-20.10.0"
+    }
+    environment {
+        IMAGE_TAG = "hyeon28/custard_admin_frontend:latest"
+    }
+
+
+    stages {
+        stage('git clone') {
+            steps {
+                git branch: 'dev', url: 'https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('frontend_admin/') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Delete Exist file') {
+            steps {
+                script {
+                    sh 'rm -rf /var/lib/jenkins/workspace/admin-frontend/dist'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('frontend_admin') {
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Archive Dist') {
+            steps {
+                script {
+                    dir('frontend_admin/dist') {
+                        sh 'tar -cvf dist.tar ./*'
+                        sh 'mv dist.tar ../'
+                    }
+                }
+            }
+        }
+
+       // Docker 빌드, 푸쉬
+        stage('Build Docker') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'hyeon', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo '$DOCKER_PASSWORD' | docker login -u '$DOCKER_USERNAME' --password-stdin"
+                    }
+                    dir('frontend_admin') {
+                        sh "docker build -t ${IMAGE_TAG} ."
+                        sh "docker push ${IMAGE_TAG}"
+                    }
+                }
+            }
+        }
+
+        //최신 이미지로 디플로이먼트 재실행
+        stage('Update Kubernetes Deployment') {
+            steps {
+                script {
+                    dir('frontend_admin') {
+                        sh "sudo kubectl apply -f frontend-admin-deployment.yml"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -35,6 +35,8 @@
 
 <script>
 import axios from 'axios';
+let backend = "http://192.168.0.52:80/api";
+// let backend = "http://localhost:8080";
 
 export default {
   data() {
@@ -48,10 +50,10 @@ export default {
   },
   methods: {
     fetchQnaData() {
-      axios.post(`http://localhost:8000/admin/qna/read/${this.$route.params.idx}`)
+      axios.post(backend + `/admin/qna/read/${this.$route.params.idx}`)
           .then(response => {
-              if (response.status === 200) {
-              this.qna = response.data;
+              if (response.data.code === 1000) {
+              this.qna = response.data.result;
             } else {
               alert("오류");
             }
@@ -65,12 +67,12 @@ export default {
         answerContent: this.answerContent
       };
 
-      axios.post(`http://localhost:8000/admin/qna/answer/${this.$route.params.idx}`, requestData, {
+      axios.post(backend + `/admin/qna/answer/${this.$route.params.idx}`, requestData, {
         headers:{
           Authorization: localStorage.getItem("accessToken")
         }
       }).then(response => {
-            if (response.status === 200) {
+            if (response.data.code === 1000) {
               alert("답변이 작성되었습니다.");
             } else {
               alert("답변이 작성되지 않았습니다.");

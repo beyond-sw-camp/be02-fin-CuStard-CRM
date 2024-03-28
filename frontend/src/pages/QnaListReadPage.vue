@@ -33,6 +33,8 @@
 
 <script>
 import axios from 'axios';
+// let backend = "http://192.168.0.53:80/api";
+let backend = "http://localhost:8080";
 
 export default {
   data() {
@@ -44,10 +46,10 @@ export default {
   },
   methods: {
     submitPassword() {
-      axios.post(`http://localhost:8080/qna/read/${this.$route.params.idx}`, { qnaPwd: this.password })
+      axios.post(backend + "/qna/read/"+ `${this.$route.params.idx}`, { qnaPwd: this.password })
           .then(response => {
-            if (response.status === 200) {
-              this.qna = response.data;
+            if (response.data.code === 1000) {
+              this.qna = response.data.result;
               this.passwordEntered = true;
             } else {
               // 비밀번호가 틀렸을 때 처리

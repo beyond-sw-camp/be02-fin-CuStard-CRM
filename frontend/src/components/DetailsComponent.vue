@@ -46,6 +46,9 @@
 import axios from 'axios';
 import {useRoute} from "vue-router";
 
+// let backend = "http://192.168.0.53:80/api";
+let backend = "http://localhost:8080";
+
 export default {
   // props: {
   //   id: {
@@ -66,12 +69,12 @@ export default {
       console.log(route.params.productIdx);
       this.productIdx = route.params.productIdx;
 
-      const response = await axios.get(`http://localhost:8080/product/read/${this.productIdx}`, {
+      const response = await axios.get(backend + `/product/read/${this.productIdx}`, {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
         }});
       console.log(response);
-      this.productDetail = response.data;
+      this.productDetail = response.data.result;
       console.log(this.productDetail);
 
       this.customData.push({"id": this.productIdx, "name": this.productDetail.productName, "price":this.productDetail.productPrice});
@@ -111,7 +114,7 @@ export default {
             if (rsp.success) {
               // 결제 성공 시 로직,
               console.log(rsp.imp_uid);
-              let response = await axios.get("http://localhost:8080/orders/validation?impUid=" + rsp.imp_uid, {
+              let response = await axios.get(backend + "/orders/validation?impUid=" + rsp.imp_uid, {
                     headers: {
                       Authorization: localStorage.getItem("accessToken"),
                     },

@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "maven-3.9.5"
+    }
+    environment {
+        IMAGE_TAG = "hyeon28/custard_backend:latest"
+    }
+
+    stages {
+
+        stage('git clone') {
+            steps {
+                git branch: 'dev', url: 'https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('backend') {
+                    sh 'mvn -B -DskipTests clean package'
+                }
+            }
+        }
+        // 테스트 코드 실행
+        stage('Unit Test'){
+            steps{
+                 dir('backend'){
+                     script {
+                         def testResult = sh(script: 'mvn test', returnStatus: true)
+                         if (testResult == 0) {
+                             echo 'Unit tests passed. Proceeding to the next stage.'
+                         } else {
+                           error 'Unit tests failed. Aborting the pipeline.'
+                         }
+                     }
+                 }
+            }
+        }
+
+        // Docker 빌드, 푸쉬
+        stage('Build Docker') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'hyeon', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo '$DOCKER_PASSWORD' | docker login -u '$DOCKER_USERNAME' --password-stdin"
+                    }
+                    dir('backend_admin') {
+                        sh "docker build -t ${IMAGE_TAG} ."
+                        sh "docker push ${IMAGE_TAG}"
+                    }
+                }
+
+            }
+        }
+
+        //최신 이미지로 디플로이먼트 재실행
+        stage('Update Kubernetes Deployment') {
+            steps {
+                script {
+                    dir('backend_admin') {
+                        sh "sudo kubectl apply -f backend-deployment.yml"
+                    }
+                }
+            }
+        }
+    }
+}

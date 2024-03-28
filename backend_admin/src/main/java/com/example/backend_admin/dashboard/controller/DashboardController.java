@@ -9,13 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/admin")
+@RequestMapping("/")
 public class DashboardController {
     private final DashboardService dashboardService;
 

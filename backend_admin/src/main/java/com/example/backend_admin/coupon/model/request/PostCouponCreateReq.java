@@ -9,8 +9,11 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostCouponCreateReq {
-    private Long adminIdx;
+public class PostCouponCreateReq<T> {
+    @NotBlank
+    private String selectedOption;
+    @NotBlank
+    private T dataToSend;
     @NotBlank
     private Integer discount;
     @NotBlank

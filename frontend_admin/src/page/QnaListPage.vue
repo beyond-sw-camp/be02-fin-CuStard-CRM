@@ -68,6 +68,8 @@
 
 <script>
 import axios from 'axios';
+let backend = "http://192.168.0.52:80/api";
+// let backend = "http://localhost:8080";
 
 export default {
   data() {
@@ -78,10 +80,10 @@ export default {
   },
   methods: {
     loadArticles() {
-      axios.get("http://localhost:8000/admin/qna/list")
+      axios.get(backend + "/admin/qna/list")
           .then((response) => {
-            this.qnasWaiting = response.data.filter(qna => !qna.answerContent);
-            this.qnasAnswered = response.data.filter(qna => qna.answerContent);
+            this.qnasWaiting = response.data.result.filter(qna => !qna.answerContent);
+            this.qnasAnswered = response.data.result.filter(qna => qna.answerContent);
           })
           .catch((error) => {
             console.error("데이터 로드 실패:", error);

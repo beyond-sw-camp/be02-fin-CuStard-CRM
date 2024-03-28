@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const backend = "http://localhost:8000";
+let backend = "http://192.168.0.52:80/api";
+// let backend = "http://localhost:8080";
 
 export const useAdminStore = defineStore("admin", {
     state: () => ({
@@ -13,11 +14,11 @@ export const useAdminStore = defineStore("admin", {
             this.isLoading = true;
             try {
                 let response = await axios.post(`${backend}/admin/login`, adminLogin);
-                if (response.status === 200 && response.data.accessToken) {
+                if (response.data.code === 1000 && response.data.result.accessToken) {
                     this.isLoggedIn = true;
                     return {
-                        accessToken: response.data.accessToken,
-                        adminIdx: response.data.idx
+                        accessToken: response.data.result.accessToken,
+                        adminIdx: response.data.result.idx
                     };
                 } else {
                     throw new Error("로그인 정보가 올바르지 않습니다.");

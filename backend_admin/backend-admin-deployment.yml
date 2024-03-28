@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custard-backend-admin-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ver: custard-backend-admin-v1
+  template:
+    metadata:
+      name: pod2
+      labels:
+        ver: custard-backend-admin-v1
+    spec:
+      containers:
+        - name: container
+          image: hyeon28/custard_admin_backend:VERSION
+          envFrom:
+            - configMapRef:
+                name: backend-config
+      terminationGracePeriodSeconds: 0

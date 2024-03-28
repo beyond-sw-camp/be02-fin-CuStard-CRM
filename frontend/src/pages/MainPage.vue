@@ -31,6 +31,10 @@ import axios from 'axios';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 
+// let backend = "http://192.168.0.53:80/api";
+let backend = "http://localhost:8080";
+
+
 export default defineComponent({
   name: 'CategoryCarousels',
 
@@ -46,8 +50,8 @@ export default defineComponent({
 
     const fetchCategorySlides = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/product/list');
-        const products = response.data;
+        const response = await axios.get(backend + "/product/list");
+        const products = response.data.result;
         // 카테고리 별로 제품을 그룹화
         products.forEach(product => {
           if (!categoriesWithSlides.value[product.category]) {
@@ -57,7 +61,7 @@ export default defineComponent({
         });
       } catch (error) {
         console.error('Error fetching categories and products:', error);
-      }
+      } 
     };
 
     // 카테고리 번호를 이름으로 변환

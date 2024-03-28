@@ -1,12 +1,12 @@
 server:
-  port: 8000
+  port: 8080
 jwt:
   secret-key: ${JWT_SECRET}
   token:
     expired-time-ms: ${JWT_EXPIRED_TIME}
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
     url: ${DB_URL}
     username: ${USER_NAME}
     password: ${PASSWORD}
@@ -34,6 +34,7 @@ spring:
         format_sql: true
     show-sql: true
     database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 cloud:
   aws:
     s3:

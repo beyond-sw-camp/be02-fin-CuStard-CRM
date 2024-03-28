@@ -20,6 +20,9 @@
 <script>
 import axios from 'axios';
 
+// let backend = "http://192.168.0.53:80/api";
+let backend = "http://localhost:8080";
+
 export default {
   data() {
     return {
@@ -33,7 +36,7 @@ export default {
     submitForm() {
       const accessToken = localStorage.getItem('accessToken');
       console.log(accessToken)
-      axios.post("http://localhost:8080/qna/register", {
+      axios.post(backend + '/qna/register', {
             title: this.title,
             qnaContent: this.content,
             qnaPwd: this.password   },{

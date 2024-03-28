@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 import static com.example.backend_admin.common.BaseResponseStatus.*;
 
 @RestController
@@ -19,10 +17,9 @@ public class CouponController {
     private final CouponService couponService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity create(@Valid @RequestBody PostCouponCreateReq postCouponCreateReq) {
-
+    public ResponseEntity create(@RequestHeader(value = "Authorization") String token,@RequestBody PostCouponCreateReq postCouponCreateReq) {
         try {
-            return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(postCouponCreateReq)));
+            return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(token, postCouponCreateReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }

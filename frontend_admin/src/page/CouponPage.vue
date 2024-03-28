@@ -20,8 +20,8 @@
                       <thead>
                       <tr>
                         <th>번호</th>
-                        <th> 쿠폰 카테고리 </th>
-                        <th> 할인율 </th>
+                        <th> 쿠폰 카테고리</th>
+                        <th> 할인율</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -29,7 +29,6 @@
                         <td>{{ coupon.idx }}</td>
                         <td>{{ getCategoryName(coupon.couponCategory) }}</td>
                         <td>{{ coupon.discount }}%</td>
-<!--                        <td>{{ coupon.getHaveCouponBaseResList }}</td>-->
                       </tr>
                       </tbody>
                     </table>
@@ -40,39 +39,61 @@
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">쿠폰 발급 </h4>
-                  <form class="forms-sample">
+                  <h4 class="card-title">쿠폰 발급</h4>
+                  <!-- 동적으로 변경되는 폼 -->
+                  <form class="forms-sample" @submit.prevent="submitCoupon">
                     <div class="form-group">
-                      <label for="exampleSelectGender">발급대상</label>
-                      <select class="form-control" id="exampleSelectGender">
-                        <option>DIAMOND</option>
-                        <option>PLATINUM</option>
-                        <option>GOLD</option>
-                        <option>SILVER</option>
-                        <option>BRONZE</option>
-                        <option>NEWBIE</option>
+                      <label for="selectionOption">발급 대상 선택</label>
+                      <select class="form-control" id="selectionOption" v-model="selectedOption"
+                              @change="updateCategoryOptions">
+                        <option value="">발급 옵션을 선택하세요</option>
+                        <option value="grade">고객 등급</option>
+                        <option value="money">누적 구매 금액</option>
+                        <option value="sleeper">휴면 기간</option>
                       </select>
                     </div>
+                    <!-- 발급 대상에 따라 동적으로 나타나는 폼 -->
+                    <div v-if="selectedOption === 'grade'" class="form-group">
+                      <label for="selectGrade">고객 등급</label>
+                      <select class="form-control" id="selectGrade" v-model="couponData.customerGrade">
+                        <option value="DIAMOND">다이아몬드</option>
+                        <option value="PLATINUM">플래티넘</option>
+                        <option value="GOLD">골드</option>
+                        <option value="SILVER">실버</option>
+                        <option value="BRONZE">브론즈</option>
+                        <option value="NEWBIE">신규고객</option>
+                      </select>
+                    </div>
+                    <div v-if="selectedOption === 'money'" class="form-group">
+                      <label for="selectPurchase">누적 구매 금액</label>
+                      <input type="text" class="form-control" id="selectMoney" v-model="couponData.purchaseAmount"
+                             placeholder="누적 구매 금액">
+                    </div>
+                    <div v-if="selectedOption === 'sleeper'" class="form-group">
+                      <label for="selectPurchase">휴면 기간</label>
+                      <input type="text" class="form-control" id="selectSleeper" v-model="couponData.dormantPeriod"
+                             placeholder="휴면 기간">
+                    </div>
                     <div class="form-group">
-                      <label for="exampleSelectGender">Category</label>
-                      <select class="form-control" id="exampleSelectGender">
+                      <label for="selectCategory">Category</label>
+                      <select class="form-control" id="selectCategory" v-model="couponData.category">
+                        <option value="">카테고리 선택</option>
                         <option>패션</option>
                         <option>뷰티</option>
                         <option>가전</option>
                         <option>식품</option>
                         <option>스포츠/레저</option>
-
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName1">할인율</label>
-                      <input type="text" class="form-control" id="exampleInputName1" placeholder="할인율">
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="할인율"
+                             v-model="couponData.discount">
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-dark">Cancel</button>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -86,38 +107,40 @@
 
 <script>
 import axios from 'axios';
-
+let backend = "http://192.168.0.52:80/api";
 export default {
   data() {
     return {
       coupons: [],
+      selectedOption: '',
+      couponData: {
+        customerGrade: '',
+        purchaseAmount: '',
+        dormantPeriod: '',
+        category: '',
+        discount: ''
+      }
     };
   },
   methods: {
     fetchCoupon() {
-      axios.get("http://localhost:8080/coupon/list")
+      axios.get(backend + "/admin/coupon/list")
           .then(response => {
-            console.log(response);
-            this.coupons = response.data;
-            console.log(this.coupons); // 데이터 확인
+            this.coupons = response.data.result;
           })
           .catch(error => {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
           });
     },
-
     getCategoryName(couponCategory) {
-      if (couponCategory === 1) {
-        return '의류';
-      } else if (couponCategory === 2) {
-        return '뷰티';
-      } else if (couponCategory === 3) {
-        return '식품';
-      } else if (couponCategory === 4) {
-        return '스포츠/레저';
-      } else if (couponCategory === 5) {
-        return '가전';
-      }
+      const categoryMapping = {
+        1: '의류',
+        2: '뷰티',
+        3: '식품',
+        4: '스포츠/레저',
+        5: '가전'
+      };
+      return categoryMapping[couponCategory];
     },
     submitCoupon() {
       const categoryMapping = {
@@ -125,28 +148,48 @@ export default {
         '뷰티': 2,
         '가전': 3,
         '식품': 4,
-        '스포츠/레저': 5,
+        '스포츠/레저': 5
       };
 
-      // 선택된 카테고리 값을 백엔드가 요구하는 숫자 코드로 변환
       const couponCategory = categoryMapping[this.couponData.category];
-
-      axios.post("http://localhost:8080/coupon/create", {
-        // adminIdx: 1, // 예시 값, 실제로는 적절한 값을 사용해야 합니다.
+      let dataToSend;
+      if (this.selectedOption === 'grade') {
+        dataToSend = this.couponData.customerGrade;
+      } else if (this.selectedOption === 'money') {
+        dataToSend= this.couponData.purchaseAmount;
+      } else if (this.selectedOption === 'sleeper') {
+        dataToSend = this.couponData.dormantPeriod;
+      } else {
+        console.error('유효하지 않은 옵션입니다.');
+        return;
+      }
+      axios.post(backend + "/admin/coupon/create", {
+        selectedOption: this.selectedOption,
+        dataToSend: dataToSend,
         discount: this.couponData.discount,
-        couponCategory: couponCategory, // 변환된 카테고리 코드 사용
+        couponCategory: couponCategory
+      },{
+        headers:{
+          Authorization: localStorage.getItem("accessToken")
+        }
+      }).then(response => {
+        console.log(response);
+        alert('쿠폰이 성공적으로 생성되었습니다.');
       })
-          .then(response => {
-            console.log(response);
-            alert('쿠폰이 성공적으로 생성되었습니다.');
-          })
           .catch(error => {
             console.error('쿠폰 생성 중 오류가 발생했습니다:', error);
           });
     },
-
-
-
+    updateCategoryOptions() {
+      // Reset couponData when the selection changes
+      this.couponData = {
+        customerGrade: '',
+        purchaseAmount: '',
+        dormantPeriod: '',
+        category: '',
+        discount: ''
+      };
+    }
   },
   mounted() {
     this.fetchCoupon();
@@ -155,5 +198,4 @@ export default {
 </script>
 
 <style>
-
 </style>
