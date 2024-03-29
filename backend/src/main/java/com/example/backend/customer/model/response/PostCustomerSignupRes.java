@@ -10,9 +10,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 public class PostCustomerSignupRes {
-    private Boolean isSuccess;
-    private Long code;
-    private String message;
-    private Map<String, String > result;
+    private Long idx;
+    private String customerEmail;
 
 }

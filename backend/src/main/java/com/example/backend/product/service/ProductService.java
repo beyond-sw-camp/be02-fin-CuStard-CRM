@@ -2,6 +2,7 @@ package com.example.backend.product.service;
 
 
 import com.example.backend.common.BaseException;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.customer.model.entity.Customer;
 import com.example.backend.customer.repository.CustomerRepository;
 import com.example.backend.log.entity.ProductDetailLog;
