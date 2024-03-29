@@ -58,44 +58,36 @@ public class CustomerService implements UserDetailsService {
     // Member CRUD
 
     // create
-    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq)  throws BaseException {
+    public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq) throws BaseException {
 
         Optional<Customer> duplicatedMember = customerRepository.findByCustomerEmail(postCustomerSignupReq.getCustomerEmail());
         // 멤버 정보를 빌드로 저장
         if (duplicatedMember.isPresent()){
             throw new BaseException(BaseResponseStatus.CUSTOMER_SIGNUP_DUPLICATE_EMAIL);
         }
-        Customer customer = Customer.builder()
+;
+
+        Customer customer = customerRepository.save(Customer.builder()
                 .customerEmail(postCustomerSignupReq.getCustomerEmail())
                 .customerPwd(passwordEncoder.encode(postCustomerSignupReq.getCustomerPwd()))
                 .authority("CUSTOMER")
                 .level(NEWBIE)
                 .totalAmount(0)
                 .status(false)
-
                 .name(postCustomerSignupReq.getName())
                 .gender(postCustomerSignupReq.getGender())
                 .address(postCustomerSignupReq.getAddress())
                 .age(postCustomerSignupReq.getAge())
+                .build());
 
+        customerEmailVerifyService.sendCustomerMail(customer);
+
+
+
+        return PostCustomerSignupRes.builder()
+                .idx(customer.getIdx())
+                .customerEmail(customer.getCustomerEmail())
                 .build();
-
-        customerRepository.save(customer);
-
-        Customer customer1 = customerRepository.findByCustomerEmail(customer.getCustomerEmail()).get();
-
-        customerEmailVerifyService.sendCustomerMail(customer1);
-        Map<String, String> result = new HashMap<>();
-        result.put("customerEmail", customer.getCustomerEmail());
-
-        PostCustomerSignupRes postCustomerSignupRes = PostCustomerSignupRes.builder()
-                .isSuccess(true)
-                .code(1000L)
-                .message("회원가입 성공.")
-                .result(result)
-                .build();
-
-        return postCustomerSignupRes;
 
 
     }
@@ -114,9 +106,7 @@ public class CustomerService implements UserDetailsService {
                 String now = LocalDateTime.now().toString();
                 System.out.println(now);
                 System.out.println(now.split("T")[0]);
-
                 member.get().setLastLogin(now.split("T")[0]);
-
                 customerRepository.save(member.get());
                 return postCustomerLoginRes;
             } else {
