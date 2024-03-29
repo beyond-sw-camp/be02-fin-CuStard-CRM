@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/qna")
@@ -18,7 +20,7 @@ public class AnswerController {
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/answer/{idx}")
-    public ResponseEntity registerAnswer(@RequestHeader(value = "Authorization") String token, @PathVariable Long idx, @RequestBody PostAnswerRegisterReq postAnswerRegisterReq) {
+    public ResponseEntity registerAnswer(@RequestHeader(value = "Authorization") String token, @PathVariable Long idx,@Valid @RequestBody PostAnswerRegisterReq postAnswerRegisterReq) {
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(answerService.registerAnswer(token, idx, postAnswerRegisterReq)));
         } catch (BaseException exception) {

@@ -21,6 +21,8 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
 
+import static com.example.backend.common.BaseResponseStatus.CUSTOMER_READ_FAIL;
+
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +60,7 @@ public class OrdersService {
 
             return getOrdersCreateRes;
         }
-        return null;
+        throw new BaseException(CUSTOMER_READ_FAIL);
     }
 
 }

@@ -29,33 +29,18 @@ public class BatchScheduler {
     private final BatchService batchService;
     private final LoginLogRespository loginLogRespository;
 
-//    @Scheduled(cron = "40 * * * * *")
+    @Scheduled(cron = "* * 4 * * *")
     public void batch() throws MessagingException {
         // 읽는거
-//        batchService.batch();
-//        List<Long> loginLogList = loginLogRespository.findBySleeperCouponTargetList();
-//
-//        for (Long idx:loginLogList) {
-//            System.out.println(idx);
-//        }
 
-
-//        List<Long> loginLogList = loginLogRespository.findByNewbieList();
-//
-//        for (Long idx:loginLogList) {
-//            System.out.println(idx);
-//        }
         SleeperCouponReaderRes sleeperCouponReaderRes = batchService.sleeperCouponReader();
         LevelCouponReaderRes levelCouponReaderRes = batchService.levelCouponReader();
         System.out.println("Reader실행");
 
 
-        // 처리
 
         System.out.println("Processor실행");
 
-
-        // 결과 저장
         batchService.sleeperCouponWriter(SleeperCouponWriterReq.builder()
                 .targetList(sleeperCouponReaderRes.getTargetList())
                 .build());

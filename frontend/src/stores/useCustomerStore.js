@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { toRaw } from "vue";
 
-const backend = "http://192.168.0.53:80/api";
-// const backend = "http://localhost:8080";
+// const backend = "http://192.168.0.53:80/api";
+const backend = "http://localhost:8080";
 
 export const useCustomerStore = defineStore("customer", {
   state: () => ({ isLoading: false, isLoggedIn: false }),

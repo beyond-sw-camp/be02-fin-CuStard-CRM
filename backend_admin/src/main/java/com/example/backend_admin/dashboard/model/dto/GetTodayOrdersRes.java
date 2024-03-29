@@ -1,4 +1,4 @@
-package com.example.backend_admin.calculate.model.response;
+package com.example.backend_admin.dashboard.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;

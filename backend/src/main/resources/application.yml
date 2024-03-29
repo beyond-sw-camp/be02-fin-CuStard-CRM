@@ -1,5 +1,6 @@
 server:
   port: 8080
+
 jwt:
   secret-key: ${JWT_SECRET}
   token:
@@ -25,6 +26,13 @@ spring:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
+
+
+    throw-exception-if-no-handler-found: true
+
+  web:
+    resources:
+      add-mappings: false
 
   jpa:
     hibernate:
@@ -53,3 +61,7 @@ imp:
   secretKey: ${IMP_SECRET}
 
 
+
+logging:
+  level:
+    root: error

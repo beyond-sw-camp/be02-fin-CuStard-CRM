@@ -9,6 +9,8 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.io.IOException;
 
 import static com.example.backend.common.BaseResponseStatus.*;
@@ -22,14 +24,9 @@ public class OrdersController {
     private final PaymentService paymentService;
 
     @RequestMapping(method = RequestMethod.GET,value = "/validation")
-    public ResponseEntity ordersCreate(@RequestHeader(value = "Authorization") String token, String impUid) throws IamportResponseException, IOException,BaseException {
+    public ResponseEntity ordersCreate(@RequestHeader(value = "Authorization") String token,@Valid String impUid) throws IamportResponseException, IOException,BaseException {
             //TODO: 프론트 연결 후 유효성 검증 가능(주석 해제)
-        if (token == null) {
-            ResponseEntity.ok().body(BaseResponse.failResponse(ORDERS_VALIDATION_AUTHENTICATION_FAIL));
-        }
-        if (impUid == null) {
-            ResponseEntity.ok().body(BaseResponse.failResponse(ORDERS_VALIDATION_EMPTY_IMPUID));
-        }
+
         try {
             if (paymentService.paymentValidation(impUid)) {
                 return ResponseEntity.ok().body(BaseResponse.successResponse(ordersService.createOrder(token, impUid)));
@@ -37,7 +34,7 @@ public class OrdersController {
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
-        return ResponseEntity.ok().body(BaseResponse.failResponse(ORDERS_VALIDATION_INCORRECT_INFOMATION));
+        return null;
 
     }
 }

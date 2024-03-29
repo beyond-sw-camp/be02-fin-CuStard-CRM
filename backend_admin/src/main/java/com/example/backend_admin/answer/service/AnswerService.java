@@ -28,7 +28,7 @@ public class AnswerService {
     public PostAnswerRegisterRes registerAnswer(String token, Long qnaIdx, PostAnswerRegisterReq postAnswerRegisterReq) throws BaseException {
         Optional<Answer> searchdup = answerRepository.findByQnaIdx(qnaIdx); //이미 작성된 답변이 있을 경우
         if (searchdup.isEmpty()) {
-            if (postAnswerRegisterReq.getAnswerContent() != null) {
+
                 PostAnswerRegisterRes postAnswerRegisterRes = null;
                 Optional<Qna> result = qnaRepository.findById(qnaIdx);
                 if (result.isPresent()) {
@@ -59,9 +59,6 @@ public class AnswerService {
                     throw new BaseException(ADMIN_ANSWER_NOT_FOUND);
                 }
                 return postAnswerRegisterRes;
-            } else {
-                throw new BaseException(ADMIN_ANSWER_EMPTY_ANSWERCONTENT);
-            }
         } else {
             throw new BaseException(ADMIN_ANSWER_ISPRESENT);
         }

@@ -31,8 +31,8 @@ import axios from 'axios';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 
-let backend = "http://192.168.0.53:80/api";
-// let backend = "http://localhost:8080";
+// let backend = "http://192.168.0.53:80/api";
+let backend = "http://localhost:8080";
 
 
 export default defineComponent({
@@ -48,7 +48,6 @@ export default defineComponent({
   setup() {
     const categoriesWithSlides = ref({});
 
-    //슬라이드에 제품들을 불러오기
     const fetchCategorySlides = async () => {
       try {
         const response = await axios.get(backend + "/product/list");

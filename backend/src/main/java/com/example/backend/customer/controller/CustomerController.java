@@ -5,6 +5,7 @@ package com.example.backend.customer.controller;
 
 import com.example.backend.common.BaseException;
 import com.example.backend.common.BaseResponse;
+import com.example.backend.common.BaseResponseStatus;
 import com.example.backend.customer.model.request.GetEmailConfirmReq;
 import com.example.backend.customer.model.request.PostCustomerLoginReq;
 import com.example.backend.customer.model.request.PostCustomerSignupReq;
@@ -13,12 +14,23 @@ import com.example.backend.customer.model.response.PostCustomerSignupRes;
 import com.example.backend.customer.service.CustomerEmailVerifyService;
 import com.example.backend.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.authenticator.SpnegoAuthenticator;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.view.RedirectView;
 
-import static com.example.backend.common.BaseResponseStatus.*;
+import javax.naming.AuthenticationException;
+import javax.validation.Valid;
+
+import java.nio.file.AccessDeniedException;
+
+import static com.example.backend.common.BaseResponseStatus.CUSTOMER_SIGNUP_EMPTY_EMAIL;
+import static com.example.backend.common.BaseResponseStatus.CUSTOMER_SIGNUP_EMPTY_PASSWORD;
 
 
 @RestController
@@ -32,19 +44,14 @@ public class CustomerController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/customer/signup")
-    public ResponseEntity signup (@RequestBody PostCustomerSignupReq postCustomerSignupReq){
+    public ResponseEntity signup (@Valid @RequestBody PostCustomerSignupReq postCustomerSignupReq) {
 
-        if (postCustomerSignupReq.getCustomerEmail() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_EMAIL));
-        }
-        if (postCustomerSignupReq.getCustomerPwd() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_PASSWORD));
-        }
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.signup(postCustomerSignupReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
+
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/customerconfirm")
@@ -61,13 +68,8 @@ public class CustomerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/customer/login")
-    public ResponseEntity login(@RequestBody PostCustomerLoginReq request){
-        if (request.getCustomerEmail() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_EMAIL));
-        }
-        if (request.getCustomerPwd() == null){
-            return ResponseEntity.ok().body(BaseResponse.failResponse(CUSTOMER_SIGNUP_EMPTY_PASSWORD));
-        }
+    public ResponseEntity login(@Valid @RequestBody PostCustomerLoginReq request){
+
         try {
             return ResponseEntity.ok().body(BaseResponse.successResponse(customerService.customerLogin(request)));
         }catch (BaseException exception){

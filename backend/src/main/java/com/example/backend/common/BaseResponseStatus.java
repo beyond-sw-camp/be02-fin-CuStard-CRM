@@ -10,9 +10,14 @@ public enum BaseResponseStatus {
 
     INTERNAL_SERVER_ERROR(false,500, "알 수 없는 문제가 발생하였습니다."),
     NOT_FOUND(false,404, "페이지를 찾을 수 없습니다."),
-    UNAUTHORIZED(false,401, "권한이 없습니다."),
-    FORBIDDEN(false, 403, "요청이 거부되었습니다."),
+    UNAUTHORIZED(false,401, "로그인을 해주세요."),
+    FORBIDDEN(false, 403, "해당 요청을 수행할 권한이 없습니다."),
     BAD_REQUEST(false, 400, "잘못된 요청입니다."),
+    NOT_SUPPORT_METHOD(false,405,"해당 요청을 지원하지 않습니다."),
+    UNEXPECTED_ERROR(false,999, "알 수 없는 에러가 발생하였습니다."),
+
+    NOT_AVAILABLE_EMAIL(false,1501,"이메일을 올바르게 입력해주세요."),
+    NOT_AVALIABLE_PASSWORD(false,1502,"비밀번호를 올바르게 입력해주세요."),
     /*
      * 1000 : 요청 성공
      */
@@ -23,7 +28,7 @@ public enum BaseResponseStatus {
     /*
      * 2000 : Customer
      */
-    CUSTOMER_NOTFOUND(false, HttpStatus.NOT_FOUND.value(), "잘못된 요청."),
+
     CUSTOMER_SIGNUP_EMPTY_EMAIL(false,2001, "이메일을 입력해주세요"),
     CUSTOMER_SIGNUP_EMPTY_PASSWORD(false, 2002, "비밀번호를 입력해주세요."),
     CUSTOMER_CONFIRM_INCOMPLETE_AUTHENTICATION_EMAIL(false,2003, "이메일 인증을 해주세요."),
