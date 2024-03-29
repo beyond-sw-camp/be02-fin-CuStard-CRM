@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { toRaw } from "vue";
 
-// const backend = "http://192.168.0.53:80/api";
-const backend = "http://localhost:8080";
+let backend = "http://192.168.0.31:80/api";
+// const backend = "http://localhost:8080";
 
 export const useCustomerStore = defineStore("customer", {
   state: () => ({ isLoading: false, isLoggedIn: false }),
@@ -20,8 +20,8 @@ export const useCustomerStore = defineStore("customer", {
 
           this.isLoggedIn = true;
           console.log(response.data.result.idx);
-          sessionStorage.setItem("customerIdx", response.data.idx)
-  
+          sessionStorage.setItem("customerIdx", response.data.result.idx)
+
           return true;
         }
       } catch (e) {

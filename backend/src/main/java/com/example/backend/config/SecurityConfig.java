@@ -40,6 +40,7 @@ public class SecurityConfig{
                     .antMatchers("/test/customer").hasRole("MEMBER")
                     .antMatchers("/orders").permitAll()
                     .antMatchers("/**").permitAll()
+                    .antMatchers("/coupon").permitAll()
                     .anyRequest().permitAll();
 
             http.addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);

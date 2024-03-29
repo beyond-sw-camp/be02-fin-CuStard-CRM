@@ -59,7 +59,8 @@
 import { ref, computed } from 'vue';
 // import { useRouter } from 'vue-router';
 import axios from 'axios';
-let backend = "http://192.168.0.53:8080"
+let backend = "http://192.168.0.31:80/api";
+// let backend = "http://localhost:8080";
 
 const coupons = ref([]);
 const showDropdown = ref(false);
@@ -100,7 +101,7 @@ function getCategoryName(categoryId) {
 
     try {
       const response = await axios.get(url);
-      coupons.value = response.data; // 응답 데이터 저장
+      coupons.value = response.data.result; // 응답 데이터 저장
       showDropdown.value = true; // 드롭다운 표시
 
       console.log(coupons);
@@ -113,6 +114,8 @@ function getCategoryName(categoryId) {
 const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("customerIdx");
+  localStorage.removeItem("notified");
+  localStorage.setItem('notified', 'false');
   location.reload();
 };
 

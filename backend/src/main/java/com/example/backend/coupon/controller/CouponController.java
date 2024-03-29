@@ -1,6 +1,7 @@
 package com.example.backend.coupon.controller;
 
 import com.example.backend.common.BaseResponse;
+import com.example.backend.coupon.model.request.CouponPushNoti;
 import com.example.backend.coupon.model.request.PostCouponCreateReq;
 import com.example.backend.coupon.service.CouponService;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,10 @@ public class CouponController {
     public ResponseEntity list(){
         return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.list()));
     }
-    public void creat(){
-
+    @RequestMapping(method = RequestMethod.POST, value = "/pushnoti")
+    public ResponseEntity couponPushnoti(@RequestBody CouponPushNoti couponPushNoti){
+        return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.couponPushNoti(couponPushNoti)));
     }
+
 
 }

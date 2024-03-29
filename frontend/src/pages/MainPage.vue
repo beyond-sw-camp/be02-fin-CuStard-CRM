@@ -31,8 +31,8 @@ import axios from 'axios';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 
-// let backend = "http://192.168.0.53:80/api";
-let backend = "http://localhost:8080";
+let backend = "http://192.168.0.31:80/api";
+// let backend = "http://localhost:8080";
 
 
 export default defineComponent({
@@ -61,7 +61,7 @@ export default defineComponent({
         });
       } catch (error) {
         console.error('Error fetching categories and products:', error);
-      } 
+      }
     };
 
     // 카테고리 번호를 이름으로 변환
