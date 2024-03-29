@@ -114,7 +114,9 @@ public class CustomerService implements UserDetailsService {
                 String now = LocalDateTime.now().toString();
                 System.out.println(now);
                 System.out.println(now.split("T")[0]);
+
                 member.get().setLastLogin(now.split("T")[0]);
+
                 customerRepository.save(member.get());
                 return postCustomerLoginRes;
             } else {

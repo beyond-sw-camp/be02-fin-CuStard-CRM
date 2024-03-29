@@ -70,7 +70,7 @@ form {
 }
 
 input[type="text"] {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 main {

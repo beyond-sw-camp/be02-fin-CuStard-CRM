@@ -20,8 +20,8 @@ export const useCustomerStore = defineStore("customer", {
 
           this.isLoggedIn = true;
           console.log(response.data.result.idx);
-          sessionStorage.setItem("customerIdx", response.data.idx)
-  
+          sessionStorage.setItem("customerIdx", response.data.result.idx)
+
           return true;
         }
       } catch (e) {

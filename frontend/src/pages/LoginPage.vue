@@ -38,6 +38,7 @@
 
 <script>
 import {useCustomerStore} from "@/stores/useCustomerStore";
+import axios from "axios";
 
 export default {
   data() {
@@ -45,11 +46,40 @@ export default {
       loginForm: {
         customerEmail: '',
         customerPwd: '',
-      }
+      },
+      customerEmail: '',
     };
   },
   methods: {
+    reqNotificationPermission(){
+      if ('Notification' in window){ //윈도우 창에서 알림
+        Notification.requestPermission().then(perm =>{
+          if(perm === "granted" && localStorage.getItem('accessToken')) { //로컬 스토리지에 토큰이 있을 때와 권한을 허용했을 때만 알림이 푸시되게 함
+            console.log("알림 허용")
+            new Notification("오랜만에 접속하셨네요🥹",{
+              body: "고객님을 위한 깜짝 쿠폰이 있어요🎁",
+              icon: "https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/122515113/2a07a238-c33b-4913-be49-3aadb1f7b548",
+            });
+            localStorage.setItem('notified' , 'true');
+          }else{
+            console.log("알림이 차단됨")
+          }
+        });
+      }
+    },
     async login() {
+      const backend = "http://localhost:8080"
+      const customerEmail = {
+        customerEmail : this.loginForm.customerEmail
+      }
+      // const customerEmail = toRaw(this.loginForm.customerEmail)
+      // axios.get(backend + '/coupon/pushNoti/'+this.customerEmail)
+      let couponPush = await axios.post(
+          backend + "/coupon/pushnoti",
+          customerEmail
+      )
+
+      console.log(couponPush)
       const customerStore = useCustomerStore(); // 스토어 직접 사용
       const result = await customerStore.login(this.loginForm);
 
@@ -65,6 +95,11 @@ export default {
         console.log(`로그인 성공: ${customerIdx}`);
 
         this.$router.push("/");
+
+        if(couponPush) {
+          this.reqNotificationPermission();
+        }
+
       } else if (result && result.status === false) {
         // status가 0이면 로그인 거부
         alert("이메일 인증을 해주세요.");

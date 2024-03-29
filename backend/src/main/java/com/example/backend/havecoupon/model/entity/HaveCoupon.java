@@ -1,5 +1,6 @@
 package com.example.backend.havecoupon.model.entity;
 
+import com.example.backend.common.BaseTimeEntity;
 import com.example.backend.coupon.model.entity.Coupon;
 import com.example.backend.customer.model.entity.Customer;
 import lombok.*;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HaveCoupon {
+public class HaveCoupon extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idx;
