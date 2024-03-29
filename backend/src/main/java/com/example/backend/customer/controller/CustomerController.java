@@ -60,10 +60,10 @@ public class CustomerController {
         if (customerEmailVerifyService.confirm(getEmailConfirmReq.getCustomerEmail(), getEmailConfirmReq.getUuid())) {
             customerEmailVerifyService.update(getEmailConfirmReq.getCustomerEmail());
 
-            return new RedirectView("http://localhost:3000/emailconfirm/" + getEmailConfirmReq.getJwt());
+            return new RedirectView("http://192.168.0.31:80/emailconfirm/" + getEmailConfirmReq.getJwt());
         } else {
 
-            return new RedirectView("http://localhost:3000/emailCertError");
+            return new RedirectView("http://192.168.0.31:80/emailCertError");
         }
     }
 
