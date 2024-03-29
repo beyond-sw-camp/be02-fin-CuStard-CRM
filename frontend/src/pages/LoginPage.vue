@@ -68,7 +68,8 @@ export default {
       }
     },
     async login() {
-      const backend = "http://localhost:8080"
+      // const backend = "http://localhost:8080"
+      let backend = "http://192.168.0.31:80/api";
       const customerEmail = {
         customerEmail : this.loginForm.customerEmail
       }

@@ -59,7 +59,7 @@
 import { ref, computed } from 'vue';
 // import { useRouter } from 'vue-router';
 import axios from 'axios';
-let backend = "http://192.168.0.53:8080"
+let backend = "http://192.168.0.31:80/api";
 // let backend = "http://localhost:8080";
 
 const coupons = ref([]);
