@@ -14,5 +14,4 @@ public class GetHaveCouponListRes {
 
     private Long customerIdx;
     private Long couponIdx;
-    private Integer discount;
 }

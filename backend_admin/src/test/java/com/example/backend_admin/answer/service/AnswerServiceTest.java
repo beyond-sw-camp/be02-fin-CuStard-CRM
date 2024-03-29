@@ -38,8 +38,6 @@ class AnswerServiceTest {
     private QnaRepository qnaRepository;
     @Mock
     private AdminRepository adminRepository;
-    @Mock
-    private TokenProvider tokenProvider;
     private AnswerService answerService;
 
     private static Admin admin;
