@@ -107,7 +107,7 @@
 
 <script>
 import axios from 'axios';
-let backend = "http://192.168.0.52:80/api";
+let backend = "http://192.168.0.33:80/api";
 export default {
   data() {
     return {
