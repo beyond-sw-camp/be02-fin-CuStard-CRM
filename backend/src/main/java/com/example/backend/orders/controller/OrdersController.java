@@ -25,8 +25,6 @@ public class OrdersController {
 
     @RequestMapping(method = RequestMethod.GET,value = "/validation")
     public ResponseEntity ordersCreate(@RequestHeader(value = "Authorization") String token,@Valid String impUid) throws IamportResponseException, IOException,BaseException {
-            //TODO: 프론트 연결 후 유효성 검증 가능(주석 해제)
-
         try {
             if (paymentService.paymentValidation(impUid)) {
                 return ResponseEntity.ok().body(BaseResponse.successResponse(ordersService.createOrder(token, impUid)));

@@ -1,6 +1,5 @@
 <template>
-
-  <header>
+  <header class="header">
     <div class="css-1xfyvd1 eo7pjfk4">
       <div class="divgnb">
         <a v-show="!isLoggedIn" href="/signup" class="css-xygizb eo7pjfk2">회원가입</a>
@@ -132,6 +131,11 @@ const isLoggedIn = computed(() => {
 </script>
 
 <style scoped>
+.header {
+  background-color: #FFFFFF;
+  padding-bottom: 30px;
+}
+
 ul {
   padding: 0;
   margin: 0;
@@ -156,6 +160,7 @@ a {
 }
 
 .divgnb {
+  padding-top: 6px;
   display: flex;
   margin-right: 45px;
 }
@@ -263,6 +268,7 @@ a {
 
 .gnb {
   /* background-color: blue; */
+  padding-left: 50px;
   display: flex;
   align-items: center;
 }
@@ -330,7 +336,7 @@ a {
   justify-content: space-between;
   margin: 0 160px;
   /* top: -55px; */
-  width: 465px;
+  width: 485px;
   height: 48px;
   padding-left: 14px;
   border: 2px solid #99154e;
@@ -383,6 +389,7 @@ a {
   height: 50px;
 }
 .answer{
+  padding-left: 50px;
   width: 120px;
   color: #333;
   right: -167px;

@@ -18,8 +18,11 @@ import com.example.backend.product.model.response.GetProductRes;
 import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,10 +37,30 @@ public class ProductService {
     private final ProductDetailLogRespository productDetailLogRespository;
     private final OrdersRepository ordersRepository;
 
-    public List<GetProductListRes> list()throws BaseException {
+    public List<GetProductListRes> list() throws BaseException {
         List<GetProductListRes> productListRes = new ArrayList<>();
+        PageRequest pageable = PageRequest.of(0, 15);
 
-        List<Product> productList = productRepository.findAll();
+        for (int i = 0; i < 6; i++) {
+            Page<Product> productList = productRepository.findByCategory(i, pageable);
+            for (Product product : productList) {
+                productListRes.add(GetProductListRes.builder()
+                        .idx(product.getIdx())
+                        .category(product.getCategory())
+                        .productName(product.getProductName())
+                        .productPrice(product.getProductPrice())
+                        .productImage(product.getProductImage())
+                        .build());
+            }
+        }
+        return productListRes;
+    }
+
+    public List<GetProductListRes> getProductsByCategory(Integer category, Integer page) {
+        PageRequest pageable = PageRequest.of(page, 20);
+        Page<Product> productList = productRepository.findByCategory(category, pageable);
+
+        List<GetProductListRes> productListRes = new ArrayList<>();
         for (Product product : productList) {
             productListRes.add(GetProductListRes.builder()
                     .idx(product.getIdx())
@@ -282,4 +305,6 @@ public class ProductService {
         }
         return similarityScore;
     }
+
+
 }
