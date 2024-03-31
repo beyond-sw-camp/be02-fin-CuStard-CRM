@@ -1,69 +1,136 @@
-<h1 align="center">Cus+ard <br>고객 관리 시스템
-</h1>
-고객 관리 시스템의 표준(customer standerd)을 만들기 위한 팀입니다.
 
-## 프로젝트 설명
+<h1 align="center">고객 관리 서비스 <img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/76fb4ada-d8e8-445e-9c30-ce944be4c52a"" alt="logo" width="30px" height="30px"> Custard </h1>
+<div align="center"> 
+ <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flw4rG%2FbtsFY8R9biY%2Fw14QE1yBsQMYzm57iEbPc1%2Fimg.png"/>
+</div>
+<br>
 
-1) CRM이란?
-* CRM은 Customer Relationship Management의 약어로, 고객 관계 관리를 의미합니다. 이는 기업이 고객과의 관계를 구축하고 유지하기 위해 사용되는 전략적인 접근 방식이자 그에 따른 기술적인 시스템을 가리킵니다.
+---
+
+## 🧑‍🤝‍🧑 팀원
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/JungDongSeob"><img src="https://avatars.githubusercontent.com/u/58664027?v=4" width="100px;" alt=""/><br /><sub><b> 🐯팀장 : 정동섭</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/kangmoonhye"><img src="https://avatars.githubusercontent.com/u/122515113?v=4" width="100px;" alt=""/><br /><sub><b> 🐶팀원 : 강문혜</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/SongYeonBaek"><img src="https://avatars.githubusercontent.com/u/78153440?v=4" width="100px;" alt=""/><br /><sub><b> 🐱팀원 : 백송연</b></sub></a><br /></td>
+     <tr/>
+      <td align="center"><a href="https://github.com/Hyeon28"><img src="https://avatars.githubusercontent.com/u/96675421?v=4" width="100px;" alt=""/><br /><sub><b> 🐧팀원 : 이주현</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/dohyun0408"><img src="https://avatars.githubusercontent.com/u/149150345?v=4" width="100px;" alt=""/><br /><sub><b> 🐺팀원 : 김도현 </b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+---
+
+##  ⭐ STACKS 
+<h4> Backend</h4>
+<img src="https://img.shields.io/badge/java-F7DF1E?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/springsecurity-000000?style=for-the-badge&logo=springsecurity&logoColor=white">
+<img src="https://img.shields.io/badge/jsonwebtokens-FCC624?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
+<img src="https://img.shields.io/badge/centos-262577?style=for-the-badge&logo=centos&logoColor=white">
+<img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=white">
+<br>
+<h4> Frontend</h4>
+<img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
+<img src="https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D">
+<img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
+<img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens">
+<img src="https://img.shields.io/badge/cent%20os-002260?style=for-the-badge&logo=centos&logoColor=F0F0F0">
+<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=Spring-Security&logoColor=white">
+<img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
+<img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"/>
+<img src="https://img.shields.io/badge/Router-CA4245?style=for-the-badge&logo=Router&logoColor=white"/>
+<h4> Database</h4>
+<img src="https://img.shields.io/badge/mariadb-003545?style=for-the-badge&logo=mariadb&logoColor=white">
+<h4> CI/CD</h4>
+<img src="https://img.shields.io/badge/jenkins-CF4045?style=for-the-badge&logo=jenkins&logoColor=white">
+<img src="https://img.shields.io/badge/docker-002260?style=for-the-badge&logo=docker&logoColor=white">
+<img src="https://img.shields.io/badge/k8s-%231572B6?style=for-the-badge&logo=k8s&logoColor=white">
+
+---
+
+## 🌟 Cus+ard 고객 관리 서비스
+
+<img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/bee89341-12b9-4993-9f00-b15a17b22bdc">
+
+
+<h4>CRM (Customer Relationship Management) 고객 관계 관리</h4>
+
+ * 기업이 고객과의 관계를 구축하고 유지하기 위해 사용되는 전략적인 접근 방식이자 그에 따른 기술적인 시스템을 가리킵니다.
 
 * CRM 시스템이 수집하는 데이터의 다양성과 통합성은 기업이 고객을 보다 깊이 있게 이해하고 개별적으로 대응할 수 있도록 합니다. 이렇게 CRM 시스템이 수집하는 데이터는 시장의 관점에서 바라보았을 때 고객 충성도를 높이고 잠재고객을 발굴하여 새로운 비즈니스 기회를 창출하는 데 도움이 된다고 볼 수 있습니다. 
 또한, 실시간 데이터 분석을 통해 기업은 빠르게 변화하는 시장 환경에 대응하고 효율적인 의사결정을 내려 비즈니스 프로그램을 사용하는 고객들에게 하여금 긍정적인 기대 효과를 가지게 되고 이는 해당 비즈니스를 다시 찾게되는 이유가 될 수 있을 것 같습니다.
 
-* 마케팅 및 판매 활동의 성과를 추적하고 평가함으로써, 기업은 자사의 전략적 방향성을 확인하고 조정할 수 있고 이러한 과정을 통해 기업은 고객과의 관계를 지속적으로 강화하고, 매출과 수익성을 증대시킬 수 있다는 등의 장점도 존재하므로 프로젝트의 주제로 선정함에 있어 배우고 공부하여 적용할 점이 많다고 판단하게 되었습니다.
+* 마케팅 및 판매 활동의 성과를 추적하고 평가함으로써, 기업은 자사의 전략적 방향성을 확인하고 조정할 수 있고 이러한 과정을 통해 기업은 고객과의 관계를 지속적으로 강화하고, 매출과 수익성을 증대시킬 수 있습니다. 
 
-* 종합해 저희 프로젝트에 대해 설명드리자면, CRM 시스템은 고객 중심의 비즈니스 전략을 구현하고, 고객 경험을 최적화하여 기업의 성과를 향상시킬 수 있다는 장점에 근거해 프로젝트의 주제로써 매력이 있다고 느끼게 되었고 저희가 느낀 매력을 다른 사용자들도 느낄 수 있는 프로젝트를 구현해보고자 해당 주제로 개발을 시작하게 되었습니다.
+<h4> 쇼핑몰 + CRM </h4>
+
+-  Cus+ard 쇼핑몰에서 직접 수집한 데이터를 기반으로 고객 행동데이터를 분석합니다. 
+- 분석된 행동 데이터로 개인 마켓팅(쿠폰 발급, 상품 추천 이메일 전송 등)이 진행됩니다. 
+
 
 ## 📌프로젝트 목표
 
 1) 고객 데이터 관리
- * 고객 데이터를 갖추지 못했을 때 잘못된 기업 측면에서의 의사결정을 내리게 됩니다. 올바른 시스템을 통해 고객 데이터를 저장, 추적, 검증할 수 있게 되면 영업 및 마케팅 팀은 고객 관계 전략을 최적화하고 기업의 이익을 증진시킬 수 있습니다.
-2) 영업 프로세스 자동화
- * 
-3) 마케팅의 개인화
-4) 영업과 마케팅 연계
+ * 올바른 시스템을 통해 고객 데이터를 저장, 추적, 검증하여 영업 및 마케팅 팀은 고객 관계 전략을 최적화하고 기업의 이익을 증진시킵니다. 
+2) 데이터의 중앙화
+  * 쇼핑몰과 CRM이 하나의 DB를 공유하여 데이터를 저장합니다. 
+3) 개인화된 마켓팅 
+  * 분석된 고객의 행동 데이터를 이용하여 맞춤형 마켓팅을 진행합니다. 
 
-## 프로젝트 기능 및 일정
 
-1) 요구사항 명세서
+## 📌 Custard 사이트 바로가기<br>
+🛍️ 커스타드 쇼핑몰 사이트 <br>
+(www.custard.com) <br>
 
-2) api 명세서
+📊 Custard 고객 관리 사이트 <br>
+(www.customer.standard.com)
+<br>
+<br>
 
-3) WBS
 
-## ✔️ 기술 스택 
+## 👷 프로젝트 설계<br>
+<details close>
+  <summary>Figma 화면 설계서</summary>
 
-1) frontend<br>
-2) backend<br>
-3) cicd
-   spring
-   java
-   k8s
-   jenkins
-   vue.js
-   mariaDB
-   jpa
-   s3
-   figma
-   html
-   css
-   js
-   pinia
-   router
-   github
-   nginx
-## 🖥️운영 환경
+🔍 <a href="https://www.figma.com/file/2pAV6Wq0Ue6Stm79E2UUC3/cus%2Bard-%ED%94%BC%EA%B7%B8%EB%A7%88?type=design&node-id=0-1&mode=design&t=28S02eukWQTbIYs3-0"> 피그마 보러가기 </a>
+</details>
 
-1) 소프트웨어 아키텍처
- 
-2) 시스템 아키텍처
+<details close>
+  <summary>ERD</summary>
+<img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/e6a79b19-9501-4e3b-b7c1-cc68544a20d9">
 
-3) 피그마
+</details>
 
-## CICD 시나리오
+<details close>
+  <summary>릴레이션 스키마</summary>
+<img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/d405c956-3f14-48ed-a82f-72bdf1e9eec1">
 
-## 상세 기능
+</details>
 
-1) back,front 기능
+## 🧩 운영 환경
+ * 시스템 아키텍쳐
+<img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/0c17ad4e-3aee-4447-990e-ff1da4513dc0">
+<br>
+<br>
+ * 소프트웨어 아키텍처
+   <img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/6dedf3f8-f43e-496a-8a6a-616c9cde2a16">
 
-2) cicd 기능
+
+## 📆 프로젝트 기능 및 일정
+<a href="/"> 🔗 요구사항 명세서  </a> <br>
+<a href="https://www.notion.so/API-2e704a21c39342b5a6d7356af08e5f84"> 🔗 API 명세서  </a> <br>
+<a href="/"> 🔗 WBS  </a> <br>
+
+## 🔗 더 자세한 설명 보러가기
+1️⃣ <a href=""> 쇼핑몰 Frontend Read.ME </a> <br>
+2️⃣<a href=""> 쇼핑몰 Backend Read.ME </a> <br>
+3️⃣ <a href=""> Cus+ard CRM Frontend Read.ME </a> <br>
+4️⃣ <a href=""> Cus+ard CRM Backend Read.ME </a> <br>
+5️⃣<a href=""> CI/CD Read.ME </a> <br>
