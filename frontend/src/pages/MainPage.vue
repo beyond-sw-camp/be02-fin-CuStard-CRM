@@ -1,7 +1,7 @@
 <template>
   <div>
     <section v-for="(categorySlides, category) in categoriesWithSlides" :key="category">
-      <div :class="'div div' + category" v-html="getCategoryName(category)"></div>
+      <div :class="'div div' + category" v-html="getCategoryName(category)" @click="goToCategory(category)"> </div>
       <Carousel :itemsToShow="5" :wrapAround="true" :transition="500">
         <Slide v-for="product in categorySlides" :key="product.idx">
           <div class="carousel__slide product">
@@ -11,7 +11,7 @@
             <div class="carousel__item-column" @click="goToProduct(product.idx)">
               <div class="carousel__item-details">
                 <div class="carousel__item-title">{{ product.productName }}</div>
-                <div class="carousel__item-price">{{ product.productPrice }}원</div>
+                <div class="carousel__item-price">{{ formatNumber(product.productPrice)}}원</div>
               </div>
             </div>
           </div>
@@ -95,7 +95,14 @@ export default defineComponent({
   methods: {
     async goToProduct(idx) {
       this.$router.push(`/product/${idx}`)
+    },
+    async goToCategory(category) {
+      this.$router.push(`/category/${category}/0`)
+    },
+    formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
     }
+
   }
 });
 </script>
@@ -113,7 +120,7 @@ export default defineComponent({
   //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
-  margin-top: 45px;
+  //margin-top: 45px;
   font-size: 22px;
   padding: 65px;
   background-image: url("../assets/Gray\ Minimalist\ New\ Collection\ Banner.gif");
