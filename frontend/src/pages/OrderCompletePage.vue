@@ -12,7 +12,7 @@
         <p>주문번호:{{this.$route.query.impUid}} </p>
         <p>주문일시: {{this.$route.query.today}}</p>
         <p>상품 이름: {{this.$route.query.name}}</p>
-        <p>총 결제금액: {{this.$route.query.price}}</p>
+        <p>총 결제금액: {{formatNumber(this.$route.query.price)}}</p>
       </div>
       <div class="confirmation-message">
         <p>주문이 성공적으로 완료되었습니다. 감사합니다!</p>
@@ -28,6 +28,9 @@
 // 상세 페이지 컴포넌트의 스크립트 부분
 
 export default {
+  formatNumber(value) {
+    return new Intl.NumberFormat().format(value);
+  },
   async mounted() {
     console.log(this.$route.query.impUid + " " +this.$route.query.today + " " + this.$route.query.name);
     console.log(this.$route);

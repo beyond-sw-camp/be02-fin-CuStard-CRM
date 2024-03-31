@@ -12,7 +12,7 @@
           </div>
         </h1>
         <div class="production-selling-header__price">
-          <span class="number">{{this.productDetail.productPrice}}</span>
+          <span class="number">{{formatNumber(this.productDetail.productPrice)}}</span>
           <span class="won">원</span>
         </div>
       </div>
@@ -32,7 +32,8 @@
         </div>
       </div>
       <div class="production-selling-option-form">
-        <p>주문금액 <span class="price">{{this.productDetail.productPrice}}</span>원</p>
+        <p>주문금액 <span class="price">{{formatNumber(this.productDetail.productPrice)}}</span>원</p>
+
       </div>
       <div class="production-selling-option-form__footer">
         <button class="button--color-blue button--size-55" type="button" @click="ordersCreate">바로 구매</button>
@@ -85,6 +86,9 @@ export default {
     }
   },
   methods: {
+    formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
+    },
     async ordersCreate() {
       const { IMP } = window;
       IMP.init('imp62836256');
