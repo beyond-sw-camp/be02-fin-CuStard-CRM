@@ -30,6 +30,13 @@ public class ProductController {
         }
     }
 
+
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity getProductsByCategory(@PathVariable Integer category, Integer page) {
+        return ResponseEntity.ok(BaseResponse.successResponse(productService.getProductsByCategory(category, page)));
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/read/{idx}")
     public ResponseEntity read(@PathVariable Long idx, Authentication authentication) {
         try {
