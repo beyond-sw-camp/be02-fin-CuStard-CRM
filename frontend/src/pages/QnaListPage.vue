@@ -1,4 +1,4 @@
-<template>
+np<template>
   <div class="qna-list">
     <ul>
       <li v-for="qna in qnas" :key="qna.idx" @click="goToArticle(qna.idx)">
