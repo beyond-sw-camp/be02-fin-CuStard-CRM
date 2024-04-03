@@ -23,7 +23,6 @@ const routes = [
   { path: "/search", component: SignupPage},
   { path: "/order/complete/", name:'orderCompletePage', component: OrderCompletePage,},
   { path: "/search/:keyword", name: "SearchResult", component: SearchResultPage, props: true},
-  { path: "/order/complete/", name:'orderCompletePage', component: OrderCompletePage,},
   { path: '/signup', component: SignupPage },
   { path: "/login", component: LoginPage, },
   { path: "/qna/list", component: QnaListPage},
