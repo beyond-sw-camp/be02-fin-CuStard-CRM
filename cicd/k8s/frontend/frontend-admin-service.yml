@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: custard-frontend-admin-service
+spec:
+  selector:
+    ver: custard-frontend-admin-v1
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80

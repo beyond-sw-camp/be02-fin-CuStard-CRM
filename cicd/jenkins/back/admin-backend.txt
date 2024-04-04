@@ -1,0 +1,110 @@
+
+
+    pipeline {
+        agent any
+        
+        // 파이프라인 실행에 필요한 도구로 maven 지정
+        tools {
+            maven "maven-3.9.5"
+        }
+    
+        // 파이프라인의 실행 단계 정의
+        stages {
+    
+            // 1. 깃 클론
+            stage('git clone') {
+                steps {
+                    git branch: 'dev', url: 'https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM.git'
+                }
+            }
+            
+            
+            // 2. maven 빌드
+            stage('Build') { 
+                steps {
+                    dir('backend') {
+                        sh 'mvn clean package'
+                    }
+                }
+            }
+            // 테스트 코드 
+            stage('Unit Test'){
+                steps{
+                    dir('backend'){
+                        script {
+                            def testResult = sh(script: 'mvn test', returnStatus: true)
+                            if (testResult == 0) {
+                                echo 'Unit tests passed. Proceeding to the next stage.'
+                            } else {
+                                error 'Unit tests failed. Aborting the pipeline.'
+                            }
+                        }
+                          
+                    }
+                }
+            }
+            // 3. Docker 빌드
+            stage('Docker Build') {
+                steps {
+                    script {
+                        // 도커 이미지 : hyungdoyou/be:2.[빌드 숫자]
+                        dir('backend') {
+                            sh 'docker build --tag hyeon28/custard_admin_backend:test4 .'
+                        }
+                    }
+                }
+            }
+    
+            stage('Docker Push') {
+                steps {
+                    script {
+                        // Docker 로그인
+                        withCredentials([usernamePassword(credentialsId: 'dongseob', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                            sh "echo '$DOCKER_PASSWORD' | docker login -u '$DOCKER_USERNAME' --password-stdin"
+                        }
+                        // sh "docker login -u ${env.username} -p ${env.password}"
+    
+                        // Docker Push
+                        sh 'docker push hyeon28/custard_admin_backend:test4'
+                    }
+                }
+            }
+    
+            // 5. SSH 전송
+            stage('SSH transfer') {
+                steps {
+                    // SSH 전송 플러그인 사용
+                    sshPublisher(
+                        // 오류 발생 시 진행을 멈춤
+                        continueOnError: false, 
+                        // 오류 발생 시 파이프라인을 실패시킴
+                        failOnError: true,
+                        // 전송자 목록
+                        publishers: [
+                            // SSH 전송 설명
+                            sshPublisherDesc(
+                                // SSH 서버 설정 이름 지정 ( master 노드 )
+                                configName: "ssh",
+                                // 자세한 출력 모드 활성화
+                                verbose: true,
+                                transfers: [
+                                    sshTransfer(
+                                        // 전송할 파일 지정
+                                        sourceFiles: "backend-admin-deployment.yml",
+                                        // 원격 디렉토리 지정 ( 원격서버로 파일을 전송할 위치 )
+                                        remoteDirectory: "/root/",
+                                        // 전송 후 야멜 파일의 VERSION을 파이프라인 빌드 숫자로 변경
+                                        // backend-deployment 야멜 파일 실행
+                                        execCommand: '''
+                                            sed -i "s/VERSION/$BUILD_ID/g" /root/backend-admin-deployment.yml
+                                            kubectl apply -f /root/backend-admin-deployment.yml
+                                        '''
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+    }

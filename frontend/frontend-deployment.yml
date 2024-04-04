@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custard-frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ver: custard-frontend-v1
+  template:
+    metadata:
+      name: pod3
+      labels:
+        ver: custard-frontend-v1
+    spec:
+      containers:
+        - name: container
+          image: hyeon28/custard_frontend:VERSION
+      terminationGracePeriodSeconds: 0
+
+#
