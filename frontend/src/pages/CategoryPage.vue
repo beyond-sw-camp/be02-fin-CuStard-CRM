@@ -10,8 +10,8 @@
         </div>
       </div>
     </div>
-    <div class="btn">
-      <button  @click="goToPage(0)"> 처음으로 </button>
+    <div class="button-container">
+      <button  @click="goToPage(0)"> 첫 페이지 </button>
       <button @click="goToPage(+route.params.page-1)"> 이전 페이지 </button>
       <button  @click="goToPage(+route.params.page+1)"> 다음 페이지 </button>
     </div>
@@ -27,6 +27,7 @@ const products = ref([]);
 
 const route = useRoute();
 const router = useRouter();
+
 let backend = "http://192.168.0.31:80/api";
 // const backend = "http://localhost:8080";
 
@@ -92,5 +93,26 @@ async function goToPage(idx) {
   display: flex;
   justify-content: center;
 }
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
+.button-container button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #99154e; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button-container button:hover {
+  background-color: #99154e; /* Darker Green */
+}
 </style>

@@ -33,7 +33,7 @@
       </div>
 
       <div class="answer">
-        <router-link to="/qna/write" >1:1문의 내역</router-link>
+        <router-link to="/qna/list" >1:1문의 내역</router-link>
       </div>
 
       <div class="css-c4pbxv e15sbxqa0">

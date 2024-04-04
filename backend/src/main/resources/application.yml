@@ -65,4 +65,4 @@ imp:
 
 logging:
   level:
-    root: error
+    root: info

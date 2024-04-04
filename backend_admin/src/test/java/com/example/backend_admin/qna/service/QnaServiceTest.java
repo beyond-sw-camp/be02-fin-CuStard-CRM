@@ -110,8 +110,8 @@ class QnaServiceTest {
         PostQnaReadRes response = qnaService.readQna(1L);
 
         //then
-        assertEquals(response.getTitle(), qna1.getTitle());
-        assertEquals(response.getQnaContent(), qna1.getQnaContent());
+        assertEquals(qna1.getTitle(), response.getTitle());
+        assertEquals(qna1.getQnaContent(), response.getQnaContent());
         assertNull(response.getAnswerContent());
     }
 
@@ -126,9 +126,9 @@ class QnaServiceTest {
 
         //then
         assertNotNull(response);
-        assertEquals(response.getTitle(), qna2.getTitle());
-        assertEquals(response.getQnaContent(), qna2.getQnaContent());
-        assertEquals(response.getAnswerContent(), answer.getAnswerContent());
+        assertEquals(qna2.getTitle(), response.getTitle());
+        assertEquals(qna2.getQnaContent(), response.getQnaContent());
+        assertEquals(answer.getAnswerContent(), response.getAnswerContent());
     }
 
     @Test

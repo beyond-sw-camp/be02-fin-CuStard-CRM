@@ -22,6 +22,16 @@
         </template>
       </Carousel>
     </section>
+    <!-- 의류 버튼 -->
+    <button class="category-button clothing" @click="goToCategory('1')">상품 더보기 ></button>
+    <!-- 뷰티 버튼 -->
+    <button class="category-button beauty" @click="goToCategory('2')">상품 더보기 ></button>
+    <!-- 식품 버튼 -->
+    <button class="category-button food" @click="goToCategory('3')">상품 더보기 ></button>
+    <!-- 스포츠/레저 버튼 -->
+    <button class="category-button sports" @click="goToCategory('4')">상품 더보기 ></button>
+    <!-- 가전 버튼 -->
+    <button class="category-button electronics" @click="goToCategory('5')">상품 더보기 ></button>
   </div>
 </template>
 
@@ -64,7 +74,6 @@ export default defineComponent({
       }
     };
 
-    // 카테고리 번호를 이름으로 변환
     const getCategoryName = (category) => {
       if (category === '1') {
         return '의류<br><span style="font-weight: normal; font-size:17px;">개성을 빛내줄 최신 패션 트렌드!</span>';
@@ -85,7 +94,6 @@ export default defineComponent({
 
     fetchCategorySlides();
 
-
     return {
       categoriesWithSlides,
       getCategoryName
@@ -102,25 +110,22 @@ export default defineComponent({
     formatNumber(value) {
       return new Intl.NumberFormat().format(value);
     }
-
   }
 });
 </script>
-
-
-
-
   <style>
+.carousel {
+    margin-left: 200px !important;
+    margin-right: 200px !important;
+}
   .div.div1 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  //text-shadow:
-  //  2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow:2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
-  //margin-top: 45px;
   font-size: 22px;
   padding: 65px;
   background-image: url("../assets/Gray\ Minimalist\ New\ Collection\ Banner.gif");
@@ -215,12 +220,22 @@ export default defineComponent({
     border-radius: 10px;
     color: white;
 }
+.carousel__prev {
+  position: absolute;
+  top: 205px;
+  left: -14px;
+}
+
+.carousel__next {
+  position: absolute;
+  top: 205px;
+  right: -14px;
+}
   .carousel__slide {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
   }
-
 
   .carousel__item-column {
     flex: 1;
@@ -228,7 +243,6 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     -webkit-line-clamp: 1;
-
   }
 
   .carousel__item {
@@ -247,7 +261,9 @@ export default defineComponent({
     padding: 10px;
     width: 150px;
     height: 400px;
-    bottom: -30px;
+    bottom: -50px;
+    display: flex;
+    position: relative;
   }
 
   .carousel__item-details {
@@ -282,5 +298,47 @@ export default defineComponent({
     height: 200px;
     object-fit: contain;
 }
+.category-button {
+   margin-bottom: 20px;
+   background-color: transparent;
+   border: none;
+   font-size: 18px;
+   color: #333;
+   transition: color 0.3s ease;
+   cursor: pointer;
+ }
+
+  .clothing {
+    position: absolute;
+    top: 350px;
+    right: 100px;
+  }
+
+  .beauty {
+    position: absolute;
+    top: 1000px;
+    right: 100px;
+  }
+
+  .food {
+    position: absolute;
+    top: 1650px;
+    right: 100px;
+  }
+
+  .sports {
+    position: absolute;
+    top: 2300px;
+    right: 100px;
+  }
+
+  .electronics {
+    position: absolute;
+    top: 2950px;
+    right: 100px;
+  }
+  .category-button:hover {
+  color: #99154e;
+  }
 
   </style>

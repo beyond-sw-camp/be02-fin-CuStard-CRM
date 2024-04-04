@@ -47,15 +47,15 @@
                       <select class="form-control" id="selectionOption" v-model="selectedOption"
                               @change="updateCategoryOptions">
                         <option value="">발급 옵션을 선택하세요</option>
-                        <option value="grade">고객 등급</option>
+                        <option value="level">고객 등급</option>
                         <option value="money">누적 구매 금액</option>
                         <option value="sleeper">휴면 기간</option>
                       </select>
                     </div>
                     <!-- 발급 대상에 따라 동적으로 나타나는 폼 -->
-                    <div v-if="selectedOption === 'grade'" class="form-group">
-                      <label for="selectGrade">고객 등급</label>
-                      <select class="form-control" id="selectGrade" v-model="couponData.customerGrade">
+                    <div v-if="selectedOption === 'level'" class="form-group">
+                      <label for="selectLevel">고객 등급</label>
+                      <select class="form-control" id="selectLevel" v-model="couponData.customerLevel">
                         <option value="DIAMOND">다이아몬드</option>
                         <option value="PLATINUM">플래티넘</option>
                         <option value="GOLD">골드</option>
@@ -114,7 +114,7 @@ export default {
       coupons: [],
       selectedOption: '',
       couponData: {
-        customerGrade: '',
+        customerLevel: '',
         purchaseAmount: '',
         dormantPeriod: '',
         category: '',
@@ -153,8 +153,8 @@ export default {
 
       const couponCategory = categoryMapping[this.couponData.category];
       let dataToSend;
-      if (this.selectedOption === 'grade') {
-        dataToSend = this.couponData.customerGrade;
+      if (this.selectedOption === 'level') {
+        dataToSend = this.couponData.customerLevel;
       } else if (this.selectedOption === 'money') {
         dataToSend= this.couponData.purchaseAmount;
       } else if (this.selectedOption === 'sleeper') {
@@ -183,7 +183,7 @@ export default {
     updateCategoryOptions() {
       // Reset couponData when the selection changes
       this.couponData = {
-        customerGrade: '',
+        customerLevel: '',
         purchaseAmount: '',
         dormantPeriod: '',
         category: '',
