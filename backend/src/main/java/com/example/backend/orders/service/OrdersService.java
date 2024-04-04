@@ -13,6 +13,8 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class OrdersService {
     private final PaymentService paymentService;
     private final OrdersRepository ordersRepository;
     private final CustomerRepository customerRepository;
+    private static final Logger logger = LoggerFactory.getLogger("ordersLogger");
 
     @Transactional
     public GetOrdersCreateRes createOrder(String token, String impUid) throws IamportResponseException, IOException, BaseException {
@@ -57,6 +60,9 @@ public class OrdersService {
 
             customer.setTotalAmount(getPortoneRes.getPrice()+customer.getTotalAmount());
             customerRepository.save(customer);
+
+            //주문 로그 남기기
+            logger.info("[주문] 고객 번호: {}, 상품: {}, 상품 가격: {}, impUid: {}", result.get().getIdx(), getPortoneRes.getId(), getPortoneRes.getPrice(), impUid );
 
             return getOrdersCreateRes;
         }

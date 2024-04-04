@@ -20,6 +20,8 @@ import com.example.backend.log.service.LoginLogService;
 
 import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -44,6 +46,7 @@ public class CustomerService implements UserDetailsService {
     private final CustomerEmailVerifyService customerEmailVerifyService;
     private final TokenProvider tokenProvider;
     private final LoginLogService loginLogService;
+    private static final Logger logger = LoggerFactory.getLogger("loginLogger");
 
     @Value("${jwt.secret-key}")
     private String secretKey;
@@ -54,10 +57,6 @@ public class CustomerService implements UserDetailsService {
         return customerRepository.findByCustomerEmail(customerEmail).get();
     }
 
-
-    // Member CRUD
-
-    // create
     public PostCustomerSignupRes signup(PostCustomerSignupReq postCustomerSignupReq)  throws BaseException {
 
         Optional<Customer> duplicatedMember = customerRepository.findByCustomerEmail(postCustomerSignupReq.getCustomerEmail());
@@ -110,12 +109,18 @@ public class CustomerService implements UserDetailsService {
                         .idx(member.get().getIdx())
                         .build();
 
+                //로그인 로그 남기기
                 loginLogService.loginLogging(member.get());
+
+
                 String now = LocalDateTime.now().toString();
                 System.out.println(now);
                 System.out.println(now.split("T")[0]);
 
                 member.get().setLastLogin(now.split("T")[0]);
+
+                //로그인 로그 남기기
+                logger.info("[로그인] ({}, {})", member.get().getIdx(), member.get().getCustomerEmail());
 
                 customerRepository.save(member.get());
                 return postCustomerLoginRes;
