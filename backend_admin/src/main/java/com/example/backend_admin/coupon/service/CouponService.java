@@ -14,6 +14,7 @@ import com.example.backend_admin.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -22,9 +23,10 @@ public class CouponService {
     private final CouponRepository couponRepository;
     private final SetCouponTargetService setCouponTargetService;
     private final AdminRepository adminRepository;
+    private final CouponTargetUploadService couponTargetUploadService;
 
 
-    public PostCouponCreateRes create(String token, PostCouponCreateReq postCouponCreateReq) throws BaseException {
+    public PostCouponCreateRes create(String token, PostCouponCreateReq postCouponCreateReq) throws BaseException, IOException {
         token = TokenProvider.replaceToken(token);
         Long adminIdx = TokenProvider.getIdx(token);
         Optional<Admin> result = adminRepository.findById(adminIdx);
@@ -36,6 +38,7 @@ public class CouponService {
                     .admin(admin)
                     .build());
             setCouponTargetService.writeFile(postCouponCreateReq, coupon.getIdx());
+            couponTargetUploadService.saveFile();
             return PostCouponCreateRes.builder()
                     .couponIdx(coupon.getIdx())
                     .adminIdx(coupon.getAdmin().getIdx())

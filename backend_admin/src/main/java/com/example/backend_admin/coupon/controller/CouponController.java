@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 import static com.example.backend_admin.common.BaseResponseStatus.*;
 
 @RestController
@@ -23,6 +25,8 @@ public class CouponController {
             return ResponseEntity.ok().body(BaseResponse.successResponse(couponService.create(token, postCouponCreateReq)));
         }catch (BaseException exception){
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
