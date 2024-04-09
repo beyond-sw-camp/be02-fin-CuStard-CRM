@@ -73,6 +73,7 @@ export default {
       const customerEmail = {
         customerEmail : this.loginForm.customerEmail
       }
+      console.log(customerEmail);
       // const customerEmail = toRaw(this.loginForm.customerEmail)
       // axios.get(backend + '/coupon/pushNoti/'+this.customerEmail)
       let couponPush = await axios.post(
