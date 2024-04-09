@@ -34,40 +34,41 @@ public class QnaService {
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public BaseResponse registerQna(String token, PostQnaRegisterReq postQnaRegisterReq) throws BaseException {
-        token = TokenProvider.replaceToken(token);
-        Long customerIdx = TokenProvider.getIdx(token);
-        Optional<Customer> result = customerRepository.findById(customerIdx);
+        public BaseResponse registerQna(String token, PostQnaRegisterReq postQnaRegisterReq) throws BaseException {
+            token = TokenProvider.replaceToken(token);
+            Long customerIdx = TokenProvider.getIdx(token);
+            Optional<Customer> result = customerRepository.findById(customerIdx);
 
-        if (result.isPresent()) {
-            if (postQnaRegisterReq.getTitle() == null) {
-                throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_TITLE);
-            } else if (postQnaRegisterReq.getQnaContent() == null) {
-                throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_QNACONTENT);
-            } else if (postQnaRegisterReq.getQnaPwd() == null) {
-                throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_PASSWORD);
+            if (result.isPresent()) {
+                if (postQnaRegisterReq.getTitle() == null) {
+                    throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_TITLE);
+                } else if (postQnaRegisterReq.getQnaContent() == null) {
+                    throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_QNACONTENT);
+                } else if (postQnaRegisterReq.getQnaPwd() == null) {
+                    throw new BaseException (BaseResponseStatus.QNA_REGISTER_EMPTY_PASSWORD);
+                } else {
+                    Customer customer = result.get();
+                    Qna qna = Qna.builder()
+                            .title(postQnaRegisterReq.getTitle())
+                            .qnaPwd(passwordEncoder.encode(postQnaRegisterReq.getQnaPwd()))
+                            .qnaContent(postQnaRegisterReq.getQnaContent())
+                            .customer(customer)
+                            .category(postQnaRegisterReq.getCategory())
+                            .build();
+
+                    qnaRepository.save(qna);
+
+                    PostQnaRegisterRes postQnaRegisterRes = PostQnaRegisterRes.builder()
+                            .title(qna.getTitle())
+                            .qnaContent(qna.getQnaContent())
+                            .build();
+                    return BaseResponse.successResponse(postQnaRegisterRes);
+                }
             } else {
-                Customer customer = result.get();
-                Qna qna = Qna.builder()
-                        .title(postQnaRegisterReq.getTitle())
-                        .qnaPwd(passwordEncoder.encode(postQnaRegisterReq.getQnaPwd()))
-                        .qnaContent(postQnaRegisterReq.getQnaContent())
-                        .customer(customer)
-                        .build();
+                throw new BaseException(BaseResponseStatus.QNA_REGISTER_UNAUTHORIZED);
 
-                qnaRepository.save(qna);
-
-                PostQnaRegisterRes postQnaRegisterRes = PostQnaRegisterRes.builder()
-                        .title(qna.getTitle())
-                        .qnaContent(qna.getQnaContent())
-                        .build();
-                return BaseResponse.successResponse(postQnaRegisterRes);
             }
-        } else {
-            throw new BaseException(BaseResponseStatus.QNA_REGISTER_UNAUTHORIZED);
-
         }
-    }
 
     public List<GetQnaListRes> list() throws BaseException{
         List<Qna> resultQna = qnaRepository.findAll();

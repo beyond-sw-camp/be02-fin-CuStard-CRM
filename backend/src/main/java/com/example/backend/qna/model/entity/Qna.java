@@ -23,6 +23,8 @@ public class Qna {
 
     private String qnaPwd;
 
+    private String category;
+
     @OneToOne
     @JoinColumn(name = "customerIdx")
     private Customer customer;
