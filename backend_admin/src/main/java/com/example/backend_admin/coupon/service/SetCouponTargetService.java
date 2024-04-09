@@ -20,7 +20,7 @@ public class SetCouponTargetService {
 
     public String readFile() {
         StringBuilder jsonContent = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/couponTarget.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("/src/main/resources/couponTarget.json"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 jsonContent.append(line);
@@ -62,7 +62,7 @@ public class SetCouponTargetService {
             // 수정된 Map을 JSON 문자열로 변환
             String updatedJsonString = objectMapper.writeValueAsString(targetMap);
             // JSON 파일에 쓰기
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/couponTarget.json"))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("/src/main/resources/couponTarget.json"))) {
                 writer.write(updatedJsonString);
             } catch (IOException e) {
                 e.printStackTrace();

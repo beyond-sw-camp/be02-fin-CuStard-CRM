@@ -19,7 +19,7 @@ public class CouponTargetUploadService {
     private String bucket;
 
     public String saveFile() throws IOException {
-        File file = new File("src/main/resources/couponTarget.json");
+        File file = new File("/src/main/resources/couponTarget.json");
         String filename = file.getName();
 
         amazonS3.deleteObject(bucket, filename);
