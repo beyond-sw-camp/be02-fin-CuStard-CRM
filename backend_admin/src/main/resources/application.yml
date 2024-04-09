@@ -35,6 +35,8 @@ spring:
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  elasticsearch:
+    uris: http://elasticsearch.elasticsearch.svc.cluster.local:9200
 cloud:
   aws:
     s3:
