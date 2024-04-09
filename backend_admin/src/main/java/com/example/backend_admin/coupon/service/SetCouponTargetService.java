@@ -31,39 +31,6 @@ public class SetCouponTargetService {
         return jsonContent.toString();
     }
 
-    public List<String> extractLevels() {
-        String jsonString = readFile();
-        List<String> levels = null;
-        try {
-            Map<String, Object> targetMap = objectMapper.readValue(jsonString, new TypeReference<Map<String, Object>>() {
-            });
-            levels = (List<String>) targetMap.get("levels");
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (ClassCastException e) {
-            // 형변환 오류 처리
-            e.printStackTrace();
-        }
-
-        return levels;
-    }
-
-    public List<Integer> extractLevelCoupon() {
-        String jsonString = readFile();
-        List<Integer> coupons = null;
-        try {
-            Map<String, Object> targetMap = objectMapper.readValue(jsonString, new TypeReference<Map<String, Object>>() {
-            });
-            coupons = (List<Integer>) targetMap.get("levelCoupon");
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (ClassCastException e) {
-            // 형변환 오류 처리
-            e.printStackTrace();
-        }
-
-        return coupons;
-    }
 
     public void writeFile(PostCouponCreateReq postCouponCreateReq, Long couponIdx) {
         String jsonString = readFile();
