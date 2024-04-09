@@ -38,7 +38,7 @@ public class CouponService {
                     .admin(admin)
                     .build());
             setCouponTargetService.writeFile(postCouponCreateReq, coupon.getIdx());
-            couponTargetUploadService.saveFile();
+            System.out.println(couponTargetUploadService.saveFile());
             return PostCouponCreateRes.builder()
                     .couponIdx(coupon.getIdx())
                     .adminIdx(coupon.getAdmin().getIdx())
