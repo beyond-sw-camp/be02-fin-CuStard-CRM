@@ -1,11 +1,17 @@
 package com.example.backend_admin.coupon.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.example.backend_admin.coupon.model.request.PostCouponCreateReq;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -17,10 +23,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SetCouponTargetService {
     private final ObjectMapper objectMapper;
+    private final AmazonS3 amazonS3;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     public String readFile() {
         StringBuilder jsonContent = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader("/src/main/resources/couponTarget.json"))) {
+        S3Object s3Object = amazonS3.getObject(new GetObjectRequest(bucket, "couponTarget.json"));
+        System.out.println(s3Object);
+        try (S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
+             BufferedReader br = new BufferedReader(new InputStreamReader(objectInputStream))) {
             String line;
             while ((line = br.readLine()) != null) {
                 jsonContent.append(line);
@@ -37,7 +49,8 @@ public class SetCouponTargetService {
         String selected = postCouponCreateReq.getSelectedOption();
 
         try {
-            Map<String, Object> targetMap = objectMapper.readValue(jsonString, new TypeReference<Map<String, Object>>() {});
+            Map<String, Object> targetMap = objectMapper.readValue(jsonString, new TypeReference<Map<String, Object>>() {
+            });
 
             if (selected.equals("level")) {
                 List<String> levels = (List<String>) targetMap.get("levels");
@@ -61,12 +74,13 @@ public class SetCouponTargetService {
             }
             // 수정된 Map을 JSON 문자열로 변환
             String updatedJsonString = objectMapper.writeValueAsString(targetMap);
-            // JSON 파일에 쓰기
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("/src/main/resources/couponTarget.json"))) {
-                writer.write(updatedJsonString);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(updatedJsonString.getBytes());
+
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType("application/json");
+
+            // JSON 문자열을 S3에 업로드
+            amazonS3.putObject(bucket, "couponTarget.json", inputStream, metadata);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

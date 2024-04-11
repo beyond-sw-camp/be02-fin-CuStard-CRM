@@ -23,7 +23,6 @@ public class CouponService {
     private final CouponRepository couponRepository;
     private final SetCouponTargetService setCouponTargetService;
     private final AdminRepository adminRepository;
-    private final CouponTargetUploadService couponTargetUploadService;
 
 
     public PostCouponCreateRes create(String token, PostCouponCreateReq postCouponCreateReq) throws BaseException, IOException {
@@ -38,7 +37,6 @@ public class CouponService {
                     .admin(admin)
                     .build());
             setCouponTargetService.writeFile(postCouponCreateReq, coupon.getIdx());
-            couponTargetUploadService.saveFile();
             return PostCouponCreateRes.builder()
                     .couponIdx(coupon.getIdx())
                     .adminIdx(coupon.getAdmin().getIdx())
