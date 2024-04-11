@@ -66,9 +66,9 @@ public class OrdersService {
             customerRepository.save(customer);
 
             Optional<Product> product = productRepository.findById(getPortoneRes.getId());
-            Long idx = product.get().getIdx();
+            Integer category = product.get().getCategory();
             //주문 로그 남기기
-            logger.info("[주문] 고객 번호: {}, 상품: {}, 카테고리:{}, 상품 가격: {}, impUid: {}", result.get().getIdx(), getPortoneRes.getId(), idx, getPortoneRes.getPrice(), impUid );
+            logger.info("[주문] 고객 번호: {}, 상품: {}, 카테고리:{}, 상품 가격: {}, impUid: {}", result.get().getIdx(), getPortoneRes.getId(), category, getPortoneRes.getPrice(), impUid );
 
             return getOrdersCreateRes;
         }
