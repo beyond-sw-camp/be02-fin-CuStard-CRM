@@ -18,6 +18,8 @@ import com.example.backend.product.model.response.GetProductRes;
 import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.utils.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -36,6 +38,9 @@ public class ProductService {
     private final SearchLogService searchLogService;
     private final ProductDetailLogRespository productDetailLogRespository;
     private final OrdersRepository ordersRepository;
+
+    private static final Logger productDetailLogger = LoggerFactory.getLogger("productDetailLogger");
+    private static final Logger productSearchLogger = LoggerFactory.getLogger("productSearchLogger");
 
     public List<GetProductListRes> list() throws BaseException {
         List<GetProductListRes> productListRes = new ArrayList<>();
@@ -93,6 +98,10 @@ public class ProductService {
                 Optional<Customer> c = customerRepository.findById(customer.getIdx());
                 if (c.isPresent()) {
                     productDetailLogService.productDetailLogging(c.get(), product);
+
+                    //상품 상세 조회 로그 남기기
+                    productDetailLogger.info("[상품 조회] 고객 번호: {}, 상품: {}, 카테고리: {}", c.get().getIdx(), product.getIdx(), product.getCategory());
+
                 }
             }
             return getProductRes;
@@ -122,6 +131,10 @@ public class ProductService {
 
             if (c.isPresent()) {
                 searchLogService.SearchLogging(c.get(), keyword);
+
+                //상품 검색 로그 남기기
+                productSearchLogger.info("[상품 검색] 고객 번호: {}, 검색 키워드: {}", customer.getIdx(), keyword);
+
             }
         }
         return productListRes;

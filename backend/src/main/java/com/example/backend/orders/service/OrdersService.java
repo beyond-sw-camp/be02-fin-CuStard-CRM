@@ -7,12 +7,17 @@ import com.example.backend.orders.model.entity.GetPortoneRes;
 import com.example.backend.orders.model.entity.Orders;
 import com.example.backend.orders.model.response.GetOrdersCreateRes;
 import com.example.backend.orders.repository.OrdersRepository;
+import com.example.backend.product.model.entity.Product;
+import com.example.backend.product.repository.ProductRepository;
+import com.example.backend.product.service.ProductService;
 import com.example.backend.utils.TokenProvider;
 import com.google.gson.Gson;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +35,8 @@ public class OrdersService {
     private final PaymentService paymentService;
     private final OrdersRepository ordersRepository;
     private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
+    private static final Logger logger = LoggerFactory.getLogger("ordersLogger");
 
     @Transactional
     public GetOrdersCreateRes createOrder(String token, String impUid) throws IamportResponseException, IOException, BaseException {
@@ -57,6 +64,11 @@ public class OrdersService {
 
             customer.setTotalAmount(getPortoneRes.getPrice()+customer.getTotalAmount());
             customerRepository.save(customer);
+
+            Optional<Product> product = productRepository.findById(getPortoneRes.getId());
+            Long idx = product.get().getIdx();
+            //주문 로그 남기기
+            logger.info("[주문] 고객 번호: {}, 상품: {}, 카테고리:{}, 상품 가격: {}, impUid: {}", result.get().getIdx(), getPortoneRes.getId(), idx, getPortoneRes.getPrice(), impUid );
 
             return getOrdersCreateRes;
         }

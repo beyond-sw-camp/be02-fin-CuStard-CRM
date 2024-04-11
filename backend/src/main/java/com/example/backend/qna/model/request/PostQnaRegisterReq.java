@@ -20,4 +20,6 @@ public class PostQnaRegisterReq {
     @Size(min = 4,max = 4)
     @Pattern(regexp = "^[0-9]*$",message = "0~9 숫자 4자리를 입력해주세요.")
     private String qnaPwd; //비밀번호
+    @NotBlank
+    private String category;
 }
