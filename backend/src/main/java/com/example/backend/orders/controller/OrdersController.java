@@ -33,6 +33,5 @@ public class OrdersController {
             return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
         return null;
-
     }
 }
