@@ -73,7 +73,7 @@ public class CalculateOrdersService {
         return GetCategoryOrdersRes.builder().orders(array).build();
     }
 
-    public GetCategoryOrdersRes customerOrdersRes(Long idx)throws BaseException{
+    public GetCategoryOrdersRes customerOrdersRes(Long idx) throws BaseException{
         List<Orders> ordersList = ordersRepository.findByCustomerIdx(idx);
 
         int[] ordersCategory = new int[6];

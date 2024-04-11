@@ -1,5 +1,6 @@
 package com.example.backend_admin.elastic.entity;
 
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -7,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+@Getter
 @Document(indexName = "login")
 public class LoginDocument {
 
@@ -22,4 +24,12 @@ public class LoginDocument {
     @Field(type = FieldType.Keyword)
     private String customerEmail;
 
+    @Override
+    public String toString() {
+        return "LoginDocument{" +
+                "timestamp=" + timestamp +
+                ", customerIdx='" + customerIdx + '\'' +
+                ", customerEmail='" + customerEmail + '\'' +
+                '}';
+    }
 }
