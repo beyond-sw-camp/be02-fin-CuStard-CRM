@@ -272,7 +272,7 @@ export default {
     },
 
     createChart() {
-      axios.get(backend + `/dashboard/customer/detail/${this.$route.params.customerId}`)
+      axios.get(backend + `/es/dashboard/customer/detail/${this.$route.params.customerId}`)
           .then(response => {
             response = response.data.result;
             this.customer = response.getCustomerReadRes;
