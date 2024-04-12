@@ -1,7 +1,11 @@
 package com.example.backend_admin.elastic.service;
 
 import com.example.backend_admin.elastic.entity.OrdersDocument;
+import com.example.backend_admin.elastic.entity.ProductDetailDocument;
+import com.example.backend_admin.elastic.model.dto.GetCategoryOrdersRes;
+import com.example.backend_admin.elastic.model.dto.GetTodayOrdersRes;
 import com.example.backend_admin.elastic.repository.OrdersDocumentRepository;
+import com.example.backend_admin.elastic.repository.ProductDetailDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +21,8 @@ import java.util.List;
 public class OrdersService {
 
     private  final OrdersDocumentRepository ordersDocumentRepository;
-
-    public Object countTodayOrders() {
+    private final ProductDetailDocumentRepository productDetailDocumentRepository;
+    public GetTodayOrdersRes countTodayOrders() {
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
 
         // 오늘 00시
@@ -49,12 +53,19 @@ public class OrdersService {
             yestOrderAmt += order.getPrice();
         }
 
-        return "오늘 결제건수: "+ todayOrders.size()+ ", 어제 동시간대 결제건수 : "+ yestOrders.size() +
-                "오늘 결제금액: " +todayOrderAmt + "어제 동시간대 결제금액: " + yestOrderAmt;
+        System.out.println( "오늘 결제건수: "+ todayOrders.size()+ ", 어제 동시간대 결제건수 : "+ yestOrders.size() +
+                "오늘 결제금액: " + todayOrderAmt + "어제 동시간대 결제금액: " + yestOrderAmt);
+
+        return GetTodayOrdersRes.builder()
+                .todayOrdersCount(todayOrders.size())
+                .todayOrdersAmount(todayOrderAmt)
+                .difOrdersCount( yestOrders.size())
+                .difOrdersAmount(yestOrderAmt)
+                .build();
     }
 
     //월별 매출
-    public Object monthlySales(){
+    public GetCategoryOrdersRes monthlySales(){
         LocalDateTime startofYear = LocalDateTime.of(LocalDate.now().getYear(), 1, 1, 0, 0);
         Date startDate = Date.from(startofYear.atZone(ZoneId.systemDefault()).toInstant());
 
@@ -65,15 +76,17 @@ public class OrdersService {
             categoryAmt[order.getTimestamp().getMonth()] += order.getPrice();
         }
 
-        return "월별 결제금액: [" + categoryAmt[0] + "," + categoryAmt[1] + "," + categoryAmt[2] + ","  +categoryAmt[3] + "," +
+        System.out.println( "월별 결제금액: [" + categoryAmt[0] + "," + categoryAmt[1] + "," + categoryAmt[2] + ","  +categoryAmt[3] + "," +
                 categoryAmt[4] + categoryAmt[5] + "," + categoryAmt[6] + "," + categoryAmt[7] + ","  +categoryAmt[8] + "," +
                 categoryAmt[9] + categoryAmt[10] + "," + categoryAmt[11] +
-                "]";
-
+                "]");
+        return GetCategoryOrdersRes.builder()
+                .orders(categoryAmt)
+                .build();
     }
 
     //카테고리별 판매율
-    public Object catergorySales(){
+    public GetCategoryOrdersRes catergorySales(){
         LocalDateTime start = LocalDate.now().minusDays(14).atStartOfDay();
         Date startDate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
 
@@ -87,27 +100,43 @@ public class OrdersService {
             categoryAmt[order.getCategory()] += order.getPrice();
         }
 
-        return "결제건수: " + list.size() + ", 결제금액: " + totalAmt +
+        System.out.println( "결제건수: " + list.size() + ", 결제금액: " + totalAmt +
                 ", 카테고리별 결제금액: [" + categoryAmt[0] + "," + categoryAmt[1] + "," + categoryAmt[2] + ","  +categoryAmt[3] + "," +
-                categoryAmt[4] + "]";
+                categoryAmt[4] + "]");
 
+        return GetCategoryOrdersRes.builder()
+                .orders(categoryAmt)
+                .ordersAmount(totalAmt)
+                .ordersCount(list.size())
+                .build();
     }
 
-    //고객 집계함수 - 카테고리별 주문 금액
-    public Object custCatergoryOrders(Long idx) {
+    //고객 집계함수 - 카테고리별 주문 금액, 카테고리별 상품 조회
+    public GetCategoryOrdersRes custCatergoryOrders(Long idx) {
 
-        List<OrdersDocument> list = ordersDocumentRepository.findAllByCustomerIdx(idx);
+        List<OrdersDocument> list1 = ordersDocumentRepository.findAllByCustomerIdx(idx);
 
-        int totalAmt = 0;
         int[] categoryAmt = new int[5];
-        for(OrdersDocument order : list) {
-            System.out.println(order.toString());
-            totalAmt += order.getPrice();
+        for(OrdersDocument order : list1) {
             categoryAmt[order.getCategory()] += order.getPrice();
         }
 
-        return " 카테고리별 결제금액: [" + categoryAmt[0] + "," + categoryAmt[1] + "," + categoryAmt[2] + ","  +categoryAmt[3] + "," +
-                categoryAmt[4] + "]";
 
+        List<ProductDetailDocument> list2 = productDetailDocumentRepository.findAllByCustomerIdx(idx);
+
+        int[] categoryRead = new int[5];
+        for(ProductDetailDocument product : list2) {
+            categoryRead[product.getCategory()-1]++;
+        }
+
+        System.out.println( " 카테고리별 조회: [" + categoryRead[0] + "," + categoryRead[1] + "," + categoryRead[2] + ","  +categoryRead[3] + "," +
+                categoryRead[4] + "]");
+        System.out.println( " 카테고리별 결제금액: [" + categoryAmt[0] + "," + categoryAmt[1] + "," + categoryAmt[2] + ","  +categoryAmt[3] + "," +
+                categoryAmt[4] + "]");
+
+        return GetCategoryOrdersRes.builder()
+                .orders(categoryAmt)
+                .productRead(categoryRead)
+                .build();
     }
 }
