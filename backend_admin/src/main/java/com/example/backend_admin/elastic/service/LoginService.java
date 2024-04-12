@@ -1,9 +1,11 @@
 package com.example.backend_admin.elastic.service;
 
+import com.example.backend_admin.elastic.entity.CustomerDocument;
 import com.example.backend_admin.elastic.entity.LoginDocument;
 import com.example.backend_admin.elastic.entity.OrdersDocument;
 import com.example.backend_admin.elastic.model.dto.GetLoginTimeRes;
 import com.example.backend_admin.elastic.model.dto.GetTodayLoginRes;
+import com.example.backend_admin.elastic.repository.CustomerDocumentRepository;
 import com.example.backend_admin.elastic.repository.LoginDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,18 +14,20 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
 
     private final LoginDocumentRepository loginDocumentRepository;
-
+    private final CustomerDocumentRepository customerDocumentRepository;
     //오늘 방문자 수, 어제 동시간대 방문자 수
     public GetTodayLoginRes countTodayLogins() {
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
@@ -100,4 +104,62 @@ public class LoginService {
                 .timeDataList(loginTime)
                 .build();
     }
+
+    public List<LoginDocument> testall (){
+        List<LoginDocument> loginDocumentList = loginDocumentRepository.findAll();
+
+        return loginDocumentList;
+    }
+
+    public List<Long> between90(){
+        LocalDate currentDate = LocalDate.now();    //  현재 날짜
+        LocalDate past90DaysDate = currentDate.minusDays(90);   //  90일 전
+        //  localdate to date
+        Date currentDateAsDate = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date past90DaysDateAsDate = Date.from(past90DaysDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        List<LoginDocument> loginDocumentList = loginDocumentRepository.findByTimestampBetween(past90DaysDateAsDate, currentDateAsDate);
+        // 중복 제거
+        List<LoginDocument> uniqueLogins = loginDocumentList.stream()
+                .collect(Collectors.toMap(LoginDocument::getCustomerIdx, login -> login, (existing, replacement) -> existing))
+                .values().stream()
+                .collect(Collectors.toList());
+
+
+        List<Long> loginCustomerIdxList = new ArrayList<>();
+        //  현재 ~ 90일 사이에 로그인 한 idx 리스트
+        for (LoginDocument document: uniqueLogins) {
+            long customerIdx = document.getCustomerIdx();   // 불필요한 박싱 제거
+            loginCustomerIdxList.add(customerIdx);
+        }
+
+        List<CustomerDocument> customerDocumentList = new ArrayList<>();
+        List<Long> sleepCustomerList = new ArrayList<>();
+        customerDocumentList = customerDocumentRepository.findAll();    //  전체 회원 document
+
+//        List<Long> asdflkjlist = new ArrayList<>();
+//        List<LoginDocument> list = new ArrayList<>();
+//        list = loginDocumentRepository.findAll();
+//        for (LoginDocument document:list) {
+//            asdflkjlist.add(Long.valueOf(document.getCustomerIdx()));
+//        }
+
+
+        for (CustomerDocument document: customerDocumentList) {         //  휴면 회원만 뽑기   //TODO: 지금은 전체 회원이 없음
+            if (!loginCustomerIdxList.contains(document.getCustomerIdx())){
+                sleepCustomerList.add(document.getCustomerIdx());
+            }
+        }
+
+        return sleepCustomerList;
+    }
+
+    public void toRatingCoupon(){
+        List<CustomerDocument> customerDocumentList = customerDocumentRepository.findAll();
+
+
+    }
+
+
+
 }

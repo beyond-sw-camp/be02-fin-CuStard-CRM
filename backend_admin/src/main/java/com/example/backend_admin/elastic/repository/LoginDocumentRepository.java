@@ -16,4 +16,8 @@ public interface LoginDocumentRepository extends ElasticsearchRepository<LoginDo
     List<LoginDocument> findAllByTimestampBetween(Date startOfDay, Date endOfDay);
     List<LoginDocument> findByTimestampBetween(Date startOfDay, Date endOfDay);
 
+    List<LoginDocument> findAll();
+
+
+
 }
