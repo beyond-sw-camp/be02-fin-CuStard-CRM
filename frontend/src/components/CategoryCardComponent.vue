@@ -22,6 +22,7 @@ export default {
     formatNumber(value) {
       return new Intl.NumberFormat().format(value);
     },
+
   }
 }
 </script>

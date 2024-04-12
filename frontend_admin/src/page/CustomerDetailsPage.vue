@@ -139,7 +139,7 @@ import axios from 'axios';
 import {Chart} from "chart.js";
 
 let backend = "http://192.168.0.33:80/api";
-// let backend = "http://localhost:8080";
+// let backend = "http://localhost:8000";
 
 export default {
   data() {

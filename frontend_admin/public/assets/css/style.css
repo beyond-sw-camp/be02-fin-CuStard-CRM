@@ -9018,7 +9018,7 @@ textarea.tt-hint {
   margin-left: -1.25rem; }
   .form-check-input[disabled] ~ .form-check-label,
   .form-check-input:disabled ~ .form-check-label {
-    color: #6c7293; }
+    color: #ffffff; }
 
 .form-check-label {
   margin-bottom: 0; }
@@ -16677,7 +16677,7 @@ code {
     padding-left: 0.625rem;
     font-size: 0.875rem;
     line-height: 1.5;
-    color: #6c7293; }
+    color: #ffffff; }
     .rtl .form-check .form-check-label {
       padding-left: 0;
       padding-right: 1.875rem; }
@@ -16917,7 +16917,7 @@ code {
   .input-group-prepend .input-group-text {
     border-color: #2c2e33;
     padding: 0.56rem 0.75rem;
-    color: #4b5564;
+    color: #FFFFFF;
     background: none; }
 
 .form-control, .asColorPicker-input, .dataTables_wrapper select, .jsgrid .jsgrid-table .jsgrid-filter-row input[type=text],
@@ -16929,7 +16929,7 @@ code {
   font-weight: normal;
   font-size: 0.875rem;
   padding: 0.625rem 0.6875rem;
-  background-color: #2A3038;
+  background-color: #444950;
   border-radius: 2px;
   color: #ffffff; }
   .form-control:focus, .asColorPicker-input:focus, .dataTables_wrapper select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=text],
@@ -16975,7 +16975,7 @@ select.tt-query,
 select.tt-hint {
   padding: .4375rem .75rem;
   border: 0;
-  color: #4b5564; }
+  color: #FFFFFF; }
   select.form-control:focus, select.asColorPicker-input:focus, .dataTables_wrapper select:focus,
   .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .select2-container--default select.select2-selection--single:focus, .select2-container--default .select2-selection--single select.select2-search__field:focus, select.typeahead:focus,
   select.tt-query:focus,
@@ -17883,12 +17883,12 @@ div.tagsinput {
 /* Tables */
 .table, .jsgrid .jsgrid-table {
   margin-bottom: 0;
-  color: #6c7293; }
+  color: #FFFFFF; }
   .table thead th, .jsgrid .jsgrid-table thead th {
     border-top: 0;
     border-bottom-width: 1px;
     font-weight: 500;
-    color: #6c7293; }
+    color: #FFFFFF; }
     .table thead th i, .jsgrid .jsgrid-table thead th i {
       margin-left: 0.325rem; }
   .table th, .jsgrid .jsgrid-table th,
