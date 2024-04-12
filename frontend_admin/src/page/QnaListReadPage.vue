@@ -8,12 +8,17 @@
               <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">1:1 문의 상세조회</h3>
+                  <br>
                   <div v-if="qna" class="article-container">
                     <div class="article-header">
-                      <h4>{{ qna.title }}</h4>
+                      <h4 class="">제목</h4>
+                      <h5> {{ qna.title }}</h5>
+                      <br>
                     </div>
                     <div class="article-content">
-                      <h4>{{ qna.qnaContent }}</h4>
+                      <h4>내용</h4>
+                      <h5>{{ qna.qnaContent }}</h5>
+                      <br>
                       <h4 v-if="qna.answerContent">답변</h4>
                       <h4 v-if="qna.answerContent">{{ qna.answerContent }}</h4>
                       <div v-else>
@@ -36,7 +41,7 @@
 <script>
 import axios from 'axios';
 let backend = "http://192.168.0.33:80/api";
-// let backend = "http://localhost:8080";
+// let backend = "http://localhost:8000";
 
 export default {
   data() {
@@ -74,6 +79,7 @@ export default {
       }).then(response => {
             if (response.data.code === 1000) {
               alert("답변이 작성되었습니다.");
+              this.$router.push({path: "/qnalist"});
             } else {
               alert("답변이 작성되지 않았습니다.");
             }

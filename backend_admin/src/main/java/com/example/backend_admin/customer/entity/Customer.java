@@ -40,6 +40,8 @@ public class Customer extends BaseTimeEntity implements UserDetails{
     private Integer totalAmount;
     private String lastLogin;
 
+    private String name;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<HaveCoupon> haveCouponList = new ArrayList<>();
 
@@ -68,7 +70,7 @@ public class Customer extends BaseTimeEntity implements UserDetails{
 
     @Override
     public String getUsername() {
-        return this.customerEmail;
+        return this.name;
     }
 
     @Override

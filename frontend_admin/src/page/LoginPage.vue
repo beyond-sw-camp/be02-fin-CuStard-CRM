@@ -6,26 +6,19 @@
           <div class="card col-lg-4 mx-auto">
             <div class="card-body px-5 py-5">
               <h3 class="card-title text-left mb-3">Login</h3>
+              <p style="color: #00a045; font-size: 10px">test01@test.com/qwer1234를 이용하시면 테스트 하실 수 있습니다. </p>
               <form @submit.prevent="login">
                 <div class="form-group">
-                  <label>Username or email *</label>
+                  <label>Email *</label>
                   <input type="text" id="email" class="form-control p_input" v-model="loginForm.adminEmail">
                 </div>
                 <div class="form-group">
                   <label>Password *</label>
                   <input type="password" id="password" class="form-control p_input" v-model="loginForm.adminPwd">
                 </div>
-                <div class="form-group d-flex align-items-center justify-content-between">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input"> Remember me </label>
-                  </div>
-                  <a href="#" class="forgot-pass">Forgot password</a>
-                </div>
                 <div class="text-center">
                   <button type="button" class="btn btn-primary btn-block enter-btn" @click="login">Login</button>
                 </div>
-                <p class="sign-up">Don't have an Account?<a href="#"> Sign Up</a></p>
               </form>
             </div>
           </div>

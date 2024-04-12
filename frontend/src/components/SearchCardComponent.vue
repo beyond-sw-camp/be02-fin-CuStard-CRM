@@ -28,7 +28,7 @@ export default {
 
 <style>
 .product-info{
-  margin-right: 60px;
+  //margin-right: 60px;
   width: 300px;
 }
 
