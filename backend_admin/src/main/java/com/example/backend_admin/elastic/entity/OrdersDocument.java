@@ -24,11 +24,11 @@ public class OrdersDocument {
     @Field(type = FieldType.Integer)
     private int productIdx;
 
-    @Field(type = FieldType.Double)
-    private double category;
+    @Field(type = FieldType.Integer)
+    private int category;
 
-    @Field(type = FieldType.Double)
-    private double price;
+    @Field(type = FieldType.Integer)
+    private int price;
 
     @Field(type = FieldType.Text)
     private String impUid;

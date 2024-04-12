@@ -125,7 +125,6 @@ public class CalculateController {
 
     }
 
-
 //    @RequestMapping("/today/sleep")
 //    public ResponseEntity sleepAccountGrowthRate(){
 //        try {
@@ -143,7 +142,6 @@ public class CalculateController {
         }catch (BaseException exception){
            return ResponseEntity.ok().body(BaseResponse.failResponse(exception.getBaseResponseStatus()));
         }
-
     }
 
 //    @RequestMapping("login/time/{idx}")
@@ -164,6 +162,5 @@ public class CalculateController {
 //        }
 //
 //    }
-
 
 }
