@@ -1,7 +1,7 @@
 package com.example.backend_admin.elastic.service;
 
-import com.example.backend_admin.elastic.entity.OrdersDocument;
-import com.example.backend_admin.elastic.entity.ProductDetailDocument;
+import com.example.backend_admin.elastic.model.entity.OrdersDocument;
+import com.example.backend_admin.elastic.model.entity.ProductDetailDocument;
 import com.example.backend_admin.elastic.model.dto.GetCategoryOrdersRes;
 import com.example.backend_admin.elastic.model.dto.GetTodayOrdersRes;
 import com.example.backend_admin.elastic.repository.OrdersDocumentRepository;

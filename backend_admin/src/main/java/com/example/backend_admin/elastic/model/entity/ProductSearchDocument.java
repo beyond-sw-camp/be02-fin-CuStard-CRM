@@ -1,14 +1,12 @@
-package com.example.backend_admin.elastic.entity;
+package com.example.backend_admin.elastic.model.entity;
 
-import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Getter
-@Document(indexName = "productdetail")
-public class ProductDetailDocument {
+@Document(indexName = "productsearch")
+public class ProductSearchDocument {
     @Id
     private String id;
 
@@ -18,9 +16,6 @@ public class ProductDetailDocument {
     @Field(type = FieldType.Integer)
     private int customerIdx;
 
-    @Field(type = FieldType.Integer)
-    private int productIdx;
-
-    @Field(type = FieldType.Integer)
-    private int category;
+    @Field(type = FieldType.Text)
+    private String keyword;
 }

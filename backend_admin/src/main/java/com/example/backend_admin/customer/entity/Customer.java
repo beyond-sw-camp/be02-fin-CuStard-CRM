@@ -31,7 +31,7 @@ public class Customer extends BaseTimeEntity implements UserDetails{
     private String customerPwd;
     private String authority;
     private boolean status;
-
+    private String name;
     private Integer age;
     private String gender;
     private String address;
