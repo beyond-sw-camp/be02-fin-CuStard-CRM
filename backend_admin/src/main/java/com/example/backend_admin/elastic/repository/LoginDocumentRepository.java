@@ -1,7 +1,7 @@
 package com.example.backend_admin.elastic.repository;
 
-import com.example.backend_admin.elastic.entity.LoginDocument;
-import org.springframework.data.elasticsearch.annotations.Query;
+
+import com.example.backend_admin.elastic.model.entity.LoginDocument;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import java.util.Date;

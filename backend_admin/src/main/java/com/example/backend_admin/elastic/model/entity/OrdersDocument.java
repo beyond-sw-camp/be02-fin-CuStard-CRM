@@ -1,4 +1,4 @@
-package com.example.backend_admin.elastic.entity;
+package com.example.backend_admin.elastic.model.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -9,8 +9,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.Date;
 
 @Getter
-@Document(indexName = "login")
-public class LoginDocument {
+@Document(indexName = "orders")
+public class OrdersDocument {
 
     @Id
     private String id;
@@ -21,15 +21,26 @@ public class LoginDocument {
     @Field(type = FieldType.Integer)
     private int customerIdx;
 
-    @Field(type = FieldType.Keyword)
-    private String customerEmail;
+    @Field(type = FieldType.Integer)
+    private int productIdx;
+
+    @Field(type = FieldType.Integer)
+    private int category;
+
+    @Field(type = FieldType.Integer)
+    private int price;
+
+    @Field(type = FieldType.Text)
+    private String impUid;
 
     @Override
     public String toString() {
-        return "LoginDocument{" +
+        return "OrdersDocument{" +
                 "timestamp=" + timestamp +
                 ", customerIdx='" + customerIdx + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
+                ", productIdx='" + productIdx + '\'' +
+                ", category='" + category + '\'' +
+                ", price='" + price + '\'' +
                 '}';
     }
 }
