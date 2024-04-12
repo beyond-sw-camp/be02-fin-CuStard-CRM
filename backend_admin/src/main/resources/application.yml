@@ -6,6 +6,7 @@ jwt:
     expired-time-ms: ${JWT_EXPIRED_TIME}
 spring:
   datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
     driver-class-name: org.mariadb.jdbc.Driver
     url: ${DB_URL}
     username: ${USER_NAME}
@@ -37,6 +38,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   elasticsearch:
     uris: http://elasticsearch.elasticsearch.svc.cluster.local:9200
+#    uris: http://192.168.0.253:31280
 cloud:
   aws:
     s3:
