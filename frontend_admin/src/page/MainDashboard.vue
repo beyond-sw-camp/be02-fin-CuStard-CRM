@@ -325,7 +325,7 @@ export default {
 
   methods: {
     createChart() {
-      axios.get(backend + '/dashboard/main')
+      axios.get(backend + '/es/dashboard/main')
           .then(response => {
             const result = response.data.result;
 

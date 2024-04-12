@@ -2,6 +2,8 @@ package com.example.backend_admin.elastic.service;
 
 import com.example.backend_admin.elastic.entity.LoginDocument;
 import com.example.backend_admin.elastic.entity.OrdersDocument;
+import com.example.backend_admin.elastic.model.dto.GetLoginTimeRes;
+import com.example.backend_admin.elastic.model.dto.GetTodayLoginRes;
 import com.example.backend_admin.elastic.repository.LoginDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class LoginService {
     private final LoginDocumentRepository loginDocumentRepository;
 
     //오늘 방문자 수, 어제 동시간대 방문자 수
-    public Object countTodayLogins() {
+    public GetTodayLoginRes countTodayLogins() {
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
 
         // 오늘 00시
@@ -44,12 +46,16 @@ public class LoginService {
         long todayLoginsCount =loginDocumentRepository.countByTimestampBetween(startOfTodayDate, nowDate);
         long yestLoginsCount = loginDocumentRepository.countByTimestampBetween(startOfYesterdayDate, sameTimeYesterdayDate);
 
-        return "오늘 방문자: "+ todayLoginsCount + " , 어제 동시간대 방문자: " + yestLoginsCount;
+        System.out.println("오늘 방문자: "+ todayLoginsCount + " , 어제 동시간대 방문자: " + yestLoginsCount);
+
+        return GetTodayLoginRes.builder()
+                .todayLogin(todayLoginsCount)
+                .difLogin(todayLoginsCount-yestLoginsCount)
+                .build();
     }
 
-
     //시간대별 로그인
-    public Object countLoginTime() {
+    public GetLoginTimeRes countLoginTime() {
         LocalDateTime start = LocalDate.now().minusDays(14).atStartOfDay();
         Date startDate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
 
@@ -60,16 +66,20 @@ public class LoginService {
             loginTime[login.getTimestamp().getHours()]++;
         }
 
-        return "시간대별 로그인: [" + loginTime[0] + "," + loginTime[1] + "," + loginTime[2] + ","  +loginTime[3] + "," +
+        System.out.println( "시간대별 로그인: [" + loginTime[0] + "," + loginTime[1] + "," + loginTime[2] + ","  +loginTime[3] + "," +
                 loginTime[4] + loginTime[5] + "," + loginTime[6] + "," + loginTime[7] + ","  +loginTime[8] + "," +
                 loginTime[9] + loginTime[10] + "," + loginTime[11] +
                 loginTime[12] + loginTime[13] + "," + loginTime[14] + "," + loginTime[15] + ","  +loginTime[16] + "," +
                 loginTime[17] + loginTime[18] + "," + loginTime[19] +loginTime[20] + loginTime[21] + "," + loginTime[22] +
-                + loginTime[23] +"]";
+                + loginTime[23] +"]");
+
+        return GetLoginTimeRes.builder()
+                .timeDataList(loginTime)
+                .build();
     }
 
 
-    public Object custLoginTime(Long idx) {
+    public GetLoginTimeRes custLoginTime(Long idx) {
         LocalDateTime start = LocalDate.now().minusDays(365).atStartOfDay();
         Date startDate = Date.from(start.atZone(ZoneId.systemDefault()).toInstant());
 
@@ -80,11 +90,14 @@ public class LoginService {
             loginTime[login.getTimestamp().getHours()]++;
         }
 
-        return "고객의 시간대별 로그인: [" + loginTime[0] + "," + loginTime[1] + "," + loginTime[2] + ","  +loginTime[3] + "," +
+        System.out.println( "고객의 시간대별 로그인: [" + loginTime[0] + "," + loginTime[1] + "," + loginTime[2] + ","  +loginTime[3] + "," +
                 loginTime[4] + loginTime[5] + "," + loginTime[6] + "," + loginTime[7] + ","  +loginTime[8] + "," +
                 loginTime[9] + loginTime[10] + "," + loginTime[11] +
                 loginTime[12] + loginTime[13] + "," + loginTime[14] + "," + loginTime[15] + ","  +loginTime[16] + "," +
                 loginTime[17] + loginTime[18] + "," + loginTime[19] +loginTime[20] + loginTime[21] + "," + loginTime[22] +
-                + loginTime[23] +"]";
+                + loginTime[23] +"]");
+        return GetLoginTimeRes.builder()
+                .timeDataList(loginTime)
+                .build();
     }
 }
