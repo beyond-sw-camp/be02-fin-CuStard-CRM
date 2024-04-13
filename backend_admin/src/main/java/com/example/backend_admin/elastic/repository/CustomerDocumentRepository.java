@@ -10,4 +10,5 @@ import java.util.List;
 public interface CustomerDocumentRepository extends ElasticsearchRepository<CustomerDocument, String> {
 
     Page<CustomerDocument> findByLevel(Integer level, Pageable pageable);
+    List<CustomerDocument> findAll();
 }

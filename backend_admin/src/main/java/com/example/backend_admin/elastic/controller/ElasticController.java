@@ -17,6 +17,8 @@ import com.example.backend_admin.elastic.service.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
@@ -119,4 +121,8 @@ public class ElasticController {
 //    public Object catergoryRead(@PathVariable Long idx) {
 //        return productDetailService.catergoryRead(idx);
 //    }
+    @GetMapping("/relogin")
+    public int reLogin(){
+        return loginService.reLogin();
+    }
 }
