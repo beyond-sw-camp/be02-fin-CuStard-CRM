@@ -59,8 +59,8 @@ public class OrdersService {
         return GetTodayOrdersRes.builder()
                 .todayOrdersCount(todayOrders.size())
                 .todayOrdersAmount(todayOrderAmt)
-                .difOrdersCount( yestOrders.size())
-                .difOrdersAmount(yestOrderAmt)
+                .difOrdersCount(todayOrders.size() - yestOrders.size())
+                .difOrdersAmount(todayOrderAmt - yestOrderAmt)
                 .build();
     }
 

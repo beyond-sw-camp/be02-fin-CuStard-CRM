@@ -1,5 +1,7 @@
 package com.example.backend_admin.elastic.controller;
 
+import com.example.backend_admin.common.BaseResponse;
+import com.example.backend_admin.common.CustomerLevel;
 import com.example.backend_admin.elastic.model.entity.CustomerDocument;
 import com.example.backend_admin.elastic.service.ElasticCustomerService;
 import lombok.RequiredArgsConstructor;
@@ -17,27 +19,28 @@ public class ElasticCustomerController {
 
     //고객 대시보드 클릭했을 때 첫 페이지
     @GetMapping("/main/{page}")
-    public Object dashboard(@PathVariable Integer page) throws IOException {
-        return elasticCustomerService.dashboard(page);
+    public BaseResponse dashboard(@PathVariable Integer page) throws IOException {
+        return BaseResponse.successResponse(elasticCustomerService.dashboard(page));
     }
 
     //주문 금액 높은 순으로 정렬한 고객 대시보드
-    @GetMapping("/amount/{page}")
-    public Object amtDescDashboard(@PathVariable Integer page) throws IOException {
-        return elasticCustomerService.amtDescDashboard(page);
+    @GetMapping("/amount/desc/{page}")
+    public BaseResponse amtDescDashboard(@PathVariable Integer page) throws IOException {
+        return BaseResponse.successResponse(elasticCustomerService.amtDescDashboard(page));
     }
 
     //주문 금액 낮은 순으로 정렬한 고객 대시보드
-    @GetMapping("/amount/{page}")
-    public Object amtFilterAscDashboard(@PathVariable Integer page) throws IOException {
-        return elasticCustomerService.amtAscDashboard(page);
+    @GetMapping("/amount/asc/{page}")
+    public BaseResponse amtFilterAscDashboard(@PathVariable Integer page) throws IOException {
+        return BaseResponse.successResponse(elasticCustomerService.amtAscDashboard(page));
     }
 
     //등급별로 필터링한 고객 대시보드
-    @GetMapping("/level")
-    public Page<CustomerDocument> getFilteredCustomers(
-            @RequestParam Integer level,
-            @RequestParam(defaultValue = "0") int page) {
-        return elasticCustomerService.getCustomersByLevel(level, page);
+    @GetMapping("/level/{level}/{page}")
+    public BaseResponse getFilteredCustomers(
+            @PathVariable CustomerLevel level,
+            @PathVariable int page) {
+        System.out.println(level.ordinal());
+        return BaseResponse.successResponse(elasticCustomerService.getCustomersByLevel(level.ordinal()+1, page));
     }
 }
