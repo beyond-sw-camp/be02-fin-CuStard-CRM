@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 8080
 jwt:
   secret-key: ${JWT_SECRET}
   token:
@@ -26,7 +26,6 @@ spring:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
-
   jpa:
     hibernate:
       ddl-auto: update
