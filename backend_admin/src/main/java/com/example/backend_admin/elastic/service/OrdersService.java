@@ -97,7 +97,7 @@ public class OrdersService {
         for(OrdersDocument order : list) {
             System.out.println(order.toString());
             totalAmt += order.getPrice();
-            categoryAmt[order.getCategory()] += order.getPrice();
+            categoryAmt[order.getCategory()-1] += order.getPrice();
         }
 
         System.out.println( "결제건수: " + list.size() + ", 결제금액: " + totalAmt +

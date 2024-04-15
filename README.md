@@ -68,10 +68,10 @@
 ---
 ## 📌 Custard 사이트 바로가기 
 🛍️ Cus+ard 쇼핑몰 사이트 <br>
-(www.custard.com) <br>
+(www.custardshop.kro.kr/) <br>
 
 📊 Cus+ard 고객 관리 사이트 <br>
-(www.customer.standard.com)
+(http://www.custardadmin.kro.kr/)
 <br>
 
 ---
@@ -139,8 +139,8 @@
 <a href="/" style="text-decoration: none;"> 🔗 WBS  </a> <br>
 
 ## 🔗 더 자세한 설명 보러가기
-1️⃣ <a href="" style="text-decoration: none;"> 쇼핑몰 Frontend Read.ME </a> <br>
-2️⃣<a href="" style="text-decoration: none;"> 쇼핑몰 Backend Read.ME </a> <br>
-3️⃣ <a href="" style="text-decoration: none;"> Cus+ard CRM Frontend Read.ME </a> <br>
-4️⃣ <a href="" style="text-decoration: none;"> Cus+ard CRM Backend Read.ME </a> <br>
-5️⃣<a href="" style="text-decoration: none;"> CI/CD Read.ME </a> <br>
+1️⃣ [쇼핑몰 Frontend Read.ME](/frontend/README.md) <br>
+2️⃣ [쇼핑몰 Backend Read.ME](/backend/README.md) <br>
+3️⃣ [Cus+ard CRM Frontend Read.ME](/frontend_admin/README.md) <br>
+4️⃣ [Cus+ard CRM Backend Read.ME](/backend_admin/README.md)  <br>
+5️⃣ [CI/CD Read.ME](/cicd/README.md) /<br>
