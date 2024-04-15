@@ -36,8 +36,8 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   elasticsearch:
-    uris: http://elasticsearch.elasticsearch.svc.cluster.local:9200
-#    uris: http://192.168.0.253:31280
+#    uris: http://elasticsearch.elasticsearch.svc.cluster.local:9200
+    uris: http://192.168.0.253:31280
 cloud:
   aws:
     s3:

@@ -1,8 +1,10 @@
 package com.example.backend_admin.elastic.service;
 
+import com.example.backend_admin.elastic.model.entity.CustomerDocument;
 import com.example.backend_admin.elastic.model.entity.LoginDocument;
 import com.example.backend_admin.elastic.model.dto.GetLoginTimeRes;
 import com.example.backend_admin.elastic.model.dto.GetTodayLoginRes;
+import com.example.backend_admin.elastic.repository.CustomerDocumentRepository;
 import com.example.backend_admin.elastic.repository.LoginDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,15 +12,17 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
 
     private final LoginDocumentRepository loginDocumentRepository;
-
+    private final CustomerDocumentRepository customerDocumentRepository;
     //오늘 방문자 수, 어제 동시간대 방문자 수
     public GetTodayLoginRes countTodayLogins() {
         ZoneId zoneId = ZoneId.of("Asia/Seoul");
@@ -95,4 +99,7 @@ public class LoginService {
                 .timeDataList(loginTime)
                 .build();
     }
+
+
+
 }
