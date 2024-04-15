@@ -143,11 +143,6 @@ export default {
 </script>
 
 <style>
-
-*{
-    font-family: 'GmarketSans';
-}
-
 body {
     background-color: #f9f9f9;
     margin: 0;

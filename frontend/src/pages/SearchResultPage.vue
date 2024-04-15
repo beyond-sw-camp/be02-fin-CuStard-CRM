@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <h3 class="result">검색 결과</h3>
@@ -55,8 +54,8 @@ async function fetchSearchResults(keyword) {
   }
 
   .result{
-    padding-left: 8%;
-    font-size: 33px;
+    padding-top: 60px;
+    padding-left: 30px;
   }
 
 </style>

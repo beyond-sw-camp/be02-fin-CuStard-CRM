@@ -85,25 +85,31 @@ input[type="password"] {
 }
 
 button[type="submit"] {
-  background-color: #ffbe0e;
+  background-color: #99154E;
   color: #fff;
   border: none;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.5s;
   margin-bottom: 20px;
-  width: 100%;
+  width: 30%;
   box-sizing: border-box;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 button[type="submit"]:hover {
-  background-color: #99154E;
+  background-color: #ffbe0e;
 }
 
 .article-container {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
+  background-color: #fff;
 }
 
 .article-header {
