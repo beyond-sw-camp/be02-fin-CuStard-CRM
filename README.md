@@ -8,16 +8,20 @@
 ---
 
 ## ‍🧑‍💻 Team
-<table>
-  <tbody>
-    <tr>
-      <td align="center"><a href="https://github.com/JungDongSeob"><img src="https://avatars.githubusercontent.com/u/58664027?v=4" width="100px;" alt=""/><br /><sub><b> 🐯팀장 : 정동섭</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/kangmoonhye"><img src="https://avatars.githubusercontent.com/u/122515113?v=4" width="100px;" alt=""/><br /><sub><b> 🐶팀원 : 강문혜</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/SongYeonBaek"><img src="https://avatars.githubusercontent.com/u/78153440?v=4" width="100px;" alt=""/><br /><sub><b> 🐱팀원 : 백송연</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/Hyeon28"><img src="https://avatars.githubusercontent.com/u/96675421?v=4" width="100px;" alt=""/><br /><sub><b> 🐧팀원 : 이주현</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/dohyun0408"><img src="https://avatars.githubusercontent.com/u/149150345?v=4" width="100px;" alt=""/><br /><sub><b> 🐺팀원 : 김도현 </b></sub></a><br /></td>
-  </tbody>
-</table>
+<div style="display: flex; justify-content: center;">
+  <table>
+    <tbody>
+      <tr>
+        <td align="center"><a href="https://github.com/JungDongSeob" style="text-decoration: none; color: lightgray;"><img src="https://avatars.githubusercontent.com/u/58664027?v=4" width="100px;" alt=""/><br /><sub><b> 🐯 정동섭</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/kangmoonhye" style="text-decoration: none; color: lightgray;"><img src="https://avatars.githubusercontent.com/u/122515113?v=4" width="100px;" alt=""/><br /><sub><b> 🐶 강문혜</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/SongYeonBaek" style="text-decoration: none; color: lightgray;"><img src="https://avatars.githubusercontent.com/u/78153440?v=4" width="100px;" alt=""/><br /><sub><b> 🐱 백송연</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/Hyeon28" style="text-decoration: none; color: lightgray;"><img src="https://avatars.githubusercontent.com/u/96675421?v=4" width="100px;" alt=""/><br /><sub><b> 🐧 이주현</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/dohyun0408" style="text-decoration: none; color: lightgray;"><img src="https://avatars.githubusercontent.com/u/149150345?v=4" width="100px;" alt=""/><br /><sub><b> 🐺 김도현 </b></sub></a><br /></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <br>
 
 ---
@@ -77,10 +81,10 @@
 
 <h3>CRM (Customer Relationship Management) 고객 관계 관리</h4>
 
- * 기업이 고객과의 관계를 구축하고 유지하기 위해 사용되는 전략적인 접근 방식이자 그에 따른 기술적인 시스템을 가리킵니다.
+ * 기업이 고객과의 관계를 구축하고 유지하기 위해 사용되는 전략적인 접근 방식이자 그에 따른 기술적인 시스템입니다. 
 
-* CRM 시스템이 수집하는 데이터의 다양성과 통합성은 기업이 고객을 보다 깊이 있게 이해하고 개별적으로 대응할 수 있도록 합니다. 이렇게 CRM 시스템이 수집하는 데이터는 시장의 관점에서 바라보았을 때 고객 충성도를 높이고 잠재고객을 발굴하여 새로운 비즈니스 기회를 창출하는 데 도움이 된다고 볼 수 있습니다. 
-또한, 실시간 데이터 분석을 통해 기업은 빠르게 변화하는 시장 환경에 대응하고 효율적인 의사결정을 내려 비즈니스 프로그램을 사용하는 고객들에게 하여금 긍정적인 기대 효과를 가지게 되고 이는 해당 비즈니스를 다시 찾게되는 이유가 될 수 있을 것 같습니다.
+* CRM 시스템이 수집하는 데이터의 다양성과 통합성은 기업이 고객을 보다 깊이 있게 이해하고 개별적으로 대응할 수 있도록 합니다. 이렇게 CRM 시스템이 수집하는 데이터는 시장의 관점에서 바라보았을 때 고객 충성도를 높이고 잠재고객을 발굴하여 새로운 비즈니스 기회를 창출합니다. 
+또한, 실시간 데이터 분석을 통해 기업은 빠르게 변화하는 시장 환경에 대응하고 효율적인 의사결정을 내려 비즈니스 프로그램을 사용하는 고객들에게 하여금 긍정적인 기대 효과를 가지게 되고 이는 해당 비즈니스를 다시 찾게 됩니다. 
 
 * 마케팅 및 판매 활동의 성과를 추적하고 평가함으로써, 기업은 자사의 전략적 방향성을 확인하고 조정할 수 있고 이러한 과정을 통해 기업은 고객과의 관계를 지속적으로 강화하고, 매출과 수익성을 증대시킬 수 있습니다. 
 
@@ -92,14 +96,17 @@
 ---
 ## 📌프로젝트 목표
 
-1️⃣ 고객 데이터 관리
-   * 올바른 시스템을 통해 고객 데이터를 저장, 추적, 검증하여 영업 및 마케팅 팀은 고객 관계 전략을 최적화하고 기업의 이익을 증진시킵니다. 
-2) 데이터의 중앙화
-   * 쇼핑몰과 CRM이 하나의 DB를 공유하여 데이터를 저장합니다. 
-3) 개인화된 마켓팅 
-   * 분석된 고객의 행동 데이터를 이용하여 맞춤형 마켓팅(상품 추천, 쿠폰 발급)을 진행합니다. 
+**1) 고객 데이터 관리**
+   * 고객 데이터를 저장, 추적, 검증하여 영업 및 마케팅 팀은 고객 관계 전략을 최적화하고 기업의 이익을 증진시킵니다. 
 
+**2) 데이터의 중앙화**
+   * 쇼핑몰과 CRM이 하나의 DB를 공유하여 데이터를 저장하여 데이터의 정확성과 신뢰성이 향상됩니다. 
 
+**3) 개인화된 마켓팅** 
+   * 분석된 고객의 행동 데이터를 이용하여 맞춤형 마켓팅(상품 추천, 쿠폰 발급)을 진행합니다.
+
+**4) ELF 도입으로 인한 빠른 실시간 로그 집계**
+   * Elastic Search를 도입하여 대용량의 로그를 빠른 속도로 실시간 집계한다. 
 ---
 ## 👷 프로젝트 설계<br>
 
@@ -127,13 +134,13 @@
 
 
 ## 📆 프로젝트 기능 및 일정
-<a href="/"> 🔗 요구사항 명세서  </a> <br>
-<a href="https://www.notion.so/API-2e704a21c39342b5a6d7356af08e5f84"> 🔗 API 명세서  </a> <br>
-<a href="/"> 🔗 WBS  </a> <br>
+<a href="/" style="text-decoration: none;"> 🔗 요구사항 명세서  </a> <br>
+<a href="https://www.notion.so/API-2e704a21c39342b5a6d7356af08e5f84" style="text-decoration: none;"> 🔗 API 명세서  </a> <br>
+<a href="/" style="text-decoration: none;"> 🔗 WBS  </a> <br>
 
 ## 🔗 더 자세한 설명 보러가기
-1️⃣ <a href="" style="none"> 쇼핑몰 Frontend Read.ME </a> <br>
-2️⃣<a href=""> 쇼핑몰 Backend Read.ME </a> <br>
-3️⃣ <a href=""> Cus+ard CRM Frontend Read.ME </a> <br>
-4️⃣ <a href=""> Cus+ard CRM Backend Read.ME </a> <br>
-5️⃣<a href=""> CI/CD Read.ME </a> <br>
+1️⃣ <a href="" style="text-decoration: none;"> 쇼핑몰 Frontend Read.ME </a> <br>
+2️⃣<a href="" style="text-decoration: none;"> 쇼핑몰 Backend Read.ME </a> <br>
+3️⃣ <a href="" style="text-decoration: none;"> Cus+ard CRM Frontend Read.ME </a> <br>
+4️⃣ <a href="" style="text-decoration: none;"> Cus+ard CRM Backend Read.ME </a> <br>
+5️⃣<a href="" style="text-decoration: none;"> CI/CD Read.ME </a> <br>
