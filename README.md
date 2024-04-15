@@ -1,32 +1,30 @@
 
-<h1 align="center">고객 관리 서비스 <img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/76fb4ada-d8e8-445e-9c30-ce944be4c52a"" alt="logo" width="30px" height="30px"> Custard </h1>
-<div align="center"> 
- <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flw4rG%2FbtsFY8R9biY%2Fw14QE1yBsQMYzm57iEbPc1%2Fimg.png"/>
+<h1 align="center">고객 관리 서비스 <img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/76fb4ada-d8e8-445e-9c30-ce944be4c52a" alt="logo" width="30px" height="30px"> Cus+ard </h1>
+<div align="center">
+  <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flw4rG%2FbtsFY8R9biY%2Fw14QE1yBsQMYzm57iEbPc1%2Fimg.png" style="width: 90%;">
 </div>
 <br>
 
 ---
 
-## 🧑‍🤝‍🧑 팀원
+## ‍🧑‍💻 Team
 <table>
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/JungDongSeob"><img src="https://avatars.githubusercontent.com/u/58664027?v=4" width="100px;" alt=""/><br /><sub><b> 🐯팀장 : 정동섭</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/kangmoonhye"><img src="https://avatars.githubusercontent.com/u/122515113?v=4" width="100px;" alt=""/><br /><sub><b> 🐶팀원 : 강문혜</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/SongYeonBaek"><img src="https://avatars.githubusercontent.com/u/78153440?v=4" width="100px;" alt=""/><br /><sub><b> 🐱팀원 : 백송연</b></sub></a><br /></td>
-     <tr/>
       <td align="center"><a href="https://github.com/Hyeon28"><img src="https://avatars.githubusercontent.com/u/96675421?v=4" width="100px;" alt=""/><br /><sub><b> 🐧팀원 : 이주현</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/dohyun0408"><img src="https://avatars.githubusercontent.com/u/149150345?v=4" width="100px;" alt=""/><br /><sub><b> 🐺팀원 : 김도현 </b></sub></a><br /></td>
-    </tr>
   </tbody>
 </table>
 <br>
 
 ---
 
-##  ⭐ STACKS 
+##  ⛓️ Stacks
 <h4> Backend</h4>
-<div class="stack-container">
+<div class="stack-container" align="">
     <img src="https://img.shields.io/badge/java-F7DF1E?style=for-the-badge&logo=java&logoColor=white">
     <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
     <img src="https://img.shields.io/badge/springsecurity-000000?style=for-the-badge&logo=springsecurity&logoColor=white">
@@ -43,8 +41,7 @@
     <img src="https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D">
     <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
     <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
-    <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens">
- <br>
+    <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"> 
     <img src="https://img.shields.io/badge/cent%20os-002260?style=for-the-badge&logo=centos&logoColor=F0F0F0">
     <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=Spring-Security&logoColor=white">
     <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
@@ -65,13 +62,20 @@
 </div>
 
 ---
+## 📌 Custard 사이트 바로가기 
+🛍️ Cus+ard 쇼핑몰 사이트 <br>
+(www.custard.com) <br>
 
-## 🌟 Cus+ard 고객 관리 서비스
+📊 Cus+ard 고객 관리 사이트 <br>
+(www.customer.standard.com)
+<br>
+
+---
+## ⭐ Cus+ard 고객 관리 서비스
 
 <img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/bee89341-12b9-4993-9f00-b15a17b22bdc">
 
-
-<h4>CRM (Customer Relationship Management) 고객 관계 관리</h4>
+<h3>CRM (Customer Relationship Management) 고객 관계 관리</h4>
 
  * 기업이 고객과의 관계를 구축하고 유지하기 위해 사용되는 전략적인 접근 방식이자 그에 따른 기술적인 시스템을 가리킵니다.
 
@@ -80,38 +84,26 @@
 
 * 마케팅 및 판매 활동의 성과를 추적하고 평가함으로써, 기업은 자사의 전략적 방향성을 확인하고 조정할 수 있고 이러한 과정을 통해 기업은 고객과의 관계를 지속적으로 강화하고, 매출과 수익성을 증대시킬 수 있습니다. 
 
-<h4> 쇼핑몰 + CRM </h4>
+<h3> 쇼핑몰 + CRM </h3>
 
--  Cus+ard 쇼핑몰에서 직접 수집한 데이터를 기반으로 고객 행동데이터를 분석합니다. 
+- Cus+ard 쇼핑몰에서 직접 수집한 데이터를 기반으로 고객 행동데이터를 분석합니다. 
 - 분석된 행동 데이터로 개인 마켓팅(쿠폰 발급, 상품 추천 이메일 전송 등)이 진행됩니다. 
 
-
+---
 ## 📌프로젝트 목표
 
-1) 고객 데이터 관리
- * 올바른 시스템을 통해 고객 데이터를 저장, 추적, 검증하여 영업 및 마케팅 팀은 고객 관계 전략을 최적화하고 기업의 이익을 증진시킵니다. 
+1️⃣ 고객 데이터 관리
+   * 올바른 시스템을 통해 고객 데이터를 저장, 추적, 검증하여 영업 및 마케팅 팀은 고객 관계 전략을 최적화하고 기업의 이익을 증진시킵니다. 
 2) 데이터의 중앙화
-  * 쇼핑몰과 CRM이 하나의 DB를 공유하여 데이터를 저장합니다. 
+   * 쇼핑몰과 CRM이 하나의 DB를 공유하여 데이터를 저장합니다. 
 3) 개인화된 마켓팅 
-  * 분석된 고객의 행동 데이터를 이용하여 맞춤형 마켓팅을 진행합니다. 
+   * 분석된 고객의 행동 데이터를 이용하여 맞춤형 마켓팅(상품 추천, 쿠폰 발급)을 진행합니다. 
 
 
-## 📌 Custard 사이트 바로가기<br>
-🛍️ 커스타드 쇼핑몰 사이트 <br>
-(www.custard.com) <br>
-
-📊 Custard 고객 관리 사이트 <br>
-(www.customer.standard.com)
-<br>
-<br>
-
-
+---
 ## 👷 프로젝트 설계<br>
-<details close>
-  <summary>Figma 화면 설계서</summary>
 
-🔍 <a href="https://www.figma.com/file/2pAV6Wq0Ue6Stm79E2UUC3/cus%2Bard-%ED%94%BC%EA%B7%B8%EB%A7%88?type=design&node-id=0-1&mode=design&t=28S02eukWQTbIYs3-0"> 피그마 보러가기 </a>
-</details>
+🔍 <a href="https://www.figma.com/file/2pAV6Wq0Ue6Stm79E2UUC3/cus%2Bard-%ED%94%BC%EA%B7%B8%EB%A7%88?type=design&node-id=0-1&mode=design&t=28S02eukWQTbIYs3-0"> Figma 화면 설계서 보러가기 </a>
 
 <details close>
   <summary>ERD</summary>
@@ -127,7 +119,7 @@
 
 ## 🧩 운영 환경
  * 시스템 아키텍쳐
-<img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/0c17ad4e-3aee-4447-990e-ff1da4513dc0">
+<img src="https://github.com/beyond-sw-camp/be02-fin-CuStard-CRM/assets/78153440/d31310a1-8abf-4e2b-b5d8-55a5b93a0eff">
 <br>
 <br>
  * 소프트웨어 아키텍처
@@ -140,7 +132,7 @@
 <a href="/"> 🔗 WBS  </a> <br>
 
 ## 🔗 더 자세한 설명 보러가기
-1️⃣ <a href=""> 쇼핑몰 Frontend Read.ME </a> <br>
+1️⃣ <a href="" style="none"> 쇼핑몰 Frontend Read.ME </a> <br>
 2️⃣<a href=""> 쇼핑몰 Backend Read.ME </a> <br>
 3️⃣ <a href=""> Cus+ard CRM Frontend Read.ME </a> <br>
 4️⃣ <a href=""> Cus+ard CRM Backend Read.ME </a> <br>

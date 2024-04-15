@@ -1,11 +1,11 @@
-## 백엔드 고객 관리 프로젝트
+<h1 align="center"> Cus+ard CRM 백엔드  </h1>
 
 * 이커머스 사이트의 관리자가 고객 정보 및 이커머스 운영 정보를 확인하는데 사용되는 백엔드 프로젝트 입니다.
 * 이커머스 사이트에서 수집된 고객들의 행동 데이터들을 집계하고 분석하여 제공하는 역할을 수행합니다.
 * 메인 대시보드, 고객 정보, 고객 상세 정보, 1:1 문의 페이지 기능을 제공합니다.
 
 
-## ⭐ 기술 스택
+## ⛓️ Stacks
 <img src="https://img.shields.io/badge/mariadb-003545?style=for-the-badge&logo=mariadb&logoColor=white">
 <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=white">
 <img src="https://img.shields.io/badge/java-F7DF1E?style=for-the-badge&logo=java&logoColor=white">
