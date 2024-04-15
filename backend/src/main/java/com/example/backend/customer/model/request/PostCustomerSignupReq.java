@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 @Builder
 public class PostCustomerSignupReq {
 
-
     @Size(min = 6, max = 25, message = "최소 6자 이상, 25자 이하의 숫자를 입력하세요")
     @Pattern(regexp = "[A-z0-9]+@[A-z]+\\.[a-z]{2,3}", message = "이메일 형식을 준수해 주세요.")
     private String customerEmail;

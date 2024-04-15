@@ -12,26 +12,8 @@
         <button type="submit">로그인</button>
       </form>
       <br>
-      <div>
-        <a href="/users/password/new">비밀번호 재설정</a>
-      </div>
-      <a href="/normal_users/new">회원가입</a>
-      <br><br>
-      <div class="confortLogin">SNS 계정으로 간편 로그인 / 회원가입</div>
-      <div class="sns-buttons">
-        <a href="/users/auth/facebook" class="facebook"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2FMjAxOTAzMjlfNSAg%2FMDAxNTUzODM2ODA4MTky.-gS3ZoRn6NftLL0GUjuFUaDNRgoG9vAnH--zyNQIF1Ag.7tgGDNfnJlPGxaTGqye0f5cD0_HKnU6GNQ7wf1FbgZAg.JPEG.btf0c6dsc%2FDFGJSDF%253BLGJ%253BKJSF%253BGKLJR%253BKLDFG.gif&type=sc960_832_gif" alt="페이스북 로고"></a>
-        <a href="/users/auth/kakao" class="kakao"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjFfMjYy%2FMDAxNjI2ODMxODU0NzUx.KsijiA7OtIhygOW1opRzuVuxZeOyK-98jGSc0Ao6g6sg.p-mwUQH33OLvab3S-6fa4-bIJsJCdPzSPpRgWg2T8mkg.JPEG.aosmithkr%2F%25C4%25AB%25C4%25AB%25BF%25C0%25C5%25E5%25C0%25CC%25B9%25CC%25C1%25F6.jpg&type=sc960_832" alt="카카오 로고"></a>
-        <a href="/users/auth/naver" class="naver"><img src="../assets/naversimbol.png" alt="네이버 로고"></a>
-      </div>
-      <div class="loginError">로그인에 문제가 있으신가요?</div>
-      <hr class="line">
-      <div class="serchOrder" @click="toggleOrderSearch()">비회원 주문 조회하기</div>
-      <div class="order-search-container">
-        <input type="text" placeholder="주문번호" id="orderNumber">
-        <input type="text" placeholder="이메일" id="orderEmail">
-        <br>
-        <button type="button" @click="searchOrder()">주문 조회</button>
-      </div>
+      <a href="./signup">회원가입</a>
+
     </div>
   </div>
 </template>
@@ -107,7 +89,7 @@ export default {
         alert("이메일 인증을 해주세요.");
       } else {
         // 그 외 경우는 로그인 실패 처리
-        alert("로그인 실패");
+        alert("ID와 PW를 다시 확인해주세요");
         this.loginForm = {
           customerEmail: '',
           customerPwd: ''
@@ -199,6 +181,7 @@ body {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-bottom: 10px;
 }
 
 .login-container button {

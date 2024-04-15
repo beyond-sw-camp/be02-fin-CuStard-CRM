@@ -1,19 +1,13 @@
 <template>
   <div class="container-scroller">
-    <!-- partial:partials/_sidebar.html -->
-    <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_navbar.html -->
-      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row ">
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-
                   <div id="results">
-                    <!-- 정렬 및 필터링된 결과가 여기에 표시됩니다 -->
                   </div>
                   <div class="select">
                     <h4 class="card-title csInfo">고객 정보</h4>
@@ -31,12 +25,9 @@
                         <option value="SILVER">SILVER</option>
                         <option value="BRONZE">BRONZE</option>
                         <option value="NEWBIE">NEWBIE</option>
-
                       </select>
-
                     </div>
                   </div>
-
                   <div class="table-responsive">
                     <table class="table table-bordered table-contextual">
                       <thead>
@@ -54,80 +45,93 @@
                         <td>{{ customer.idx }}</td>
                         <td>{{ customer.name }}</td>
                         <td>{{ customer.customerEmail }}</td>
-                        <td>{{ customer.level }}</td>
-                        <td>{{ formatNumber(customer.totalAmount) }}</td>
+                        <td>{{ getLevelName(customer.level) }}</td>
+                        <td>{{ formatNumber(customer.totalAmount) }}원</td>
                         <td>{{ customer.lastLogin}}</td>
                       </tr>
                       </tbody>
                     </table>
-                  </div>
+                    <div class="pagination">
+                    <button class="page-control" @click="changePage(-1)" :disabled="currentPage === 0"> &lt; </button>
+                      <span class="page-number">{{ currentPage+1 }}</span>
+                    <button class="page-control" @click="changePage(1)"> &gt; </button>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <!-- partial -->
         </div>
-        <!-- main-panel ends -->
       </div>
-      <!-- page-body-wrapper ends -->
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 let backend = "http://192.168.0.33:80/api";
-// let backend = "http://localhost:8080";
+// let backend = "http://localhost:8000";
 
 export default {
   data() {
     return {
       customers: [],
-      originalCustomers: [], // 원본 고객 목록을 저장할 속성
-
+      originalCustomers: [],
+      currentPage: 0,
+      currentFilter: 'main', // 'main', 'desc', 'asc'
     };
   },
   methods: {
     fetchCustomers() {
-      axios.get(backend + "/admin/customer/list") //:Todo 백엔드 어드민으로 분리할 것
+      let url = `${backend}/es/customer/${this.currentFilter}/${this.currentPage}`;
+      axios.get(url)
           .then(response => {
-            this.customers = response.data.result;
-            this.originalCustomers = [...response.data.result];
+            this.customers = response.data.result.content;
+            this.originalCustomers = [...response.data.result.content];
           })
           .catch(error => {
             console.error('고객 정보를 불러오는 중 오류가 발생했습니다:', error);
           });
     },
+    changePage(increment) {
+      this.currentPage += increment;
+      this.fetchCustomers();
+    },
+    changeFilter(newFilter) {
+      this.currentFilter = newFilter;
+      this.currentPage = 0;
+      this.fetchCustomers();
+    },
     goToCustomerDetail(idx) {
       this.$router.push({ name: 'CustomerDetail', params: { customerId: idx } });
     },
     sortCustomers(type, value) {
-      this.customers = [...this.originalCustomers]; // 원본 데이터로 리셋
-
-      console.log('Filtering by:', type, value);
-
       if (type === 'amount') {
         if (value === 'highToLow') {
-          this.customers.sort((a, b) => b.totalAmount - a.totalAmount);
+          this.changeFilter('amount/desc');
         } else if (value === 'lowToHigh') {
-          this.customers.sort((a, b) => a.totalAmount - b.totalAmount);
+          this.changeFilter('amount/asc');
         }
       } else if (type === 'grade' && value) {
-        this.customers = this.customers.filter(customer => customer.level === value);
+        this.currentFilter = `level/${value}`;
+        this.currentPage = 0;
+        this.fetchCustomers();
       }
-
-      console.log('Filtered customers:', this.customers);
     },
+
     formatNumber(value) {
       return new Intl.NumberFormat().format(value);
+    },
+    getLevelName(levelIndex) {
+      const levels = ['NEWBIE', 'BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND'];
+      return levels[levelIndex - 1];
     },
   },
   mounted() {
     this.fetchCustomers();
   }
 };
+
 </script>
 
 <style>
@@ -146,4 +150,28 @@ select{
 select > option{
   text-align: left;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.page-control {
+  background-color: transparent; /* 배경색 제거 */
+  border: none;
+  color: gray; /* 글자색 회색으로 변경 */
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.page-number {
+  margin: 0 10px;
+}
+
+
+
+
 </style>

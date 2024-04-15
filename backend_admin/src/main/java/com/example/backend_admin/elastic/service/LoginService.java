@@ -1,22 +1,17 @@
 package com.example.backend_admin.elastic.service;
 
-import com.example.backend_admin.elastic.entity.LoginDocument;
-import com.example.backend_admin.elastic.entity.OrdersDocument;
+import com.example.backend_admin.elastic.model.entity.LoginDocument;
 import com.example.backend_admin.elastic.model.dto.GetLoginTimeRes;
 import com.example.backend_admin.elastic.model.dto.GetTodayLoginRes;
 import com.example.backend_admin.elastic.repository.LoginDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 @Service
 @RequiredArgsConstructor

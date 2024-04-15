@@ -1,7 +1,6 @@
 package com.example.backend_admin.elastic.repository;
 
-import com.example.backend_admin.elastic.entity.OrdersDocument;
-import com.example.backend_admin.elastic.entity.ProductDetailDocument;
+import com.example.backend_admin.elastic.model.entity.ProductDetailDocument;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import java.util.List;

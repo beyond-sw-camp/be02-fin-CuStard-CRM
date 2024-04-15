@@ -1,7 +1,7 @@
 package com.example.backend_admin.elastic.service;
 
-import com.example.backend_admin.elastic.entity.OrdersDocument;
-import com.example.backend_admin.elastic.entity.ProductDetailDocument;
+import com.example.backend_admin.elastic.model.entity.OrdersDocument;
+import com.example.backend_admin.elastic.model.entity.ProductDetailDocument;
 import com.example.backend_admin.elastic.model.dto.GetCategoryOrdersRes;
 import com.example.backend_admin.elastic.model.dto.GetTodayOrdersRes;
 import com.example.backend_admin.elastic.repository.OrdersDocumentRepository;
@@ -59,8 +59,8 @@ public class OrdersService {
         return GetTodayOrdersRes.builder()
                 .todayOrdersCount(todayOrders.size())
                 .todayOrdersAmount(todayOrderAmt)
-                .difOrdersCount( yestOrders.size())
-                .difOrdersAmount(yestOrderAmt)
+                .difOrdersCount(todayOrders.size() - yestOrders.size())
+                .difOrdersAmount(todayOrderAmt - yestOrderAmt)
                 .build();
     }
 

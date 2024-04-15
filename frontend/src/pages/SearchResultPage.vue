@@ -55,8 +55,8 @@ async function fetchSearchResults(keyword) {
   }
 
   .result{
-    padding-top: 60px;
-    padding-left: 30px;
+    padding-left: 8%;
+    font-size: 33px;
   }
 
 </style>

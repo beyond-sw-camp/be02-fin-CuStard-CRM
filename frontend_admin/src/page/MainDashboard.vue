@@ -3,7 +3,7 @@
     <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
-          <h6 class="text-muted font-weight-normal" style="padding-left:10px;"> 오늘 03:00시 기준</h6>
+          <h6 class="text-muted font-weight-normal" style="padding-left:10px;"> 전일 동시간대 기준</h6>
           <div class="row">
             <div class="grid-margin stretch-card" style="width: 17%; height: 110px;">
               <div class="card">
@@ -225,7 +225,7 @@ import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 
 let backend = "http://192.168.0.33:80/api";
-// let backend = "http://localhost:8080";
+// let backend = "http://localhost:8000";
 
 export default {
   data() {
