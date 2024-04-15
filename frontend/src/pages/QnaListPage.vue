@@ -87,7 +87,7 @@ ul {
 .write-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #ffbe0e;
+  background-color: #99154E;
   transition: background-color 0.5s;
   color: #fff;
   border: none;
@@ -98,6 +98,6 @@ ul {
 }
 
 .write-button:hover {
-  background-color: #99154E;
+  background-color: #ffbe0e;
 }
 </style>

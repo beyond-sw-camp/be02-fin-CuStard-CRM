@@ -119,7 +119,8 @@ async function goToPage(pageNumber) {
 }
 
 .result {
-  //padding-left: 14%;
+  padding-left: 8%;
+  margin-top:  -12px;
 }
 
 .btn {
@@ -134,7 +135,7 @@ async function goToPage(pageNumber) {
 }
 
 .button-container button {
-  margin: 0 10px;
+  margin: 20px 10px;
   padding: 10px 20px;
   background-color: #58283d; /* Green */
   border: none;

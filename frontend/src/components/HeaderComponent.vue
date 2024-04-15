@@ -13,43 +13,42 @@
     </div>
     <div class="gnb">
       <a href="/" class="css-boc80u ekdqe1a1">
-        <img href="/" src="../../public/img/logo.png" alt="커스타드 로고" class="css-17mnrrx e1s3pt0j0 logo">
+        <img  href="/" src="../../public/img/logo.png" alt="커스타드 로고" class="css-17mnrrx e1s3pt0j0 logo">
         <div class="active css-mxd3pm ekdqe1a0">Cus+ard</div>
       </a>
       <div class="css-pqw0uk e1493ofl4">
         <div class="css-w444a2 e1493ofl1">
           <input
-              id="gnb_search"
-              placeholder="검색어를 입력해주세요."
-              required=""
-              class="css-11ntk83 e1493ofl3"
-              value=""
-              v-model="searchInput"
+            id="gnb_search"
+            placeholder="검색어를 입력해주세요."
+            required=""
+            class="css-11ntk83 e1493ofl3"
+            value=""
+            v-model="searchInput"
           >
-          <a :href="'/search/' + searchInput">
+          <a :href= "'/search/' + searchInput">
             <button id="submit" aria-label="submit" class="css-ywxmlw e1493ofl0"></button>
           </a>
         </div>
       </div>
 
-      <div class="group">
-        <div class="answer">
-          <router-link to="/qna/list">1:1문의 내역</router-link>
-        </div>
+      <div class="answer">
+        <router-link to="/qna/list" >1:1문의 내역</router-link>
+      </div>
+      <div class="css-c4pbxv e15sbxqa0">
+      <div class="vertical-line"></div> <!-- 수직 구분선 -->
 
-        <div class="css-c4pbxv e15sbxqa0">
-          <div class="coupondiv" @click="fetchCoupons" @mouseleave="showDropdown = false">
-            보유 쿠폰
-            <transition name="fade">
-              <div v-if="showDropdown" class="css-14vnom0 e1n3mt0d1 coupon dropdown">
-                <ul>
-                  <li v-for="haveCoupon in coupons" :key="haveCoupon.idx">
-                    [{{ getCategoryName(haveCoupon.count) }}] {{ haveCoupon.discount }} % 할인쿠폰 {{ haveCoupon.count }}개
-                  </li>
-                </ul>
-              </div>
-            </transition>
-          </div>
+        <div class="coupondiv" @click="fetchCoupons" @mouseleave="showDropdown = false">
+          보유 쿠폰
+          <transition name="fade">
+            <div v-if="showDropdown" class="css-14vnom0 e1n3mt0d1 coupon dropdown">
+              <ul>
+                <li v-for="haveCoupon in coupons" :key="haveCoupon.idx">
+                  [{{ getCategoryName(haveCoupon.count) }}]  {{ haveCoupon.discount }} % 할인쿠폰 {{ haveCoupon.count }}개
+                </li>
+              </ul>
+            </div>
+          </transition>
         </div>
       </div>
     </div>
@@ -57,10 +56,9 @@
 </template>
 
 <script setup>
-import {ref, computed} from 'vue';
+import { ref, computed } from 'vue';
 // import { useRouter } from 'vue-router';
 import axios from 'axios';
-
 let backend = "http://192.168.0.31:80/api";
 // let backend = "http://localhost:8080";
 
@@ -71,7 +69,7 @@ const searchInput = ref('');
 
 // 카테고리 번호에 따른 이름을 반환하는 메서드
 function getCategoryName(categoryId) {
-  switch (categoryId) {
+  switch(categoryId) {
     case 1:
       return '패션';
     case 2:
@@ -90,30 +88,28 @@ function getCategoryName(categoryId) {
 }
 
 // 쿠폰 데이터를 불러오는 함수
-const fetchCoupons = async () => {
-  // 로컬 스토리지에서 사용자 idx 가져오기
-  const customerIdx = sessionStorage.getItem('customerIdx');
+  const fetchCoupons = async () => {
+    // 로컬 스토리지에서 사용자 idx 가져오기
+    const customerIdx = sessionStorage.getItem('customerIdx');
 
-  if (!customerIdx) {
-    alert('로그인이 필요합니다.');
-    return;
-  }
+    if (!customerIdx) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
 
-  const url = backend + `/have/list?customerIdx=${customerIdx}`;
+    const url = backend + `/have/list?customerIdx=${customerIdx}`;
 
-  try {
-    const response = await axios.get(url);
-    coupons.value = response.data.result; // 응답 데이터 저장
-    showDropdown.value = true; // 드롭다운 표시
+    try {
+      const response = await axios.get(url);
+      coupons.value = response.data.result; // 응답 데이터 저장
+      showDropdown.value = true; // 드롭다운 표시
 
-    console.log(coupons);
-  } catch (error) {
-    console.error("Fetching coupons failed:", error);
-    showDropdown.value = false; // 실패 시 드롭다운 숨김
-  }
-};
-
-
+      console.log(coupons);
+    } catch (error) {
+      console.error("Fetching coupons failed:", error);
+      showDropdown.value = false; // 실패 시 드롭다운 숨김
+    }
+  };
 
 const logout = () => {
   localStorage.removeItem("accessToken");
@@ -122,6 +118,7 @@ const logout = () => {
   localStorage.setItem('notified', 'false');
   location.reload();
 };
+
 
 
 const isLoggedIn = computed(() => {
@@ -161,6 +158,7 @@ ul {
 a {
   text-decoration-line: none;
   color: #333;
+  margin-left: -10px;
 }
 
 .divgnb {
@@ -176,18 +174,17 @@ a {
   margin: 0px auto;
   letter-spacing: -0.3px;
 }
-
 .css-c4pbxv {
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  //position: relative;
+  position: relative;
   /* right: -200px;
   top: -49px; */
   /* border: 1px solid red; */
-  //width: 200px;
-  //justify-content: flex-end;
-  //right: -81px;
+  width: 200px;
+  justify-content: flex-end;
+  right: -81px;
 }
 
 .css-1xfyvd1 {
@@ -208,8 +205,9 @@ a {
 
 .css-1qgm48u:first-of-type {
   width: 1px;
-  height: 13px;
-  margin: 0px 12px;
+  height: 16px;
+  margin: 0px 6px;
+  margin-right: 16px;
   background-color: rgb(217, 217, 217);
 }
 
@@ -264,7 +262,7 @@ a {
   width: 156px;
   /* border: 1px solid red; */
   position: relative;
-  left: 35px;
+  left: 160px;
 }
 
 .login {
@@ -284,10 +282,10 @@ a {
   height: 30px;
   margin: 10px;
   bottom: 3px;
-  background-image: url("../assets/search.png");
+  background-image: url("../assets/search.png") ;
   background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: 5px 9px;
+  background-size : 60%;
+  background-position : 5px 9px;
   border: none;
   background-color: #FFF;
 }
@@ -339,9 +337,10 @@ a {
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  //margin: 0 160px;
+  margin: 0 200px;
+  margin-left: 50px;
   /* top: -55px; */
-  width: 485px;
+  width: 410px;
   height: 48px;
   padding-left: 14px;
   border: 2px solid #99154e;
@@ -349,7 +348,6 @@ a {
   background-color: rgb(255, 255, 255);
   box-shadow: rgb(247, 247, 247) 0px 0px 0px 1px inset;
 }
-
 .css-11ntk83::placeholder {
   color: 33380; /* Change this to the desired color */
 }
@@ -377,12 +375,8 @@ a {
   /* border: 1px solid red; */
   display: flex;
   transition: all 0.5s ease 0s;
-  //margin-right: 46px;
-  color: #333;
-  cursor: pointer;
-}
-.coupondiv:hover{
-  color: #99154E;
+  margin-right: 46px;
+  color:#333;
 }
 
 .amount {
@@ -398,21 +392,19 @@ a {
   width: 50px;
   height: 50px;
 }
-
-.answer {
-  //margin-left: 50px;
+.answer{
+  padding-left: 50px;
   width: 120px;
   color: #333;
-  //right: -167px;
-  //position: relative;
+  right: -167px;
+  position: relative;
   //border: 1px solid red;
 }
-
-.group{
-  display: flex;
-  //background-color: #00ab03;
-  //z-index: 1;
-  position: relative;
-  right: -25%;
+.vertical-line {
+  width: 1px; /* 구분선의 너비 설정 */
+  height: 20px; /* 구분선의 높이 설정 */
+  background-color: #ccc; /* 구분선의 색상 설정 */
+  margin: 0 6px; /* 구분선의 좌우 여백 설정 */
 }
+
 </style>

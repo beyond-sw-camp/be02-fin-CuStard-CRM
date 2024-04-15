@@ -113,7 +113,18 @@ export default defineComponent({
   }
 });
 </script>
+
   <style>
+  @font-face {
+    font-family: 'NotoSansKR-Thin';
+    src: url('~@/assets/fonts/NotoSansKR-Thin.ttf');
+  }
+
+body {
+	font-family: 'NotoSansKR-Thin', sans-serif;
+	font-size: 20px;
+}
+
 .carousel {
     margin-left: 200px !important;
     margin-right: 200px !important;
@@ -123,7 +134,8 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  text-shadow:2px 2px 4px rgba(0, 0, 0, 0.3);
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
   font-size: 22px;
@@ -229,7 +241,7 @@ export default defineComponent({
 .carousel__next {
   position: absolute;
   top: 205px;
-  right: -14px;
+  right: -13px;
 }
   .carousel__slide {
     display: flex;
