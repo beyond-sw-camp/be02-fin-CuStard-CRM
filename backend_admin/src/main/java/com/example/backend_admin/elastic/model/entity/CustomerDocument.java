@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @Document(indexName = "customer")
 public class CustomerDocument {
     @Id
-    private Long idx;
+    private String idx;
 
     @Field(type = FieldType.Text, name = "name")
     private String name;
