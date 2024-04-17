@@ -6,7 +6,6 @@ import com.example.demo.customer.repository.CustomerRepository;
 import com.example.demo.email.model.entity.Email;
 import com.example.demo.email.repository.EmailRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import java.util.Optional;
 
 @Service
