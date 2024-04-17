@@ -12,6 +12,7 @@
         <button type="submit">로그인</button>
       </form>
       <br>
+      <p class="memeber">회원이 아니신가요?</p>
       <a href="./signup">회원가입</a>
 
     </div>
@@ -187,16 +188,17 @@ body {
 .login-container button {
   width: 100%;
   padding: 10px;
-  background-color: #ffbe0e;
+  background-color: black;
   color: #fff;
-  border: none;
+  border: 1px solid black;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.5s;
 }
 
 .login-container button:hover {
-  background-color: #99154e;
+  background-color: #FFFFFF;
+  color:black;
 }
 
 .content-container {
@@ -287,5 +289,9 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
+.memeber{
+  font-weight: normal;
+  font-size: 12px;
+  color: #a4a4a4;
+}
 </style>
