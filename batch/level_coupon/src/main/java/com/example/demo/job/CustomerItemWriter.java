@@ -39,19 +39,17 @@ public class CustomerItemWriter implements ItemWriter<List<CustomerDocument>> {
             } catch (NumberFormatException e) {
             }
         }
-        System.out.println("List : " + list);
         for (int i = 0; i < list.size(); i++) {
             for (CustomerDocument customer : list.get(i)) {
-                System.out.println("회원 목록 " + customerRepository.findAll());
                 Optional<Customer> result = customerRepository.findById(customer.getIdx());
                 if(result.isPresent()) {
 
-                haveCouponService.create(HaveCouponCreateReq.builder()
-                        .coupon(couponList.get(i))
-                        .customer(result.get())
-                        .count(1)
-                        .build());
-                emailService.sendLevelCoupon(customer.getIdx());
+                    haveCouponService.create(HaveCouponCreateReq.builder()
+                            .coupon(couponList.get(i))
+                            .customer(result.get())
+                            .count(1)
+                            .build());
+                    emailService.sendLevelCoupon(customer.getIdx());
                 }else {
                     System.out.println("존재하지 않는 사용자");
                 }
