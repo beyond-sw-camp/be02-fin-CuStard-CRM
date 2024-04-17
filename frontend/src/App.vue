@@ -51,8 +51,10 @@ export default {
 </script>
 
 <style>
-body {
-  font-family: 'IBM Plex Sans KR', sans-serif;
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css");
+html, body{
+  font-family: "Pretendard";
   font-weight: bold;
+  font-style: normal;
 }
 </style>
