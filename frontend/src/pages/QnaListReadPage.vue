@@ -14,7 +14,7 @@
       <div class="container">
         <div class="title">{{ qna?.title || '제목' }}</div><hr>
         <ul class="status">
-          <li>문의 유형: <span>{{ qna?.category || ' '}}</span></li>
+          <li>문의 유형: <span>{{ qna?.category}}</span></li>
           <li>상태:<span class="qnaAnswer"> {{ qna.answerContent !== null ? '답변 완료' : '답변 대기' }}</span></li>
         </ul>
         <hr>
@@ -28,8 +28,8 @@
 
 <script>
 import axios from 'axios';
-// let backend = "http://localhost:8080";
-let backend = "http://192.168.0.31:80/api";
+let backend = "http://localhost:8080";
+// let backend = "http://192.168.0.31:80/api";
 
 export default {
   data() {

@@ -112,6 +112,7 @@ public class QnaService {
                     return PostQnaReadRes.builder()
                             .title(qna.getTitle())
                             .qnaContent(qna.getQnaContent())
+                            .category(qna.getCategory())
                             .build();
                     //답변이 없는 경우
                 }

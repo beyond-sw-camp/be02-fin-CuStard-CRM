@@ -390,12 +390,14 @@ body {
     opacity: 0.7; /* 연하게 만들기 위한 투명도 조절 */
 }
 .loginsubmit{
-    transition: all 0.3s ease 0s;
-    background: #ffbe0e;
-    color: white;
+  background-color: black;
+  color: #fff;
+  border: 1px solid black;
+  transition: all 0.5s;
 }
 .loginsubmit:hover{
-    background: #99154e;
+  background-color: #FFFFFF;
+  color:black;
 }
 .insertname {
     text-align: left;
