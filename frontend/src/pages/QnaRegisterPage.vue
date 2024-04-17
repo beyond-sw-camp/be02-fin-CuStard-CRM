@@ -37,7 +37,7 @@
                 <textarea id="content" v-model="content" rows="4" required placeholder="내용을 입력하세요"></textarea>
 <br>
                 <label for="password" class="password-register">비밀번호</label>
-                <input type="password" id="password" v-model="password" required placeholder="비밀번호를 입력하세요">
+                <input type="password" id="password" v-model="password" required placeholder="숫자 4자리를 입력하세요">
 
                 <button type="submit" class="submit-button">문의하기</button>
             </form>
@@ -90,6 +90,14 @@ export default {
 };
 </script>
 
+
+
+
+
+
+
+
+
 <style scoped>
 .container {
     max-width: 600px;
@@ -120,10 +128,10 @@ input[type="password"] {
 }
 
 .submit-button {
-    background-color: #99154e;
-    color: white;
+    background-color: #fff;
+    color: black;
     padding: 10px 20px;
-    border: none;
+  border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 15px;
@@ -131,7 +139,8 @@ input[type="password"] {
 }
 
 .submit-button:hover {
-    background-color: #ffbe0e;
+  background-color: black;
+  color: #fff;
 }
 
 .checkbox-container {
