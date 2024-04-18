@@ -78,7 +78,6 @@ public class QnaService {
             GetQnaListRes qnaListRes = new GetQnaListRes();
             qnaListRes.setIdx(qna.getIdx());
             qnaListRes.setTitle(qna.getTitle());
-            qnaListRes.setQnaContent(qna.getQnaContent());
             qnaListRes.setCategory(qna.getCategory());
             Optional<Answer> resultAnswer = answerRepository.findByQnaIdx(qnaListRes.getIdx());
             if (resultAnswer.isPresent()) {

@@ -8,7 +8,6 @@
           <th>NO</th>
           <th>문의 유형</th>
           <th>문의 제목</th>
-          <th>문의 내용</th>
           <th>상태</th>
         </tr>
         </thead>
@@ -17,7 +16,6 @@
           <td>{{ qna.idx }}</td>
           <td>{{qna.category}}</td>
           <td>{{ qna.title }}</td>
-          <td>{{qna.qnaContent}}</td>
           <td>{{ qna.answerContent !== null ? '답변 완료' : '답변 대기' }}</td>
         </tr>
         </tbody>
@@ -113,7 +111,7 @@ ul {
   position: absolute;
   top: 167px;
   font-size: 13px;
-  right: 71px;
+  right: 120px;
   border: 1px solid black;
 }
 
