@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -65,7 +68,6 @@ public class SetCouponTargetService {
             Map<String, Object> targetMap = objectMapper.readValue(jsonString, new TypeReference<Map<String, Object>>() {
             });
             coupons = (List<Integer>) targetMap.get("levelCoupon");
-            System.out.println("coupon : " + coupons);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (ClassCastException e) {

@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <h3 class="result">검색 결과</h3>
@@ -49,14 +48,20 @@ async function fetchSearchResults(keyword) {
 </script>
 
 <style>
-  .searched-product{
-    display: flex;
-    padding-top: 20px;
-  }
+.searched-product {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  gap: 20px; /* 각 아이템 사이의 간격을 설정합니다 */
+  padding-top: 20px;
+  margin-left: 30px;
+  font-size: 16px;
+  font-weight: normal;
+}
 
-  .result{
-    padding-left: 8%;
-    font-size: 33px;
-  }
+.result {
+  padding-top: 60px;
+  margin-left: 30px;
+}
+
 
 </style>

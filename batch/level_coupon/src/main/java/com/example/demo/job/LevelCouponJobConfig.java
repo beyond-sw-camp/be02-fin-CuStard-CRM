@@ -1,5 +1,6 @@
 package com.example.demo.job;
 
+import com.example.demo.coupon.repository.CouponRepository;
 import com.example.demo.coupon.service.SetCouponTargetService;
 import com.example.demo.customer.model.entity.Customer;
 import com.example.demo.customer.model.entity.CustomerDocument;
@@ -27,10 +28,12 @@ import java.util.List;
 public class LevelCouponJobConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
-    private final CustomerDocumentRepository customerRepository;
+    private final CustomerDocumentRepository customerDocumentRepository;
     private final SetCouponTargetService setCouponTargetService;
     private final HaveCouponService haveCouponService;
     private final EmailService emailService;
+    private final CouponRepository couponRepository;
+    private final CustomerRepository customerRepository;
 
     @Bean("LevelCouponJob")
     public Job levelCouponJob(Step levelCouponStep) {
@@ -54,14 +57,14 @@ public class LevelCouponJobConfig {
     @Bean
     @StepScope
     public CustomerRepositoryItemReader levelCouponReader() {
-        return new CustomerRepositoryItemReader(customerRepository, setCouponTargetService);
+        return new CustomerRepositoryItemReader(customerDocumentRepository, setCouponTargetService);
     }
 
 
     @Bean
     @StepScope
     public ItemWriter<List<CustomerDocument>> levelCouponWriter() {
-        return new CustomerItemWriter(setCouponTargetService, haveCouponService, emailService);
+        return new CustomerItemWriter(setCouponTargetService, haveCouponService, emailService, couponRepository, customerRepository);
     }
 
 }

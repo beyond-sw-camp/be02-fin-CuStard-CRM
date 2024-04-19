@@ -23,15 +23,15 @@
       </Carousel>
     </section>
     <!-- 의류 버튼 -->
-    <button class="category-button clothing" @click="goToCategory('1')">상품 더보기 ></button>
+    <button class="category-button clothing" @click="goToCategory('1')">more +</button>
     <!-- 뷰티 버튼 -->
-    <button class="category-button beauty" @click="goToCategory('2')">상품 더보기 ></button>
+    <button class="category-button beauty" @click="goToCategory('2')">more +</button>
     <!-- 식품 버튼 -->
-    <button class="category-button food" @click="goToCategory('3')">상품 더보기 ></button>
+    <button class="category-button food" @click="goToCategory('3')">more +</button>
     <!-- 스포츠/레저 버튼 -->
-    <button class="category-button sports" @click="goToCategory('4')">상품 더보기 ></button>
+    <button class="category-button sports" @click="goToCategory('4')">more +</button>
     <!-- 가전 버튼 -->
-    <button class="category-button electronics" @click="goToCategory('5')">상품 더보기 ></button>
+    <button class="category-button electronics" @click="goToCategory('5')">more +</button>
   </div>
 </template>
 
@@ -113,7 +113,19 @@ export default defineComponent({
   }
 });
 </script>
+
   <style>
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+  }
+
+html, body {
+	font-family: 'Pretendard';
+}
+
 .carousel {
     margin-left: 200px !important;
     margin-right: 200px !important;
@@ -123,7 +135,8 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   font-weight: bold;
-  text-shadow:2px 2px 4px rgba(0, 0, 0, 0.3);
+  //text-shadow:
+  //  2px 2px 4px rgba(0, 0, 0, 0.3);
   color:#333;
   align-content: stretch;
   font-size: 22px;
@@ -229,7 +242,7 @@ export default defineComponent({
 .carousel__next {
   position: absolute;
   top: 205px;
-  right: -14px;
+  right: -13px;
 }
   .carousel__slide {
     display: flex;
@@ -299,13 +312,13 @@ export default defineComponent({
     object-fit: contain;
 }
 .category-button {
-   margin-bottom: 20px;
-   background-color: transparent;
-   border: none;
-   font-size: 18px;
-   color: #333;
-   transition: color 0.3s ease;
-   cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  border: none;
+  background: rgba(209, 209, 209, 0.48);
+  font-size: 15px;
+  transition: all 0.25s ease 0s;
  }
 
   .clothing {
@@ -338,7 +351,8 @@ export default defineComponent({
     right: 100px;
   }
   .category-button:hover {
-  color: #99154e;
+  color: #fff;
+    background: #2F3438;
   }
 
   </style>

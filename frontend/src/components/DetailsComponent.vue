@@ -146,16 +146,12 @@ export default {
 
 <style scoped>
 /* header start */
-*{
-  font-family: 'GmarketSans';
-}
-
 .production-selling {
   position: relative;
   width: 100%;
   min-height: 1px;
   justify-content : center;
-  margin-top: 5%;
+  margin-top: 4%;
   display: flex;
   /* border: 1px solid red; */
 }
@@ -210,11 +206,10 @@ a {
 
 .production-selling-overview__content{
   width: 90%;
-  /* padding-right:5%; */
   padding: 30px;
   height: auto;
   flex: right;
-  /* background-color: blanchedalmond; */
+  margin-right: 20px; /* Add margin to the right */
 }
 
 .production-selling-header {
@@ -256,8 +251,8 @@ p {
   font-weight: 400;
   line-height: 20px;
   color: #000;
-  overflow-wrap: break-all;
-  margin-right: 36px;
+  overflow-wrap: break-word; /* 긴 단어 줄바꿈 */
+  margin-top: 10px; /* product-name과의 간격 설정 */
 }
 
 .production-selling-header__action {
@@ -551,21 +546,27 @@ p {
 }
 
 .product-image-box{
-  width: 500px;
-  height: 500px;
+  width: 900px;
+  height: 700px;
   float: left;
-  padding-left: 20%;
-
+  padding-left: 15%;
+  margin-top: -80px;
+  overflow: hidden; /* 이미지가 상자를 넘어가지 않도록 함 */
+  display: flex; /* 이미지 상자 내부를 유연하게 조절하기 위해 flex 사용 */
+  justify-content: center; /* 이미지를 수평 중앙으로 정렬 */
+  align-items: center; /* 이미지를 수직 중앙으로 정렬 */
 }
 
 .product-image{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  width: 100%; /* 이미지의 너비를 100%로 설정하여 이미지를 상자에 꽉 채우도록 함 */
+  height: auto; /* 이미지의 세로 크기를 자동으로 조절하여 비율 유지 */
 }
 
 .product-name{
-  height: 60px;
+  height: auto;
+  overflow: hidden;
+  font-size: 28px;
+  margin-top: -20px;
 }
 
 

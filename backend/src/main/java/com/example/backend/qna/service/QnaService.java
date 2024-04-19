@@ -78,6 +78,7 @@ public class QnaService {
             GetQnaListRes qnaListRes = new GetQnaListRes();
             qnaListRes.setIdx(qna.getIdx());
             qnaListRes.setTitle(qna.getTitle());
+            qnaListRes.setCategory(qna.getCategory());
             Optional<Answer> resultAnswer = answerRepository.findByQnaIdx(qnaListRes.getIdx());
             if (resultAnswer.isPresent()) {
                 Answer answer = resultAnswer.get();
@@ -103,12 +104,14 @@ public class QnaService {
                             .title(qna.getTitle())
                             .qnaContent(qna.getQnaContent())
                             .answerContent(answer.getAnswerContent())
+                            .category(qna.getCategory())
                             .build();
                     //답변이 있는 경우
                 } else {
                     return PostQnaReadRes.builder()
                             .title(qna.getTitle())
                             .qnaContent(qna.getQnaContent())
+                            .category(qna.getCategory())
                             .build();
                     //답변이 없는 경우
                 }

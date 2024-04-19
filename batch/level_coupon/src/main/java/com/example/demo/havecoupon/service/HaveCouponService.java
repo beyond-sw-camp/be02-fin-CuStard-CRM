@@ -17,19 +17,15 @@ public class HaveCouponService {
     public HaveCouponCreateRes create(HaveCouponCreateReq haveCouponCreateReq){
         HaveCoupon haveCoupon = haveCouponRepository.save(HaveCoupon.builder()
                 .count(haveCouponCreateReq.getCount())
-                .customer(Customer.builder()
-                        .idx(haveCouponCreateReq.getCustomerIdx())
-                        .build())
-                .coupon(Coupon.builder()
-                        .idx(haveCouponCreateReq.getCouponIdx())
-                        .build())
+                .customer(haveCouponCreateReq.getCustomer())
+                .coupon(haveCouponCreateReq.getCoupon())
                 .build());
 
         return HaveCouponCreateRes.builder()
                 .idx(haveCoupon.getIdx())
                 .count(haveCoupon.getCount())
-                .customerIdx(haveCouponCreateReq.getCustomerIdx())
-                .couponIdx(haveCouponCreateReq.getCouponIdx())
+                .customerIdx(haveCouponCreateReq.getCustomer().getIdx())
+                .couponIdx(haveCouponCreateReq.getCoupon().getIdx())
                 .build();
     }
 }

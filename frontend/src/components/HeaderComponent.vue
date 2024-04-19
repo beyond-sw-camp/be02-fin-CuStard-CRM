@@ -32,12 +32,13 @@
         </div>
       </div>
 
-      <div class="group">
+      <div class="select">
         <div class="answer">
           <router-link to="/qna/list">1:1문의 내역</router-link>
         </div>
-
         <div class="css-c4pbxv e15sbxqa0">
+          <div class="vertical-line"></div> <!-- 수직 구분선 -->
+
           <div class="coupondiv" @click="fetchCoupons" @mouseleave="showDropdown = false">
             보유 쿠폰
             <transition name="fade">
@@ -113,8 +114,6 @@ const fetchCoupons = async () => {
   }
 };
 
-
-
 const logout = () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("customerIdx");
@@ -161,6 +160,7 @@ ul {
 a {
   text-decoration-line: none;
   color: #333;
+  margin-left: -10px;
 }
 
 .divgnb {
@@ -178,16 +178,7 @@ a {
 }
 
 .css-c4pbxv {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  //position: relative;
-  /* right: -200px;
-  top: -49px; */
-  /* border: 1px solid red; */
-  //width: 200px;
-  //justify-content: flex-end;
-  //right: -81px;
+  position: relative;
 }
 
 .css-1xfyvd1 {
@@ -208,8 +199,9 @@ a {
 
 .css-1qgm48u:first-of-type {
   width: 1px;
-  height: 13px;
-  margin: 0px 12px;
+  height: 16px;
+  margin: 0px 6px;
+  margin-right: 16px;
   background-color: rgb(217, 217, 217);
 }
 
@@ -264,7 +256,7 @@ a {
   width: 156px;
   /* border: 1px solid red; */
   position: relative;
-  left: 35px;
+  left: 160px;
 }
 
 .login {
@@ -339,12 +331,13 @@ a {
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  //margin: 0 160px;
+  margin: 0 200px;
+  margin-left: 50px;
   /* top: -55px; */
-  width: 485px;
+  width: 410px;
   height: 48px;
   padding-left: 14px;
-  border: 2px solid #99154e;
+  border: 2px solid black;
   border-radius: 6px;
   background-color: rgb(255, 255, 255);
   box-shadow: rgb(247, 247, 247) 0px 0px 0px 1px inset;
@@ -374,15 +367,14 @@ a {
 }
 
 .coupondiv {
-  /* border: 1px solid red; */
+
   display: flex;
   transition: all 0.5s ease 0s;
-  //margin-right: 46px;
-  color: #333;
   cursor: pointer;
 }
-.coupondiv:hover{
-  color: #99154E;
+
+.coupondiv:hover {
+  color: #99154e;
 }
 
 .amount {
@@ -400,19 +392,30 @@ a {
 }
 
 .answer {
-  //margin-left: 50px;
-  width: 120px;
-  color: #333;
+  //padding-left: 50px;
+  //width: 120px;
+  //color: #333;
   //right: -167px;
   //position: relative;
-  //border: 1px solid red;
+  z-index: 1;
+  //display: block;
+}
+.select{
+  display: flex;
+  z-index: 1;
+  width: 215px;
+  position: relative;
+  justify-content: space-around;
+  left: 170px;
+}
+.vertical-line {
+  width: 1px;
+  height: 20px;
+  background-color: #ccc;
+  /* margin: 0 6px; */
+  position: absolute;
+  right: 79px;
 }
 
-.group{
-  display: flex;
-  //background-color: #00ab03;
-  //z-index: 1;
-  position: relative;
-  right: -25%;
-}
+
 </style>

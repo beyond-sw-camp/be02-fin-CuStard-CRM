@@ -1,6 +1,7 @@
 package com.example.backend_admin.elastic.controller;
 
 import com.example.backend_admin.customer.service.CustomerService;
+import com.example.backend_admin.elastic.model.entity.CustomerDocument;
 import com.example.backend_admin.elastic.model.response.*;
 import com.example.backend_admin.customer.entity.response.GetCustomerReadRes;
 import com.example.backend_admin.elastic.model.dto.*;
@@ -16,6 +17,8 @@ import com.example.backend_admin.elastic.service.OrdersService;
 //import com.example.backend_admin.elastic.service.ProductDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -119,4 +122,18 @@ public class ElasticController {
 //    public Object catergoryRead(@PathVariable Long idx) {
 //        return productDetailService.catergoryRead(idx);
 //    }
+//    @GetMapping("/relogin")
+//    public int reLogin(){
+//        return loginService.reLogin();
+//    }
+//    @GetMapping("/be")
+//    public List<Long> be(){
+//        return loginService.between90();
+//    }
+//
+//    @GetMapping("/id")
+//    public List<CustomerDocument> id(){
+//        return loginService.id();
+//    }
+
 }
